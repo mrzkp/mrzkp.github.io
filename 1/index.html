@@ -5,9 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 1</title>
 
-    <h2> Descrption </h2>
+    <h2> Overview of Project </h2>
+    <h4>Take the digitized Prokudin-Gorskii glass plate images and produce a colored image.
+    </h4>
 
-    <h4> </h4>
+    <h2> Approach </h2>
+
+    <h4> Since .jpgs are small, we can exhaustively search the entire image within a
+      range of [-15, 15] in the horizontal and vertical directions. For .tifs, had to 
+      recursively align via an image pyramid from lower to higher resolutions by a factor of 2.
+    </h4>
+
+    <h2> Bells and Whistles </h2>
+
+    <h3> Sobel Edge Detection</h3>
+
+    <h4>
+      Firstly, started with sobel edge detection. Thought process behind using it was, if I could identify edges,
+      then I would have another feature to align the three channels on. Surely this would help.
+
+      To my surprise, this helped greatly with Emir.
+
+      To my understanding, Sobel detection works by identifying edges by calculating the gradients for each pixel.
+      I used sobel in two ways. One was during the alignment process, where I would iterate over the x-grads and y-grads 
+      to find the best alignment. 
+      
+      The second was post-processing for auto cropping.
+    </h4>
+
+    <h3> Auto Cropping </h3>
+
+    <h4> 
+      I then constructed an auto crop. The motivation was to remove unisightly boarders.
+
+      I used Sobel here as well, I generated a mask on a grayed version of the image. Afterwards, I then created a 
+      threshold where I checked if the the output edges were in the 95th percentile. If there were, I would iterate 
+      over the rows and columns of that section of the image with those edges and determine the boundaries of the image.
+      
+      Finally, to ensure that I do not shave off too much of the image, I added an limit to how much I could get rid of.
+
+    </h4>
+
 
     <style>
         ul {
@@ -137,7 +175,7 @@
             </figure>
         </li>
     </ul>
-    <h2>Images from Before Folder</h2>
+    <h2>Images before Sobel Edge, Auto Contrasting, and Auto Cropping</h2>
     <ul>
         <li>
             <figure>
