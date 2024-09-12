@@ -5,47 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 1</title>
 
-    <h2> Overview of Project </h2>
-    <h4>Take the digitized Prokudin-Gorskii glass plate images and produce a colored image.
-    </h4>
-
-    <h2> Approach </h2>
-
-    <h4> Since .jpgs are small, we can exhaustively search the entire image within a
-      range of [-15, 15] in the horizontal and vertical directions. For .tifs, had to 
-      recursively align via an image pyramid from lower to higher resolutions by a factor of 2.
-    </h4>
-
-    <h2> Bells and Whistles </h2>
-
-    <h3> Sobel Edge Detection</h3>
-
-    <h4>
-      Firstly, started with sobel edge detection. Thought process behind using it was, if I could identify edges,
-      then I would have another feature to align the three channels on. Surely this would help.
-
-      To my surprise, this helped greatly with Emir.
-
-      To my understanding, Sobel detection works by identifying edges by calculating the gradients for each pixel.
-      I used sobel in two ways. One was during the alignment process, where I would iterate over the x-grads and y-grads 
-      to find the best alignment. 
-      
-      The second was post-processing for auto cropping.
-    </h4>
-
-    <h3> Auto Cropping </h3>
-
-    <h4> 
-      I then constructed an auto crop. The motivation was to remove unisightly boarders.
-
-      I used Sobel here as well, I generated a mask on a grayed version of the image. Afterwards, I then created a 
-      threshold where I checked if the the output edges were in the 95th percentile. If there were, I would iterate 
-      over the rows and columns of that section of the image with those edges and determine the boundaries of the image.
-      
-      Finally, to ensure that I do not shave off too much of the image, I added an limit to how much I could get rid of.
-
-    </h4>
-
+    <h2>Overview of Project</h2>
+    <p>
+        The goal of the project was to take the digitized Prokudin-Gorskii glass plate images and produce a colored image.
+    </p>
+    
+    <h2>Approach</h2>
+    <p>
+        Since .jpg files are small, it was possible to exhaustively search the entire image within a range of [-15, 15] in both horizontal and vertical directions. 
+        However, for .tif files, a different approach was necessary. The .tif images had to be recursively aligned via an image pyramid, starting from lower to higher 
+        resolutions, with each level of resolution scaled by a factor of 2.
+    </p>
+    
+    <h2>Bells and Whistles</h2>
+    
+    <h3>Sobel Edge Detection</h3>
+    <p>
+        Firstly, I started with Sobel edge detection. The thought process behind using it was that if I could identify edges, then I would have another feature to align the three channels on. 
+        "Surely this would help," I thought.
+    </p>
+    <p>
+        To my surprise, this did a great deal, especially for the Emir image.
+    </p>
+    <p>
+        To my understanding, Sobel detection works by identifying edges by calculating the gradients for each pixel. I used Sobel in two ways. One was during the alignment process, 
+        where I would iterate over the x-gradients and y-gradients to find the best alignment.
+    </p>
+    <p>
+        The second use of Sobel was in post-processing for auto cropping.
+    </p>
+    
+    <h3>Auto Cropping</h3>
+    <p>
+        I then constructed an auto-crop feature. The motivation behind this was to remove unsightly borders.
+    </p>
+    <p>
+        I used Sobel here as well. I generated a mask on a grayed version of the image. Afterwards, I created a threshold where I checked if the output edges were in the 95th percentile. 
+        If they were, I would iterate over the rows and columns of that section of the image and determine the boundaries of the image.
+    </p>
+    <p>
+        Finally, to ensure that I didn't shave off too much of the image, I added a limit to how much could be cropped.
+    </p>
+    
+    <h3>Auto Contrast</h3>
+    <p>
+        Lastly, I created an auto-contrast function. Some of the images were a bit too unrealistic to be photographs and were missing details, so I decided to add auto contrast.
+    </p>
+    <p>
+        Originally, I planned to implement the functionality of <code>cv2.exposure.equalize_adapthist()</code> myself. However, my implementation added some runtime and made the images grainier, 
+        so I decided to stick with OpenCV's implementation instead.
+    </p>
 
     <style>
         ul {
