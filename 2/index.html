@@ -33,6 +33,8 @@
         <figcaption>OG Picture</figcaption>
     </figure>
 
+    <p> First, we compute the partial derivatives of the image in both x and y directions. We also define a ' humble' finite difference as our filter in the x and y directions as Dx = [1 -1] and Dy = [1 -1]^t.</p>
+
     <h2>Finite Difference Operator</h2>
 
     <h3>Partial Derivative in X and Y</h3>
@@ -45,11 +47,18 @@
         <figcaption>Partial Derivative in Y</figcaption>
     </figure>
 
+    <p>
+        Using these values, we convolve the image with these operators to obtain gradient components Gx and Gy, where Gx is the horizontal changes and vice versa.
+        
+        The gradient magnitude is calculated as the Euclidean norm of these components, which we can define as Gradient Magnitude = sqrt(Gx^2 + Gy^2). </p>
+
     <h3>Gradient Magnitude Image</h3>
     <figure>
         <img src="part1/camermangGRAD.png" alt="Gradient Magnitude">
         <figcaption>Gradient Magnitude</figcaption>
     </figure>
+
+    <p> Finally, we can threshold the gradient magnitude to create a binarized mapping where the pixels shown are above the threshold of 0.289.</p>
 
     <h3>Binarized</h3>
     <figure>
@@ -74,6 +83,14 @@
         <img src = "grad_DOG_BINARIZED.png">
         <figcaption> BINARIZED </figcaption>
     </figure>
+
+
+
+    <h1>Part 2: Fun with Frequencies!</h1>
+
+    <h2>Part 2.1: Image "Sharpening"</h2>
+
+    <>
 
 </body>
 </html>
