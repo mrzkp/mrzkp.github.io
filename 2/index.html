@@ -28,36 +28,39 @@
     <h1>Part 1: Fun with Filters</h1>
 
     <h2>Overview</h2>
-    <p>This section builds intuitions about 2D convolutions and filtering. We'll explore simple finite difference operations to detect edges in images.</p>
+    <figure>
+        <img src="part1/cameraman.png">
+        <figcaption>OG Picture</figcaption>
+    </figure>
 
     <h2>Finite Difference Operator</h2>
-    <p>Here, we use the finite difference method as our filter in the x and y directions to approximate the partial derivatives of an image.</p>
 
     <h3>Partial Derivative in X and Y</h3>
-    <p>The image below shows the results of applying finite difference operators \(D_x\) and \(D_y\) to a standard 'cameraman' image to compute the partial derivatives:</p>
     <figure>
-        <img src="part1/derivative_x.jpg" alt="Partial Derivative in X">
+        <img src="part1/camermangX.png" alt="Partial Derivative in X">
         <figcaption>Partial Derivative in X</figcaption>
     </figure>
     <figure>
-        <img src="part1/derivative_y.jpg" alt="Partial Derivative in Y">
+        <img src="part1/camermangY.jpg" alt="Partial Derivative in Y">
         <figcaption>Partial Derivative in Y</figcaption>
     </figure>
 
     <h3>Gradient Magnitude Image</h3>
-    <p>The gradient magnitude image, computed from the partial derivatives, highlights the intensity of changes across the image:</p>
     <figure>
-        <img src="part1/gradient_magnitude.jpg" alt="Gradient Magnitude">
+        <img src="part1/cameramanGRAD.jpg" alt="Gradient Magnitude">
         <figcaption>Gradient Magnitude</figcaption>
     </figure>
 
+    <h3>Binarized</h3>
+    <figure>
+        <img src="part1/camermangBINARIZED.png">
+        <figcaption>With a threshold val of 0.289</figcaption>
+    </figure>
+
     <h3>Edge Detection</h3>
-    <p>By applying a threshold to the gradient magnitude, we can create an edge image that shows significant boundaries in the original image:</p>
     <figure>
         <img src="part1/edge_detection.jpg" alt="Edge Detection">
         <figcaption>Edge Detection</figcaption>
     </figure>
-
-    <p>Each image above should be assessed qualitatively to find the right threshold that suppresses noise while revealing real edges.</p>
 </body>
 </html>
