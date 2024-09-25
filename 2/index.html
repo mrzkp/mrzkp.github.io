@@ -68,19 +68,23 @@
 
     <h2>Part 1.2: Derivative of Gaussian (DoG) Filter</h2>
 
+    <p>
+        The results are less noisy compared to using just the difference operator, as you can see, the edges appear smoother overall, whereas finer details seem to be filtered out.
+    </p>
+
     <h3> Images </h3>
     <figure>
-        <img src="grad_DOG.png">
+        <img src="part1/grad_DOG.png">
         <figcaption> Top row shows the Gaus Filter implementation results and the bottom shows the DOG filter</figcaption>
     </figure>
 
-    <h3> What differences do you see? </h3>
     <p>
-        Looking at just the gaussian filter output, I would say that there is less noise and the image is overall more smoother.
-    </p>
-
+        The DoG filter combines smoothing and differentiation into a single operation, which is computationally more efficient. However, notice that the results are actually the same!
+        
+        In my code implementation, I wrote a line that essentially checks if the two images had values within a very small tolerance to see if they were equal, to which it returned true.</p>
+    
     <figure>
-        <img src = "grad_DOG_BINARIZED.png">
+        <img src = "part1/grad_DOG_BINARIZED.png">
         <figcaption> BINARIZED </figcaption>
     </figure>
 
