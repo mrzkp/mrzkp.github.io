@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Part 1: Fun with Filters</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,7 +40,10 @@
 
         figure {
             margin: 20px 0;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         figure img {
@@ -47,9 +51,12 @@
             height: auto;
             border: 2px solid #ccc;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 0 10px;
         }
 
         figure figcaption {
+            width: 100%;
+            text-align: center;
             margin-top: 10px;
             font-size: 0.9em;
             color: #7f8c8d;
@@ -76,14 +83,8 @@
         }
 
         @media (min-width: 600px) {
-            figure {
-                display: inline-block;
-                width: 45%;
-                margin-right: 5%;
-                vertical-align: top;
-            }
-            figure:last-child {
-                margin-right: 0;
+            figure img {
+                max-width: 45%;
             }
         }
     </style>
@@ -202,7 +203,7 @@
     </figure>
 
     <p> Personally, I think having color for only Nutmeg (high frequencies) was the best result.</p>
-    <p> Note: I used some color </p>
+    <p> Note: I used some color balancing to make the images darker.</p>
 
     <p> Here are some of the other hybrids that I created!</p>
 
@@ -264,9 +265,20 @@
     <p> As per deliverables, not much to comment here... I will say though, I threw in some extreme sigma values for my Gaussian Blur which resulted in some surprsing results...</p>
 
     <figure>
-
+        <img src="part2.3/apple.jpeg">
+        <img src="part2.3/orange.jpeg">
+        <figcaption>Images</figcaption>
     </figure>
 
+    <figure>
+        <img src="part2.3/XDDD.png", title="Oraple!!">
+    </figure>
+
+    <p>What a oraple... I achieved this with some extreme sigma values, so my stacks may look a bit off, but if I tone them down, then they would have looked as expected.</p>
+
+    <figure title="Recreation of Figure 3.42">
+        <img src = "part2.3/recreation.png">
+    </figure>
 
 </body>
 </html>
