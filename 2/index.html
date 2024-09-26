@@ -7,43 +7,84 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
             background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
         }
-        img {
-            width: 100%; /* Responsive images within their containers */
-            height: auto; /* Maintain aspect ratio */
-            max-width: 400px; /* Consistent max width for all images */
-            border-radius: 4px; /* Optional: rounds the corners of the images */
-        }
-        figure {
-            display: inline-block;
-            margin: 10px;
-            text-align: center;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        p {
-            font-size: 16px; /* Adjust font size for better readability */
-        }
+
         h1, h2, h3 {
-            color: #333; /* Dark grey color for headings */
-            font-weight: normal;
+            color: #2c3e50;
         }
+
         h1 {
-            margin-top: 0;
-            font-size: 24px; /* Larger size for main headings */
+            text-align: center;
+            margin-bottom: 40px;
         }
+
         h2 {
-            font-size: 20px; /* Distinct size for section headings */
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
+            margin-top: 40px;
         }
+
         h3 {
-            font-size: 18px; /* Smaller size for subheadings */
+            margin-top: 30px;
         }
-        figcaption {
-            font-style: italic; /* Style for captions */
-            font-size: 14px; /* Smaller font size for captions */
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        figure figcaption {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .threshold {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        code {
+            background-color: #ecf0f1;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        @media (min-width: 600px) {
+            figure {
+                display: inline-block;
+                width: 45%;
+                margin-right: 5%;
+                vertical-align: top;
+            }
+            figure:last-child {
+                margin-right: 0;
+            }
         }
     </style>
 </head>
