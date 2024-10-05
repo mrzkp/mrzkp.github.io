@@ -21,6 +21,15 @@
             max-width: 100%; /* Ensures images are responsive */
             height: auto;
         }
+        .gif-container {
+            text-align: center;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -76,10 +85,20 @@
 
     <h3> Part 3 </h3>
 
-    <figure>
-        <img src="part3/morph.gif" alt="Morph Gif" width="500">
-        <figcaption>GIF</figcaption>
-    </figure>
+    <div class="gif-container">
+        <img id="gif" src="part3/morph.gif" alt="GIF" width="500">
 
+        <br>
+        <button onclick="restartGIF()">Repeat</button>
+    </div>
+
+    <script>
+        function restartGIF() {
+            var gif = document.getElementById('gif');
+            var src = gif.src;
+            gif.src = '';
+            gif.src = src;
+        }
+    </script>
 </body>
 </html>
