@@ -4,65 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 3</title>
+    <style>
+        /* Add flexbox to ensure images appear side by side */
+        .image-row {
+            display: flex;
+            justify-content: space-around; /* Distributes images evenly */
+            align-items: center; /* Aligns images vertically */
+            flex-wrap: wrap; /* Ensures they wrap if screen size is too small */
+        }
 
+        .image-row figure {
+            margin: 10px; /* Adds space between the figures */
+        }
+
+        img {
+            max-width: 100%; /* Ensures images are responsive */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
     <h2>Face Morphing Project</h2>
     <h3> Part 1 </h3>
     <p>
         In this portion, we define corresponding points for both images. We use the software provided from the student last year, and we define 64 points.
     </p>
 
-    <p>
-        Below are the two images that I'll be performing face morphing on.
-    </p>
+    <p>Below are the two images that I'll be performing face morphing on.</p>
 
-    <ul>
-        <li>
-            <figure>
-                <img src="part1/adi.jpg" alt="adi" width="450">
-                <figcaption>Aditya (Me)</figcaption>
-            </figure>
-            <figure>
-                <img src="part1/rao.jpg" alt="rao" width = "450">
-                <figcaption>Satish Rao (EECS Professor)</figcaption>
-            </figure>
-        </li>
-    </ul>
+    <div class="image-row">
+        <figure>
+            <img src="part1/adi.jpg" alt="adi" width="450">
+            <figcaption>Aditya (Me)</figcaption>
+        </figure>
+        <figure>
+            <img src="part1/rao.jpg" alt="rao" width="450">
+            <figcaption>Satish Rao (EECS Professor)</figcaption>
+        </figure>
+    </div>
 
-    <p>
-        Below are the vertices and the triangulation of said points results.
-    </p>
+    <p>Below are the vertices and the triangulation of said points results.</p>
 
-    <ul>
-        <li>
-            <figure>
-                <img src="part1/adiPOINTS.jpg" alt="AdityaPoints" width = "450">
-                <figcaption>Triangulation on points on Aditya</figcaption>
-            </figure>
-            <figure>
-                <img src="part1/raoPOINTS.jpg" alt="RaoPoints" width = "450">
-                <figcaption>Triangulation on points on Satish Rao</figcaption>
-            </figure>
-        </li>
-    </ul>
+    <div class="image-row">
+        <figure>
+            <img src="part1/adiPOINTS.jpg" alt="AdityaPoints" width="450">
+            <figcaption>Triangulation on points on Aditya</figcaption>
+        </figure>
+        <figure>
+            <img src="part1/raoPOINTS.jpg" alt="RaoPoints" width="450">
+            <figcaption>Triangulation on points on Satish Rao</figcaption>
+        </figure>
+    </div>
 
     <h3> Part 2 </h3>
+    <p>In this portion, we create the a mid-way face between Rao and I.</p>
 
-    <p> In this portion, we create the a mid-way face between Rao and I.</p>
-    <ul>
-        <li>
-            <figure>
-                <img src="part2/adi.jpg" alt="ADi" width = "450">
-                <figcaption>Aditya</figcaption>
-            </figure>
-            <figure>
-                <img src="part2/rao.jpg" alt="rao" width = "450">
-                <figcaption>Satish Rao</figcaption>
-            </figure>
-            <figure>
-                <img src = "part2/mid.jpg" alt = "MID" width = '450'>
-                <figcaption>Mid-Way Face</figcaption>
-            </figure>
-        </li>
-    </ul>
-</head>
-
+    <div class="image-row">
+        <figure>
+            <img src="part2/adi.jpg" alt="Aditya" width="450">
+            <figcaption>Aditya</figcaption>
+        </figure>
+        <figure>
+            <img src="part2/rao.jpg" alt="Rao" width="450">
+            <figcaption>Satish Rao</figcaption>
+        </figure>
+        <figure>
+            <img src="part2/mid.jpg" alt="Mid-Way Face" width="450">
+            <figcaption>Mid-Way Face</figcaption>
+        </figure>
+    </div>
+</body>
+</html>
