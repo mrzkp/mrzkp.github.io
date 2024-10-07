@@ -86,7 +86,7 @@
     <h3> Part 3 </h3>
 
     <div class="gif-container">
-        <img id="gif" src="part3/morph.gif" alt="GIF" width="500">
+        <img id="gif" src="part3/morph.gif" alt="GIF" width="450">
 
         <br>
         <button onclick="restartGIF()">Repeat</button>
@@ -100,5 +100,77 @@
             gif.src = src;
         }
     </script>
+
+    <h3> Part 4 </h3>
+
+    <p> 
+        For this portion of the project, we compute the average face shape of the FEI Face Database and then (1) warp my 11th grade picture into the average geometry and (2) warp the average face into my 11th grade picture's geometry!
+    </p>
+
+    <p>
+        To start, we showcase the intermediate steps to begin by showcasing the average face and the average geometry of the face.
+    </p>
+
+    <div class="image-row">
+        <figure>
+            <img src="part4/old_adi.png" alt="Aditya" width="450">
+            <figcaption>Older Pic of Aditya</figcaption>
+        </figure>
+        <figure>
+            <img src="part4/avg_face.jpg" alt="Rao" width="450">
+            <figcaption>Avg Face of FEI DB</figcaption>
+        </figure>
+        <figure>
+            <img src="part4/avg_geometry.jpg" alt="Mid-Way Face" width="450">
+            <figcaption>AVG Geometry</figcaption>
+        </figure>
+    </div>
+
+    <p>
+        Now, here is my face warped into the average geometry and the average face warped into your geometry.
+    </p>
+
+    <div class="image-row">
+        <figure>
+            <img src="part4/adi_to_avg.jpg" alt="Aditya" width="450">
+            <figcaption>Older Pic of Aditya to Avg</figcaption>
+        </figure>
+        <figure>
+            <img src="part4/avg_to_adi.jpg" alt="Rao" width="450">
+            <figcaption>Avg Face to Aditya</figcaption>
+        </figure>
+    </div>
+
+    <h3> Part 5 </h3>
+
+    <p> In this portion, we produce a caricature of my face by extrapolating from the population mean from the previous step.</p>
+
+    <p>
+        I calculated p + 1.5(q - p) as the target correspondences, found the extrapolated triangulation, and then I finally warped my face to those targets.
+    </p>
+
+    <div class="image-row"></div>
+        <figure>
+            <img src="part5/0_25.jpg" alt="0.25" width="450">
+            <figcaption>alpha = 0.25</figcaption>
+        </figure>
+        <figure>
+            <img src="part5/avg_to_adi.jpg" alt="0.85" width="450">
+            <figcaption>alpha = 0.85</figcaption>
+        </figure>
+    </div>
+
+    <div class="image-row"></div>
+        <figure>
+            <img src="part5/1_5.jpg" alt="1_5" width="450">
+            <figcaption>alpha = 1.5</figcaption>
+        </figure>
+        <figure>
+            <img src="part5/3.jpg" alt="3" width="450">
+            <figcaption>alpha = 3</figcaption>
+        </figure>
+    </div>
+
+
 </body>
 </html>
