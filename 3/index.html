@@ -103,19 +103,16 @@
 
     <h3> Part 4 </h3>
 
-    <p> 
-        For this portion of the project, we compute the average face shape of the FEI Face Database and then (1) warp my 11th grade picture into the average geometry and (2) warp the average face into my 11th grade picture's geometry!
+    <p>
+        For this portion, we attempt to take the average face of the FEI Face Database and apply the average geometry on other faces!
     </p>
 
     <p>
-        To start, we showcase the intermediate steps to begin by showcasing the average face and the average geometry of the face.
+        To start, we morph some pictures from the FEI database with the average.
     </p>
 
+
     <div class="image-row">
-        <figure>
-            <img src="part4/old_adi.png" alt="Aditya" width="450">
-            <figcaption>Older Pic of Aditya</figcaption>
-        </figure>
         <figure>
             <img src="part4/avg_face.jpg" alt="Rao" width="450">
             <figcaption>Avg Face of FEI DB</figcaption>
@@ -126,11 +123,36 @@
         </figure>
     </div>
 
-    <p>
-        Now, here is my face warped into the average geometry and the average face warped into your geometry.
+    <p> Here are the results:</p>
+
+    <div class="image-row">
+        <figure>
+            <img src="part4/10a_warped.jpg" alt="Rao" width="450">
+            <figcaption>10a Warped</figcaption>
+        </figure>
+        <figure>
+            <img src="part4/15a_warped.jpg" alt="Mid-Way Face" width="450">
+            <figcaption>15a Warped</figcaption>
+        </figure>
+        <figure>
+            <img src="part4/20a_warped.jpg" alt="Mid-Way Face" width="450">
+            <figcaption>20a Warped</figcaption>
+        </figure>
+        <figure>
+            <img src="part4/50a_warped.jpg" alt="Mid-Way Face" width="450">
+            <figcaption>50a Warped</figcaption>
+        </figure>
+    </div>
+
+    <p> 
+        Now, we (1) warp my 11th grade picture into the average geometry and (2) warp the average face into my 11th grade picture's geometry!
     </p>
 
     <div class="image-row">
+        <figure>
+            <img src="part4/old_adi.png" alt="Aditya" width="450">
+            <figcaption>Older Pic of Aditya</figcaption>
+        </figure>
         <figure>
             <img src="part4/adi_to_avg.jpg" alt="Aditya" width="450">
             <figcaption>Older Pic of Aditya to Avg</figcaption>
@@ -171,6 +193,51 @@
         </figure>
     </div>
 
+    <h3> Bells and Whistles </h3>
+
+    <h4> 'something else that is fun in this space' - Auto Correspondence</h4>
+
+    <p>
+        Something that was mildy annoying while going through this project was the fact that I had to manually determine all the points in the images. This was time consuming and there was some backtracking involved when I had to include more points than what I had originally put down. Then, as I was scrolling through some past submissions, I see a student had implemented a "auto correspondence" using some python library. I figured, "why not, that sounds useful". So, here are the results of the auto correspondence feature!
+    </p>
+
+    <div class="image-row"></div>
+        <figure>
+            <img src="part6/notsooldman.png" alt="1_5" width="450">
+            <figcaption>Auto Correspondeces for Adi</figcaption>
+        </figure>
+        <figure>
+            <img src="part6/oldman.png" alt="3" width="450">
+            <figcaption>Auto Correspondences for Rao</figcaption>
+        </figure>
+    </div>
+
+
+    <h4> 'Change age/gender/ethnicity/smile/etc of your (or your friend's) face.' </h4>
+
+    <p> So, I decided to look online ofr the average face of a turkish woman. For reference, I am a Indian man, so I was trying to change ethnicity and gender.</p>
+
+    <p> Below are the results... </p>
+
+    <div class="image-row"></div>
+        <figure>
+            <img src="part6/better_crop.png" alt="1_5" width="450">
+            <figcaption>Original Image of Me.</figcaption>
+        </figure>
+        <figure>
+            <img src="part6/avgturkishwoman.png" alt="3" width="450">
+            <figcaption>Average Turkish Woman</figcaption>
+        </figure>
+        <figure>
+            <img src="part6/adi_to_average_turkish_woman.jpg" alt="3" width="450">
+            <figcaption>Adi to Average Turkish Woman</figcaption>
+        </figure>
+    
+    <p>
+        Although the resulting image is a bit off, I would argue that it is more about my specfic image being a bit 'crooked'. Specifically, my nose is PRETTY crooked in the picture. Furthermore, the focal point are much different for the images. Specifically, my Focal Point is much higher than the average turkish woman's image.
+    </p>
+
+    </div>
 
 </body>
 </html>
