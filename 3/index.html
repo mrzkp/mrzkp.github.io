@@ -104,6 +104,8 @@
         }
     </script>
 
+    <p> Observations: Overall, pretty good morph if I do say so myself. I added a few correspondence points to our shirts, but I think our left sides could have used more points since it looked a bit jarring. Furthermore, a small bunch of our hair seems to be morphing a bit unnaturally near the later end of the gif. However, the morph is overall pretty clean and I am proud of it.</p>
+
     <h3> Part 4 </h3>
 
     <p>
@@ -111,7 +113,7 @@
     </p>
 
     <p>
-        To start, we warp some pictures from the FEI database with the average.
+        To start, we warp some pictures from the FEI database and determine the average face, and the average geometry.
     </p>
 
 
@@ -126,7 +128,7 @@
         </figure>
     </div>
 
-    <p> Here are the results:</p>
+    <p> Now, let's see how some people from the dataset look when they are warped to the average face.</p>
 
     <div class="image-row">
         <figure>
@@ -147,6 +149,20 @@
         </figure>
     </div>
 
+    <p> Pretty good overall considering I did not add too many correspondce points. However, 50a looks very unnatural. I think this is due to that picture being an outlier in terms of positoning, since the original image the person was facing a bit upwards. Also, the person's face is a bit unique.</p>
+
+    <figure>
+        <img src="part4/50a.jpg" alt="Mid-Way Face" width="450">
+        <figcaption>Original 50a</figcaption>
+    </figure>
+
+    <p> For reference, here is 20a looked (the most natural looking transformation of the 4).</p>
+
+    <figure>
+        <img src="part4/20a.jpg" alt="Mid-Way Face" width="450">
+        <figcaption>Original 20a</figcaption>
+    </figure>
+
     <p> 
         Now, we (1) warp my 11th grade picture into the average geometry and (2) warp the average face into my 11th grade picture's geometry!
     </p>
@@ -154,15 +170,15 @@
     <div class="image-row">
         <figure>
             <img src="part4/old_adi.png" alt="Aditya" width="450">
-            <figcaption>Older Pic of Aditya</figcaption>
+            <figcaption>11th Grade Aditya</figcaption>
         </figure>
         <figure>
             <img src="part4/adi_to_avg.jpg" alt="Aditya" width="450">
-            <figcaption>Older Pic of Aditya to Avg</figcaption>
+            <figcaption>11th Grade Aditya to Avg</figcaption>
         </figure>
         <figure>
             <img src="part4/avg_to_adi.jpg" alt="Rao" width="450">
-            <figcaption>Avg Face to Aditya</figcaption>
+            <figcaption>Avg Face to 11th Grade Aditya</figcaption>
         </figure>
     </div>
 
