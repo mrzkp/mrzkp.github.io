@@ -5,20 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 3</title>
     <style>
-        /* Add flexbox to ensure images appear side by side */
         .image-row {
             display: flex;
-            justify-content: space-around; /* Distributes images evenly */
-            align-items: center; /* Aligns images vertically */
-            flex-wrap: wrap; /* Ensures they wrap if screen size is too small */
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .image-row figure {
-            margin: 10px; /* Adds space between the figures */
+            margin: 10px;
         }
 
         img {
-            max-width: 100%; /* Ensures images are responsive */
+            max-width: 100%;
             height: auto;
         }
         .gif-container {
@@ -68,6 +67,8 @@
     <h3> Part 2 </h3>
     <p>In this portion, we create the a mid-way face between Rao and I.</p>
 
+    <p> We accomplish this by transforming the triangles from the tirangulations of each image to their mid-way values. This was done by a Affine Transformation which was computed through a change of basis matrices.</p>
+
     <div class="image-row">
         <figure>
             <img src="part2/adi.jpg" alt="Aditya" width="450">
@@ -84,6 +85,8 @@
     </div>
 
     <h3> Part 3 </h3>
+
+    <p> We do similar steps as from Part 2, but instead we continously warp and cross-diffuse throughout the process. We control the amount of warping and cross-diffusing from 0 to 1, where 0 is my face and 1 is rao's face. Finally, said values are determined by the </p>
 
     <div class="gif-container">
         <img id="gif" src="part3/morph.gif" alt="GIF" width="450">
@@ -108,7 +111,7 @@
     </p>
 
     <p>
-        To start, we morph some pictures from the FEI database with the average.
+        To start, we warp some pictures from the FEI database with the average.
     </p>
 
 
