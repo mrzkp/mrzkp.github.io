@@ -161,6 +161,8 @@
             \end{cases}
             \]
         </p>
+
+        <h4> Which we can finally transform to...</h4>
     
         <p>
             \[
@@ -189,11 +191,12 @@
 
         <p> Thus, given some n amount of correspondence points, we can stack these equations to form a 2n * 9 matrix A. For each correspondence point (x, y) -> (x', y'), we formulate two equations: </p>
 
-        <p>x'(h31x + h32y + h33) = h11x + h12y + h13</p>
-        <p>y'(h31x + h32y + h33) = h21x + h22y + h23</p>
+        <div class = 'centered-text'>
+            <p>x'(h31x + h32y + h33) = h11x + h12y + h13</p>
+            <p>y'(h31x + h32y + h33) = h21x + h22y + h23</p>
+        </div>
 
         <p> These equations are what is used to construct A.</p>
-
         <p> Afterwards, we use SVD on A to solve for AH = b to construct H, which is our homography matrix.</p>
     </body>
 
@@ -204,11 +207,11 @@
 
     <div class="image-row">
         <figure>
-            <img src="rect/rect1_25.jpg" alt="Rezero" width="450">
+            <img src="rect/rect1_25.jpg" alt="Rezero" width="750">
             <figcaption> Picture of Re:Zero Vol 1</figcaption>
         </figure>
         <figure>
-            <img src="rect/rect2_25.jpg" alt="Jojo" width="450">
+            <img src="rect/rect2_25.jpg" alt="Jojo" width="750">
             <figcaption>Picture of JoJo's Part 3 Vol 1</figcaption>
         </figure>
     </div>
