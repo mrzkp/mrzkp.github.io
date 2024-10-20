@@ -6,12 +6,56 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2a9d8f;
+            font-size: 36px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h3, h4 {
+            color: #264653;
+            border-left: 5px solid #2a9d8f;
+            padding-left: 10px;
+            margin-bottom: 15px;
+        }
+        h4 {
+            font-size: 20px;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+        figcaption {
+            color: #555;
+            font-style: italic;
         }
         .image-row {
             display: flex;
             justify-content: space-around;
             align-items: center;
             flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        figure {
+            margin: 20px;
+        }
+        figure img {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        body blockquote {
+            font-size: 18px;
+            color: #e76f51;
+            margin-left: 20px;
+            border-left: 5px solid #e76f51;
+            padding-left: 15px;
+        }
+        .centered-text {
+            text-align: center;
         }
     </style>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -145,8 +189,8 @@
 
         <p> Thus, given some n amount of correspondence points, we can stack these equations to form a 2n * 9 matrix A. For each correspondence point (x, y) -> (x', y'), we formulate two equations: </p>
 
-        x'(h31x + h32y + h33) = h11x + h12y + h13
-        y'(h31x + h32y + h33) = h21x + h22y + h23
+        <p>x'(h31x + h32y + h33) = h11x + h12y + h13</p>
+        <p>y'(h31x + h32y + h33) = h21x + h22y + h23</p>
 
         <p> These equations are what is used to construct A.</p>
 
