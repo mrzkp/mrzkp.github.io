@@ -71,7 +71,31 @@
 
     <h3> Recover Homographies </h3>
 
-    <body> Before we wrap the images into alignment, we must first recover the parameters of the transformation between each pair of images.</body> 
+    <body> Before we wrap the images into alignment, we must first recover the parameters of the transformation between each pair of images.</body>
+
+    <body>
+        <h2>We want to recover a projective transformation such that</h2>
+        <p>
+            \[
+            \begin{bmatrix}
+            a & b & c \\
+            d & e & f \\
+            g & h & 1
+            \end{bmatrix}
+            \begin{bmatrix}
+            x \\
+            y \\
+            1
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+            wx' \\
+            wy' \\
+            w
+            \end{bmatrix}
+            \]
+        </p>
+    </body>
 
 
     <h3> Warping Images </h3>
@@ -86,6 +110,8 @@
             <figcaption>Standard Example - Mosaic of Counter</figcaption>
         </figure>
     </div>
+
+    <body> Don't get tricked by bottom left! The shadow of the chair was naturally 'off-looking'... =]</body>
 
     <div style="text-align: center;">
         <figure>
@@ -110,7 +136,7 @@
     <div style="text-align: center;">
         <figure>
             <img src="mosaics/garden_test.jpg" alt ="Garden mosaic" width = "750">
-            <figcaption>Simple Example - Mosaic of a Garden</figcaption>
+            <figcaption>Extreme Example - Mosaic of a Garden</figcaption>
         </figure>
     </div>
 
