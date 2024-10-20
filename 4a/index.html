@@ -203,7 +203,38 @@
 
     <h3> Warping Images </h3>
 
-    <p> For warping </p>
+    <p> For warping, we take our Homography matrix H, and inverse it to an adjusted cordiante plane and warped points. This essentially maps out points in the warped image to the original image that we are attaching the warp to.</p>
+
+    <p> Below are the correspondence points for the 'Counter' Images that I used.</p>
+
+    <div class="image-row">
+        <figure>
+            <img src="warp/warp.png" alt="correspondence1" width="450">
+            <figcaption>Correspondences on Counter 1</figcaption>
+        </figure>
+        <figure>
+            <img src="warp/warp2.png" alt="correspondence2" width="450">
+            <figcaption>Correspondences on Counter 2</figcaption>
+        </figure>
+    </div>
+
+    <p> Afterwards, we can apply warp either Counter 1 to Counter 2, or vice versa. Shown below are both results!</p>
+
+    <div class="image-row">
+        <figure>
+            <img src="warp/warped1.jpg" alt="warped1" width="450">
+            <figcaption>Counter 1 Warped to Counter 2</figcaption>
+        </figure>
+        <figure>
+            <img src="warp/warped2.jpg" alt="warped2" width="450">
+            <figcaption>Counter 2 Warped to Counter 1</figcaption>
+        </figure>
+    </div>
+
+    <p> NOTE: Warping the same image to itself results in the same image! A good sanity check to ensure you warp function isn't doing something crazy...</p>
+
+
+    <p> Given that we are able to warp our images, we can rectify specfic objects in an image! Essentially we take a irregular quadilateral and can turn it into a regular rectangle. This can be done by selecting the correspondence points soley around the corners around the area of desire and choosing the second set of points as the corners of the image.</p>
 
     <p> Below are two examples of image rectification on some books that I enjoyed reading!</p>
 
@@ -233,8 +264,11 @@
 
     <h3> Blending Images to Create Mosaics</h3>
 
-    <body> Here we showcase two standard examples, one simple example, and one more extreme example of mosiacs created from the pictures. </body>
+    <p> Finally, using our warping function, we can construct a mosaic between warped and original images (even warped to warped images if you really want).</p>
 
+    <body> The process goes as follows... Compute Homography Matrix H between correspondence points from both images and choose either image (in our case, the first one, even both work). Given this image and H, we then apply our warping. During our warping process, I also specifically constructed output based on the warped image to help in creating the width and height of the final mosaic, as well as accomodating for any translatons. Afterwards, we place the warped image on the left and the unaltered second image on the right. Finally, to ensure clean results, we apply some blending techniques from Project 2. The only difference is, we have to accomodate for an irregular mask here. We can construct one by creating binary masks of both images on where there are pixels located and computing the distance transform on each of these masks to create weights for each image. The lowest frequency component is then blended using weights computed from distance transfoms. For the higher frequency, we use a binary to select between the two images based on which is closer at each pixel. </body>
+    
+    <body> Here we showcase two standard examples, one simple example, and one more extreme example of mosiacs created from the pictures. </body>
 
     <div class="image-row">
         <figure>
@@ -317,5 +351,8 @@
     </div>
 
     <body> This is more extreme since the angle of the pictures had been shifted from one to the other, hence the extreme tilt in the warped image compared to the non-warped image.</body>
+
+
+    
 </body>
 </html>
