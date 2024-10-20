@@ -117,7 +117,7 @@
         </figure>
     </div>
 
-    <h3> Recover Homographies </h3>
+    <h2> Recover Homographies </h2>
 
     <body> Before we wrap the images into alignment, we must first recover the parameters of the transformation between each pair of images.</body>
 
@@ -204,7 +204,7 @@
     </body>
 
 
-    <h3> Warping Images </h3>
+    <h2> Warping Images </h2>
 
     <p> For warping, we take our Homography matrix H, and inverse it to an adjusted cordiante plane and warped points. This essentially maps out points in the warped image to the original image that we are attaching the warp to.</p>
 
@@ -236,7 +236,7 @@
 
     <p> NOTE: Warping the same image to itself results in the same image! A good sanity check to ensure you warp function isn't doing something crazy...</p>
 
-    <h3> Image Rectification</h3>
+    <h2> Image Rectification</h2>
 
     <p> Given that we are able to warp our images, we can rectify specfic objects in an image! Essentially we take a irregular quadilateral and can turn it into a regular rectangle. This can be done by selecting the correspondence points soley around the corners around the area of desire and choosing the second set of points as the corners of the image.</p>
 
