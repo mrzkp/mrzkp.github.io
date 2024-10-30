@@ -412,7 +412,7 @@
     </p>
 
     <p>
-        For each image, we iterate through each feature of the image and match it to whatever is the best matching feature of the other image. We utilize KDTrees for this for efficent querying.
+        For each image, we iterate through each feature of the image and match it to whatever is the best matching feature of the other image. We utilize KDTrees for this for efficient querying.
     </p>
 
     <p>
@@ -436,7 +436,7 @@
 
     <p> We randomly select 4 pairs of points, then we compute the homography matrix given these points. During this process, we construct a list of inliners frmo this homography matrix.</p>
 
-    <p> For each point in an image, we determine the other images warped position by using the hompgrahpy. Then, using the literal position of the point of the other image and determine if the distance between the estimated point from the homography matrix and the original point vs the actual point from the other image is less than some error (this is to ensure robustness). If it is the case, then we add it to the list of inliners. </p>
+    <p> For each point in an image, we determine the other images warped position by using the homography. Then, using the literal position of the point of the other image and determine if the distance between the estimated point from the homography matrix and the original point vs the actual point from the other image is less than some error (this is to ensure robustness). If it is the case, then we add it to the list of inliners. </p>
 
     <p> After some predetermined amount of iterations (500 in my case), we use the homography that constructed the most amount of inliners. </p>
 
@@ -486,7 +486,9 @@
 
     <p> Give or take the automated selection of points does a reasonably good job compared to when I was manually clicking. If you include the actual effort that went into clicking all those points, I'd say these results are very successful!</p>
 
-    
+    <h3> What I've learned! </h3>
+
+    <p> Learning how to filter out harris corner detection and make the outputs more robust is DEFINIETLY something that I'll be using for my future work. In hindsight, probably the most useful content that I have seen (at least from what I can tell).</p>
 
 </body>
 </html>
