@@ -357,6 +357,136 @@
     <body> This is more extreme since the angle of the pictures had been shifted from one to the other, hence the extreme tilt in the warped image compared to the non-warped image.</body>
 
 
+    <h1> PART B </h1>
+
+    <p> Alright, now we start the next portion of the project!. Previously, we had to select points in the images that we could use as correspondence points manually. This task was a pretty big hassle and DID NOT build any character =[. So, for this section, we'll be automating this process! </p>
+
+    <p> Before we start, we utilized another set of images for testing. </p>
+    <div class="image-row">
+        <figure>
+            <img src="images/kitch1_25.jpg" alt="kitchen1" width="450">
+            <figcaption>Picture of a Messy Kitchen.</figcaption>
+        </figure>
+        <figure>
+            <img src="images/kitch2_25.jpg" alt="kitchen2" width="450">
+            <figcaption>Anotehr picture of a messy kitchen.</figcaption>
+        </figure>
+    </div>
+
+
+    <p> How we'll be accomplishing this is by the following: (1) Detecting corners from an image. (2) Extracting feature descriptiors from the images given the corners. (3) Matching these descriptors to the images. (4) Using Ransac to compute a homography. (5) Using what we built in Part 4a to warp the images together.</p>
+
+
+    <h2> Detecting Corner Features in an Image </h2>
+
+    <p> Below is the naive Harris Detection Code that was provided as you can see on the left. On the right, we implemented AMNS to select the points. I believe my AMNS looks better than other people simply due to the high amount of points that are available in the image, and how well-defined the corners are. For reference, there are 500 points on the right that are outputted. </p>
+
+    <div style="text-align: center;">
+        <figure>
+            <img src="corner/anms_out.png" alt ="ANMS" width = "750">
+            <figcaption>ANMS over Picture of Messy Kitchen</figcaption>
+        </figure>
+    </div>
+
+    <p> To accomplish this, we implement the Adaptive Non-Maximal Suppression (ANMS) process. First, we sort the corner points based on their Harris response strength. For each corner point <em>xi</em>, we find all points that have a strength greater than 0.9 times the response strength of <em>xi</em>. This helps us identify stronger points in the vicinity. Next, we calculate the minimum distance from <em>xi</em> to these stronger points, which we designate as the point's "suppression radius." Finally, we select the top 500 points with the largest suppression radii.</p>
+
+    <h2> Extracting a Feature Descriptor for each Feature Point. </h2>
+
+    <p> From the ANMS points, we iterate through each one and extract a square patch of size (40x40). To ensure noise doesn't play an effect, we apply a Gaus Blur.</p>
+
+    <p> For each of the patches, we can resize it to a 8x8 descriptor. Finally we vectorize and normalize it.</p>
+
+    <div style="text-align: center;">
+        <figure>
+            <img src="corner/features_out.png" alt ="Features " width = "750">
+            <figcaption>Some Descriptors of the feature points from the previous ANMS out.</figcaption>
+        </figure>
+    </div>
+
+    <p> We do this because even though we have these points, we want to gain some 'feature' from them for matching, which is the next section!</p>
+
+    <h2> Feature Matching </h2>
+
+    <p>
+        Afterwards, we can now use these descriptors to start matching features with one another, which we can use to create correspondences. This means we'll be repeating the above process twice.
+    </p>
+
+    <p>
+        For each image, we iterate through each feature of the image and match it to whatever is the best matching feature of the other image. We utilize KDTrees for this for efficent querying.
+    </p>
+
+    <p>
+        Afterwards, we ensure that a match in one direction is also the best match in the other direction. If not, then we do not include it.
+    </p>
+
+    <p> To ensure highest quality, we also utilzed Lowe's ratio test, which we used to compared the closest and second-closest feature matches. If it is the case that these distances are too close to one another, then we consider teh match unreliable.</p>
+
+    <p> Below are the results of doing the outlined steps. </p>
+
+    <div style="text-align: center;">
+        <figure>
+            <img src="corner/matches.png" alt ="Matches " width = "750">
+            <figcaption>Matches between two images of my messy Kitchen.</figcaption>
+        </figure>
+    </div>
+
+    <h2> RANSAC </h2>
+
+    <p> Some matches can be misleading, hence why we utilize RANSAC to further reduce the number of outliers, since outliers can greatly change the output.</p>
+
+    <p> We randomly select 4 pairs of points, then we compute the homography matrix given these points. During this process, we construct a list of inliners frmo this homography matrix.</p>
+
+    <p> For each point in an image, we determine the other images warped position by using the hompgrahpy. Then, using the literal position of the point of the other image and determine if the distance between the estimated point from the homography matrix and the original point vs the actual point from the other image is less than some error (this is to ensure robustness). If it is the case, then we add it to the list of inliners. </p>
+
+    <p> After some predetermined amount of iterations (500 in my case), we use the homography that constructed the most amount of inliners. </p>
+
+    <p>
+        Below are some of my results:
+    </p>
+
+    <div style="text-align: center;">
+        <figure>
+            <img src="corner/kitch_test.jpg" alt ="KITCHEN Mosiac " width = "750">
+            <figcaption>Mosaic of Kitchen.</figcaption>
+        </figure>
+    </div>
+
+    <div class="image-row">
+        <figure>
+            <img src="corner/C_final.jpg" alt="counter1" width="450">
+            <figcaption>Original Mosaic from Manual clicking</figcaption>
+        </figure>
+        <figure>
+            <img src="corner/C5_test.jpg" alt="counter2" width="450">
+            <figcaption>New Mosaic </figcaption>
+        </figure>
+    </div>
+
+    <div class="image-row">
+        <figure>
+            <img src="corner/C_final.jpg" alt="counter1" width="500">
+            <figcaption>Original Mosaic from Manual clicking for Counter</figcaption>
+        </figure>
+        <figure>
+            <img src="corner/C5_test.jpg" alt="counter2" width="500">
+            <figcaption>New Mosaic for Counter </figcaption>
+        </figure>
+    </div>
+
+    <div class="image-row">
+        <figure>
+            <img src="corner/FSM_final.jpg" alt="FSM1" width="500">
+            <figcaption>Original Mosaic from Manual clicking for FSM</figcaption>
+        </figure>
+        <figure>
+            <img src="corner/fsm1_test.jpg" alt="FSM2" width="500">
+            <figcaption>New Mosaic for FSM.</figcaption>
+        </figure>
+    </div>
+
+    <p> Give or take the automated selection of points does a reasonably good job compared to when I was manually clicking. If you include the actual effort that went into clicking all those points, I'd say these results are very successful!</p>
+
+    
 
 </body>
 </html>
