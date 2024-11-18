@@ -5,6 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 1</title>
     <style>
+
+       .center-container {
+            text-align: center;
+        }
+
+        .github-button  {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: rgb(74, 114, 173);
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .github-button.left {
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .github-button.right {
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .github-button:hover {
+            background-color: rgb(161, 31, 31);
+        }
         ul {
             display: table; 
             margin: 0 auto;
@@ -63,6 +99,17 @@
             margin: 20px 0;
             font-weight: bold;
         }
+
+        h1 {
+            font-family: 'Great Vibes', cursive; /* Fancy cursive font */
+            font-size: 3em;
+            color: #333;
+        }
+        .byline {
+            font-size: 1.2em;
+            color: rgb(0, 0, 0);
+            text-align: center;
+        }
     </style>
 
     <!-- MathJax -->
@@ -79,17 +126,35 @@
 
 
 
-
-
 <body>
-    <div class="title">EE290 Final Project</div>
+    <div class="title">BEAMS</div>
+    <p class="byline">Beamforming and Enhanced Algorithms for MmWave Systems</p>
+    <p class="byline">EE290-010 Final Project by Aditya Tummala and Arjun Damerla, Professor Parekh</p>
     <h3 style="font-weight: normal; font-size: 1.5em;">Table of Contents</h3>
     <ul class="toc">
         <li><a href="#overview">Overview of Project</a></li>
         <li><a href="#data-generation">Data Generation</a></li>
         <li><a href="#SVM">Why not use a normal SVM?</a></li>
         <li><a href="#NN">Naive NN</a></li>
+        <li><a href="#results">Training Results</a></li>
+        <li><a href="#final">Final Thoughts and Future Modifications</a></li>
     </ul>
+
+    &nbsp;
+<!-- 
+    <div class="center-container">
+        <a href="https://github.com/ShonenMind/EE290-Final-Project" class="github-button left" target="_blank">
+            Click Here for GitHub
+        </a>
+    </div>
+
+    &nbsp;
+
+    <div class="center-container">
+        <a href="https://docs.google.com/presentation/d/1ubH-FBG0ocIo_t4kei2dvTSBeOPlsx90s2gPVIWXNe8/edit#slide=id.g317f763dc2b_0_55" class="github-button right" target="_blank">
+            Click Here for Slides
+        </a>
+    </div> -->
 
     <h4>Project Inspiration: <a href="https://ieeexplore.ieee.org/document/9024543" target="_blank">https://ieeexplore.ieee.org/document/9024543</a></h4>
 
@@ -216,7 +281,7 @@
       This meant curating a large dataset that followed a HPPP. Here are the system parameters:
 
       <ul>
-        <li>$\lambda_S = 1 \cdot 10^{-4}m^{-2}$: The density of our homogenous Poisson point process.</li>
+        <li>$\lambda_S = 1 \cdot 10^{-4}m^{-2}$: The density of our Heterogeneous Poisson point process.</li>
         <li>$P_S = 20$ dBm: The maximum SPS power.</li>
         <li>$L = 2$: The number of propagation paths.</li>
         <li>$N_{MT} = 2$: The number of MT antennas.</li>
@@ -239,7 +304,7 @@
 
     <p style="text-align: center">$s_{\mathrm{S}\mathrm{B}\mathrm{S},k} = c_{S, k}d_{S, k}, \text{where } c_{S, k} \in \mathbb{C}^{N_{\mathrm{S}\mathrm{B}\mathrm{S}}\times 1}$</p>
 
-    <p> where $c_{S, k}$ is the $k$th SBS's analog beam (which directly points to the MT through the use of phase shifters). Our channel propagation for the $k$th SBS is actually based on the <a href="https://telcomatraining.com/what-is-sv-saleh-valenzuela/" target="_blank">Saleh-Valenzudela model</a>, a narrow band clustered channel model:</p>
+    <p> where $c_{S, k}$ is the $k$th SBS's analog beam (which directly points to the MT through the use of phase shifters). Our channel propagation for the $k$th SBS is actually based on the <a href="https://telcomatraining.com/what-is-sv-saleh-valenzuela/" target="_blank">Saleh-Valenzuela model</a>, a narrow band clustered channel model:</p>
 
     <p style="text-align: center">$\mathrm{H}_{\mathrm{S},k}=\gamma\sum_{l=1}^{L}\alpha_{\mathrm{S},k,l}\mathrm{a}_{\mathrm{M}\mathrm{T}}(\phi_{\mathrm{M}\mathrm{T},k,l})[\mathrm{a}_{\mathrm{S},k}(\emptyset \mathrm{s},k,l)]^{H}$</p>
 
@@ -355,7 +420,7 @@
 
   <p>If we were to use a traditional SVM, then we'd end up using $N_C$ separate classifiers in order to find hyperplanes that can cleanly separate our data. However, our data can be <b>incredibly imbalanced</b> (such as some beams having much fewer samples than other beams), which can introduce heavy bias and inaccurate predictions.</p>
 
-  <p>Therefore, by using a <b>data-driven iterative SVM classifier</b>, we can better address the issue of imbalanced data and ensure better prediction accuracy for analog beam selection.</p> Specifically, we can perform resampling/reweighting with our samples deploy a more iterative process with each learning step to improve refinement.
+  <p>Therefore, by using a <b>data-driven iterative SVM classifier</b>, we can better address the issue of imbalanced data and ensure better prediction accuracy for analog beam selection.</p> Specifically, we can perform resampling/reweighting with our samples to deploy a more iterative process with each learning step to improve refinement.
 
   <h2 id="SMV Classifier">Data-Driven Iterative SVM classifier</h2>
 
@@ -467,8 +532,8 @@
     </li>
 </ul>
 
-  <h2>Training History</h2>
-  <p>Below are the training histories for different NN complexities:</p>
+  <h2 id="results"> Training Results</h2>
+  <p>Below are the training histories for the different NN complexities, the normal SVM classifier, and Data-Driven Iterative SVM classifier:</p>
   
   <div style="text-align: center;">
       <figure>
@@ -481,7 +546,28 @@
           <img src="training_history_advanced.png" alt="Advanced Training History" style="max-width: 100%; height: auto;">
           <figcaption>Figure 2: Training History for the Advanced NN (Best Acc: 90.89%)</figcaption>
       </figure>
+
+    <div style="text-align: center;">
+        <figure>
+            <img src="svm_regular_graphs.png" alt="Training History" style="max-width: 100%; height: auto;">
+            <figcaption>Figure 3: Training History for the normal SVM classifier (Best Acc: 91.18%)</figcaption>
+        </figure>
+
+
+        <figure>
+            <img src="svm_good_graphs.png" alt="Advanced Training History" style="max-width: 100%; height: auto;">
+            <figcaption>Figure 4: Training History for the Data-Driven Iterative SVM classifier (Best Acc: 94.01%)</figcaption>
+        </figure>
   </div>
+
+  <h2 id="final"> Final Thoughts and Future Modifications</h2>
+
+  <p style="text-align: left">From the data, we see that the iterative data-driven SVM classifier with SMO had the best accuracy. Furthermore, this version would scale the best out of the four, as the iterative nature of this implementation allows for more candidate vectors to be added to the network (via a HPPP distribution) without the runtime scaling up exponentially. Our normal SVM implementation, since it uses the "one-to-one" approach, will increase dramatically in runtime with every new candidate vector that gets added.</p>
+
+  <p style="text-align: left">However, one of the main hurdles in our project was generating data that stayed true to the data used in the original paper. We went through many different types of datasets before we finally landed on a script that gave us the most accurate dataset (relative to the paper's dataset). It would've been very helpful if the paper provided the dataset they used for their own simulations.</p>
+  <p style = "text-align: left">In terms of future improvements, one idea we could implement is PCA, as this would help reduce the dimenionality problem (there are many features that need be juggled when running these models), and thereby reducing runtime while still keeping accuracy relatively high. </p>
+  <p style = "text-align: left">Furthermore, the paper had many more than just one mobile terminal, resulting in a more realistic network in terms of concurrent transmission. While we attempted to have multiple MT, this dramatically increased runtime, making our models unusable. If we were to get a hold on more sophisticated GPU's for faster computing, we could implement our models to house multiple MT's.</p>
+
   
 
 </html>
