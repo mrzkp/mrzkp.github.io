@@ -5,44 +5,138 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Gallery</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-        }
-        section {
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #333;
-        }
-        img {
-            margin: 5px;
-            max-width: 200px;
-            height: auto;
-        }
-        .large-image {
-          width: 5000px;
+      body {
+          font-family: Arial, sans-serif;
+          line-height: 1.6;
+          margin: 0;
+          padding: 0;
+          background-color: #f9f9f9;
+          color: #333;
+      }
+
+      h1, h2, h3, h4 {
+          color: #222;
+          margin-bottom: 10px;
+      }
+
+      h1 {
+          text-align: center;
+          padding: 20px 0;
+          background-color: #4CAF50;
+          color: #fff;
+      }
+
+      section {
+          margin: 20px auto;
+          padding: 20px;
+          max-width: 900px;
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      p {
+          margin-bottom: 15px;
+      }
+
+      img {
+          display: inline-block;
+          margin: 10px;
+          max-width: 100%;
           height: auto;
-    }
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .large-image {
+          max-width: 100%;
+          height: auto;
+          margin: 20px 0;
+      }
+
+      #1-1 img, #1-2 img, #1-3 img {
+          max-width: 30%;
+          display: inline-block;
+      }
+
+      h2 {
+          border-bottom: 2px solid #4CAF50;
+          padding-bottom: 5px;
+      }
+
+      h3 {
+          font-size: 1.5em;
+          margin-top: 30px;
+      }
+
+      h4 {
+          font-size: 1.2em;
+          margin-top: 20px;
+      }
+
+      code, pre {
+          background: #f4f4f4;
+          padding: 5px;
+          border-radius: 4px;
+          font-family: 'Courier New', Courier, monospace;
+          display: block;
+          margin: 10px 0;
+      }
+
+      img[src$=".gif"] {
+          display: block;
+          margin: 20px auto;
+          border: 2px solid #ddd;
+          padding: 5px;
+          background: #fff;
+          border-radius: 10px;
+      }
+
+      #1-1 img, #1-2 img, #1-3 img {
+          display: inline-block;
+          margin: 10px;
+          max-width: 30%;
+          height: auto;
+      }
+
+      #1-4 img, #1-5 img, #1-6 img, #1-7 img {
+          display: inline-block;
+          margin: 10px;
+          max-width: 40%;
+          height: auto;
+      }
+
+      #1-74 img, #1-8 img {
+          display: block;
+          margin: 10px auto;
+          max-width: 50%;
+      }
+
+      footer {
+          text-align: center;
+          padding: 10px;
+          margin-top: 20px;
+          background-color: #4CAF50;
+          color: white;
+      }
+
     </style>
 </head>
 <body>
   <h1> Project 5A</h1>
-  <p> NOTE: Apogloies for small screenshots, I tried to make small screenshots bigger with css, but couldnt...</p>
+  <p> NOTE: Apogloies for any small screenshots.</p>
   <p> In this project, we will implement and deploy diffusion models for image generation</p>
   <h4> Part 1.1</h4>
   <p> In part A, we will play around with diffusion models, implement diffusion sampling loops, and use them for other tasks such as inpainting and creating optical illusions</p>
-
+  <p> We will write "sampling loops" that use the pretrained DeepFloyd denoisers. The hope is to produce high quality images.</p>
   <section id="1-1">
-    <h2>Section 1-1</h2>
-  <p> We will write your own "sampling loops" that use the pretrained DeepFloyd denoisers. The hope is to produce high quality images.</p>
+    <h2>Section 1.1</h2>
 
   <img src = 'partA/EQ1.png'>
 
   <p> First, we implement these equations (which are equivalent) to add noise to an image. This is otherwise known as the forward process.</p>
 
   <p> Here are test image at noise level [250, 500, 750].</p>
-    <!-- Section for 1-1 -->
 
         <img src="partA/1-1.png" alt="1-1">
         <img src="partA/1-1-2.png" alt="1-1-2">
@@ -51,12 +145,10 @@
 
     <section id="1-2">
       <h2>Section 1-2</h2>
-    <p> Let's try to denoise these images using classical methods. Again, take noisy images for timesteps [250, 500, 750], but use Gaussian blur filtering to try to remove the noise. Getting good results should be quite difficult, if not impossible.</p>
-
-    <!-- Section for 1-2 -->
+    <p> Here, we take noisy images for timesteps [250, 500, 750], but use Gaussian blur filtering to try to remove the noise.</p>
 
         <img src="partA/1-2.png" alt="1-2">
-
+<p> As you can see, it's not that effective.</p>
     </section>
 
     <section id="1-3">
@@ -68,21 +160,19 @@
       <p> We do the following for this section: </p>
   
       <p>For the 3 noisy images from 1.2 (t = [250, 500, 750]):
-        * Using the UNet, denoise the image by estimating the noise.
-        * Estimate the noise in the new noisy image
-        * Remove the noise from the noisy image to obtain an estimate of the original image.
-        * Visualize the original image, the noisy image, and the estimate of the original image</p>
+        (1) Using the UNet, denoise the image by estimating the noise.
+        (2) Estimate the noise in the new noisy image
+        (3) Remove the noise from the noisy image to obtain an estimate of the original image.
+        (4) Visualize the original image, the noisy image, and the estimate of the original image</p>
       </p>
 
       <p> Furthermore, I scaled the noise according to specific coefficients associated with each timestep. This process involves dividing the noisy image by the estimated noise at each step, adjusting for each image's noise level to maximize clarity.</p><p></p>
 
       <p> Below are the results. </p>
 
-    <!-- Section for 1-3 -->
         <img src="partA/1-3.png" alt="1-3" class="large-image">
     </section>
 
-    <!-- Section for 1-4 -->
     <section id="1-4">
         <h2>Section 1-4</h2>
 
@@ -92,6 +182,8 @@
         <p> where: </p>
         <img src = "partA/EQ3.png">
 
+        <p> We will implement iterative denoising!</p>
+
         <p> Unlike a single-step approach, iterative denoising gradually reconstructs the image by removing noise over multiple steps, producing finer details and better image quality, especially for heavily degraded images. At each step, noise is incrementally removed based on specific calculations involving noise scaling coefficients, which balance the levels of signal and noise at each stage</p>
         <p> Iterative denoising recreates the image via removing itertativly noise. At each step, noise is incrementally removed based off specific calculations using noise scaling coefficinets, which help balance levels of signal and noise at every stage.</p>
 
@@ -99,7 +191,6 @@
         <img src="partA/1-4-2.png" alt="1-4-2" width="300" height="200">
     </section>
 
-    <!-- Section for 1-5 -->
     <section id="1-5">
         <h2>Section 1-5</h2>
         <p> In part 1.4, we use the diffusion model to denoise an image. Another thing we can do with the iterative_denoise function is to generate images from scratch</p>
@@ -110,7 +201,7 @@
         <img src="partA/1-5.png" alt="1-5">
     </section>
 
-    <!-- Section for 1-6 -->
+
     <section id="1-6">
         <h2>Section 1-6</h2>
 
@@ -124,7 +215,6 @@
         <img src="partA/1-6.png" alt="1-6">
     </section>
 
-        <!-- Section for 1-71 -->
         <section id="1-71">
           <h2>Section 1-7</h2>
           <p> In part 1.4, we take a real image, add noise to it, and then denoise. This effectively allows us to make edits to existing images. The more noise we add, the larger the edit will be. This works because in order to denoise an image, the diffusion model must to some extent "hallucinate" new things -- the model has to be "creative." Another way to think about it is that the denoising process "forces" a noisy image back onto the manifold of natural images.
@@ -134,16 +224,20 @@
           
             <p> We start by running the forward process to the original image. The noise varies across predefined noise levels of [1, 3, 5, 7, 10, 20]. Afterwards, we apply the CFG based iterative denoising. Below are the results.</p>
 
-            <P> Once again, we are starting from a "high quality photo".</P>
+            <P> Once again, we are starting from a "high quality photo".  Our first result is of the Campinelle</P>
+
           <img src="partA/1-71-1.png" alt="1-71-1">
           <img src="partA/1-71-2.png" alt="1-71-2">
+
+          <p> Our second image is of a Duck.</p>
           <img src="partA/1-71-3.png" alt="1-71-3">
           <img src="partA/1-71-4.png" alt="1-71-4">
+
+          <p> And our third is a porshe.</p>
           <img src="partA/1-71-5.png" alt="1-71-5">
           <img src="partA/1-71-6.png" alt="1-71-6">
       </section>
   
-      <!-- Section for 1-72 -->
       <section id="1-72">
           <h2>Section 1.7.1</h2>
 
@@ -153,7 +247,6 @@
           <img src="partA/1-72-3.png" alt="1-72-3">
       </section>
   
-      <!-- Section for 1-73 -->
       <section id="1-73">
           <h2>Section 1-7.2</h2>
 
@@ -166,30 +259,33 @@
 
             <p> Essentially, we leave everything inside the edit mask alone, but we replace everything outside the edit mask with our original image — with the correct amount of noise added for timestep t.
             </p>
+            <p> Our first result is of the Campinelle</p>
           <img src="partA/1-73-1.png" alt="1-73-1">
           <img src="partA/1-73-2.png" alt="1-73-2">
+          <p> Below is a Porshe!</p>
           <img src="partA/1-73-3.png" alt="1-73-3">
           <img src="partA/1-73-4.png" alt="1-73-4">
+          <p> And here is spongebob</p>
           <img src="partA/1-73-5.png" alt="1-73-5">
           <img src="partA/1-73-6.png" alt="1-73-6">
       </section>
 
-    <!-- Section for 1-74 -->
     <section id="1-74">
       <h2>Section 1-7.3</h2>
 
       <p> Now, instead of starting with a random high-quality image, we can also start with a text of our choosing!</p>
 
-      <p> below are the results: </p>
+      <p> below are the results. We start with 'a rocketship'</p>
       <img src="partA/1-74-1.png" alt="1-74-1">
       <img src="partA/1-74-2.png" alt="1-74-2">
+      <p> Followed with 'a forest'</p>
       <img src="partA/1-74-3.png" alt="1-74-3">
       <img src="partA/1-74-4.png" alt="1-74-4">
+      <p> and we end with 'a pencil'!</p>      
       <img src="partA/1-74-5.png" alt="1-74-5">
       <img src="partA/1-74-6.png" alt="1-74-6">
   </section>
 
-    <!-- Section for 1-8 -->
     <section id="1-8">
         <h2>Section 1-8</h2>
 
@@ -205,14 +301,17 @@
         <p>e2 = flip(UNet(flip(x_t), t, p2))</p>
         <p>e = (e1 + e2) / 2 </p>
 
-        <p> where UNet is the diffusion model UNet from before, flip(·) is a function that flips the image, and p1 and p2 are two different text prompt embeddings. And our final noise estimate is e. Please implement the above algorithm and show an example of an illusion.
+        <p> where UNet is the diffusion model UNet from before, flip(·) is a function that flips the image, and p1 and p2 are two different text prompt embeddings. And our final noise estimate is e.
         </p>
+
+        <p> First is the old man to people around a campfire.</p>
         <img src="partA/1-8-1.png" alt="1-8-1">
+        <p> Followed with a man with a hat to a village in the mountains.</p>
         <img src="partA/1-8-2.png" alt="1-8-2">
+        <p> Finally, we end with waterfall in village to old man with beard. </p>
         <img src="partA/1-8-3.png" alt="1-8-3">
     </section>
 
-    <!-- Section for 1-9 -->
     <section id="1-9">
         <h2>Section 1-9</h2>
 
@@ -226,61 +325,94 @@
           </p>
 
           <p> where UNet is the diffusion model UNet, f_lowpass is a low pass function, f_highpass is a high pass function, and p1 and p2 are two different text prompt embeddings. Our final noise estimate is e.</p>
+
+          <p> We start with a skull and a waterfall.</p>
         <img src="partA/1-9-1.png" alt="1-9-1">
+        <p> Followed with a hamburger and a village in the mountains.</p>
         <img src="partA/1-9-2.png" alt="1-9-2">
+        <p> Finally, we end with a pencil and a bird</p>
         <img src="partA/1-9-3.png" alt="1-9-3">
     </section>
-    <h1> Project 5B</h1>
 
-    <p> In this potion, we will train your own diffusion model on MNIST
-    </p>
+    <h1>Project 5B</h1>
+    <p>In this portion, we will train our own diffusion model on MNIST</p>
 
-    <h3> Part 1.1 </h3>
+    <section id="b-1-1">
+        <h2>Section 1.1</h2>
+        <p>We train a UNet to remove Gaussian noise from images. The UNet architecture is good for this task due to its ability to capture both local and global features through its encoder-decoder structure with skip connections. The implementation starts by defining the fundamental components of the UNet model.</p>
+        <img src="partB/1.png">
+        <p>We mainly follow this scheme, where the blocks are defined as follows</p>
+        <img src="partB/2.png">
+        <p>For our UNet architecture, we use convolutional layers with GELU activation functions in the encoder for downsampling and transposed convolutions in the decoder for upsampling. We also include skip connections between encoder and decoder layers.
+        The model was trained using MSE loss on image pairs and optimized via Adam optimizer.</p>
+    </section>
 
-    <p> We train a UNet to remove Gaussian noise from images. The UNet architecture is good for this task due to its ability to capture both local and global features through its encoder-decoder structure with skip connections. The implementation starts by defining the fundamental components of the UNet model.</p>
+    <section id="b-1-2">
+        <h2>Section 1.2</h2>
+        <p>Below is a visualization of the different noising processes over varying sigma values of [0, 0.2, 0.4, 0.5, 0.6, 0.8, 1]</p>
+        <img src="partB/noisy.png">
+    </section>
 
-    <img src="partB/1.png">
-    <p> We mainly follow this scheme, where the blocks are defined as follows</p>
+    <section id="b-1-2-1">
+        <h2>Section 1.2.1</h2>
+        <p>We set the sigma value to 0.5 during training and dynamically add image batches using a batch size of 256 for 5 epochs. We set the learning rate of 1e-4. Other than that, we follow standard ML paradigms on training NNs.</p>
+        <p>And here is the loss over steps during training.</p>
+        <img src="partB/T1.png">
+        <p>Furthermore, here are the denoised results at the first and fifth epoch.</p>
+        <img src='partB/E1.png'>
+        <img src='partB/E2.png'>
+    </section>
 
-    <img src="partB/2.png">
+    <section id="b-1-2-2">
+        <h2>Section 1.2.2</h2>
+        <p>Our denoiser was trained on a sigma val of 0.5. Here are the results when being tested on a varying amount of noise.</p>
+        <img src='partB/VaryingNoise.png'>
+    </section>
 
-    <p> Below is us adding noise to the image: </p>
+    <section id="b-2-1-2">
+        <h2>Section 2.1 and 2.2</h2>
+        <p>For the next section, we focus on training a time-conditioned UNET for iterative denoising via a DDPM framework.
+          The model is trained to predict noise rather than clean images using a variance schedule that starts at 0.0001 and ends at 0.02 over 300 timesteps. 
+          Rather than training separate models for every noise level, the UNet is conditioned on timestep t. This allows a single model to handle varying noise levels throughout the diffusion process. Similarly, we are attempting to minimize the mean squared error between predicted and actual noise at randomly sampled timesteps.</p>
+        <img src='partB/3.png'>
+        <img src='partB/4.png'>
+        <p>Here's the training algorithm that we follow:</p>
+        <img src='partB/5.png'>
+        <p>Here is the time-conditioned UNet training loss graph</p>
+        <img src='partB/T2.png'>
+    </section>
 
-    <img src="partB/noisy.png">
+    <section id="b-2-3">
+        <h2>Section 2.3</h2>
+        <p>Furthermore, the sampling process is very similar as done in Part A of the project.</p>
+        <img src='partB/6.png'>
+        <p>And here are the gifs for various epochs:</p>
+        <img src='partB/1a5.gif'>
+        <img src='partB/1a10.gif'>
+        <img src='partB/1a15.gif'>
+        <img src='partB/1a20.gif'>
+        <p>Notice that on varying values of sigma, this model already performs better than the previous model?</p>
+    </section>
 
-    <p> And here is the training data once we go ahead and train the model. </p>
+    <section id="b-2-4">
+        <h2>Section 2.4</h2>
+        <p>For our final model, we utilize two additional FCBlocks for processing class as well as time, where we represent class as a one-hot vector.</p>
+        <p>The model implements CFG by randomly dropping class conditioning throughout the training process. Furthermore, during generation, we combine conditional and unconditional predictions using a guidance value of 5 as we've done in Part A.</p>
+        <p>The training process goes as follows:</p>
+        <img src='partB/7.png'>
+        <p>Here is the class-conditioned UNet training loss graph</p>
+        <img src='partB/T3.png'>
+    </section>
 
-    <img src="partB/T1.png">
-
-    <p> Furthermore, here are the denoised results at the first and fifth epoch.</p>
-
-    <img src = 'partB/E1.png'>
-    <img src = 'partB/E2.png'>
-
-    <p> Our denoiser was trained on a sigma val of 0.5. Here are the reuslts when being tested on a varying amount of noise. </p>
-
-    <img src = 'partB/VaryingNoise.png'>
-    <p> Here is the time-conditioned UNet training loss graph</p>
-
-    <img src = 'partB/T2.png'>
-
-    <p> And here are the gifs for the epochs:</p>
-
-    <img src = 'partB/1a5.gif'>
-    <img src = 'partB/1a10.gif'>
-    <img src = 'partB/1a15.gif'>
-    <img src = 'partB/1a20.gif'>
-
-    <p> Here is the class-conditioned UNet training loss graph</p>
-
-    <img src = 'partB/T3.png'>
-
-    <p> Here are the gifs for the epochs</p>
-
-    <img src = 'partB/2a5.gif'>
-    <img src = 'partB/2a10.gif'>
-    <img src = 'partB/2a15.gif'>
-    <img src = 'partB/2a20.gif'>
-
+    <section id="b-2-5">
+        <h2>Section 2.5</h2>
+        <p>Finally, the sampling process is detailed as follows:</p>
+        <img src='partB/8.png'>
+        <p>Here are the gifs for the epochs</p>
+        <img src='partB/2a5.gif'>
+        <img src='partB/2a10.gif'>
+        <img src='partB/2a15.gif'>
+        <img src='partB/2a20.gif'>
+    </section>
 </body>
 </html>
