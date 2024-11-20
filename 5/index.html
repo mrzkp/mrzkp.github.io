@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        img {
+            margin: 5px;
+            max-width: 200px;
+            height: auto;
+        }
+        .large-image {
+          width: 5000px;
+          height: auto;
+    }
+    </style>
+</head>
+<body>
+  <h1> Project 5A</h1>
+  <p> NOTE: Apogloies for small screenshots, I tried to make small screenshots bigger with css, but couldnt...</p>
+  <p> In this project, we will implement and deploy diffusion models for image generation</p>
+  <h4> Part 1.1</h4>
+  <p> In part A, we will play around with diffusion models, implement diffusion sampling loops, and use them for other tasks such as inpainting and creating optical illusions</p>
+
+  <section id="1-1">
+    <h2>Section 1-1</h2>
+  <p> We will write your own "sampling loops" that use the pretrained DeepFloyd denoisers. The hope is to produce high quality images.</p>
+
+  <img src = 'partA/EQ1.png'>
+
+  <p> First, we implement these equations (which are equivalent) to add noise to an image. This is otherwise known as the forward process.</p>
+
+  <p> Here are test image at noise level [250, 500, 750].</p>
+    <!-- Section for 1-1 -->
+
+        <img src="partA/1-1.png" alt="1-1">
+        <img src="partA/1-1-2.png" alt="1-1-2">
+        <img src="partA/1-2-3.png" alt="1-2-3">
+    </section>
+
+    <section id="1-2">
+      <h2>Section 1-2</h2>
+    <p> Let's try to denoise these images using classical methods. Again, take noisy images for timesteps [250, 500, 750], but use Gaussian blur filtering to try to remove the noise. Getting good results should be quite difficult, if not impossible.</p>
+
+    <!-- Section for 1-2 -->
+
+        <img src="partA/1-2.png" alt="1-2">
+
+    </section>
+
+    <section id="1-3">
+      <h2>Section 1-3</h2>
+    <p> Now, we'll use a pretrained diffusion model to denoise.</p>
+
+    <p> Because this diffusion model was trained with text conditioning, we also need a text prompt embedding. We provide the embedding for the prompt "a high quality photo" for you to use. Later on, we use our own prompts.
+
+      <p> We do the following for this section: </p>
+  
+      <p>For the 3 noisy images from 1.2 (t = [250, 500, 750]):
+        * Using the UNet, denoise the image by estimating the noise.
+        * Estimate the noise in the new noisy image
+        * Remove the noise from the noisy image to obtain an estimate of the original image.
+        * Visualize the original image, the noisy image, and the estimate of the original image</p>
+      </p>
+
+      <p> Furthermore, I scaled the noise according to specific coefficients associated with each timestep. This process involves dividing the noisy image by the estimated noise at each step, adjusting for each image's noise level to maximize clarity.</p><p></p>
+
+      <p> Below are the results. </p>
+
+    <!-- Section for 1-3 -->
+        <img src="partA/1-3.png" alt="1-3" class="large-image">
+    </section>
+
+    <!-- Section for 1-4 -->
+    <section id="1-4">
+        <h2>Section 1-4</h2>
+
+        <p> Using the following equation: </p>
+        <img src = "partA/EQ2.png" width="300" height="200" >
+
+        <p> where: </p>
+        <img src = "partA/EQ3.png">
+
+        <p> Unlike a single-step approach, iterative denoising gradually reconstructs the image by removing noise over multiple steps, producing finer details and better image quality, especially for heavily degraded images. At each step, noise is incrementally removed based on specific calculations involving noise scaling coefficients, which balance the levels of signal and noise at each stage</p>
+        <p> Iterative denoising recreates the image via removing itertativly noise. At each step, noise is incrementally removed based off specific calculations using noise scaling coefficinets, which help balance levels of signal and noise at every stage.</p>
+
+        <img src="partA/1-4-1.png" alt="1-4-1" width="300" height="200">
+        <img src="partA/1-4-2.png" alt="1-4-2" width="300" height="200">
+    </section>
+
+    <!-- Section for 1-5 -->
+    <section id="1-5">
+        <h2>Section 1-5</h2>
+        <p> In part 1.4, we use the diffusion model to denoise an image. Another thing we can do with the iterative_denoise function is to generate images from scratch</p>
+
+        <p> This effectively denoises pure noise.</p>
+
+        <p> The diffusion model attempts to denoise the 'nosiy' image (in this case, a high-quality photo iterativley). In other words, we use the created photo as the inital input. Using iterative denoising, each noisy image is denoised via guiadnce from the text pomrpt embedding. Below are five different images using this apporach. </p>
+        <img src="partA/1-5.png" alt="1-5">
+    </section>
+
+    <!-- Section for 1-6 -->
+    <section id="1-6">
+        <h2>Section 1-6</h2>
+
+        <p>In 1.6, we utilize classifer-free guidance (CFG) to the diffusion model to improve image quality. CFG utlizes both conditional and uncondintional noise estimates, which allows the model to emphasize relevant details while keeping some randomness.
+
+          CFG essentially combines two noise estimates to porduce more coherent and detailed images. We utilize CFG ontop of the iterative denoising that we implemented in the previous sections, but, of course, CFG combines the noise estimate at each iteration.
+          
+          Thus, the model refines the noise prgoressively till we get a more structured image.</p>
+
+          <p> Note, that we had to run UNet twice. Once for conditional prompt embedding, and the other for unconditional. </p>
+        <img src="partA/1-6.png" alt="1-6">
+    </section>
+
+        <!-- Section for 1-71 -->
+        <section id="1-71">
+          <h2>Section 1-7</h2>
+          <p> In part 1.4, we take a real image, add noise to it, and then denoise. This effectively allows us to make edits to existing images. The more noise we add, the larger the edit will be. This works because in order to denoise an image, the diffusion model must to some extent "hallucinate" new things -- the model has to be "creative." Another way to think about it is that the denoising process "forces" a noisy image back onto the manifold of natural images.
+
+            Here, we're going to take the original test image, noise it a little, and force it back onto the image manifold without any conditioning. Effectively, we're going to get an image that is similar to the test image (with a low-enough noise level). This follows the SDEdit algorithm.</p>
+
+          
+            <p> We start by running the forward process to the original image. The noise varies across predefined noise levels of [1, 3, 5, 7, 10, 20]. Afterwards, we apply the CFG based iterative denoising. Below are the results.</p>
+
+            <P> Once again, we are starting from a "high quality photo".</P>
+          <img src="partA/1-71-1.png" alt="1-71-1">
+          <img src="partA/1-71-2.png" alt="1-71-2">
+          <img src="partA/1-71-3.png" alt="1-71-3">
+          <img src="partA/1-71-4.png" alt="1-71-4">
+          <img src="partA/1-71-5.png" alt="1-71-5">
+          <img src="partA/1-71-6.png" alt="1-71-6">
+      </section>
+  
+      <!-- Section for 1-72 -->
+      <section id="1-72">
+          <h2>Section 1.7.1</h2>
+
+          <p> We can use the same process to our own hand-drawn illustrations!</p>
+          <img src="partA/1-72-1.png" alt="1-72-1">
+          <img src="partA/1-72-2.png" alt="1-72-2">
+          <img src="partA/1-72-3.png" alt="1-72-3">
+      </section>
+  
+      <!-- Section for 1-73 -->
+      <section id="1-73">
+          <h2>Section 1-7.2</h2>
+
+          <p> 
+            
+            We can use the same procedure to implement inpainting. That is, given an image x_orig, and a binary mask m, we can create a new image that has the same content where m is 0, but new content wherever m is 1.
+            
+            To do this, we can run the diffusion denoising loop. But at every step, after obtaining x_t, we "force" x_t to have the same pixels as x_orig where m is 0, i.e.: x_t <- m * x_t + (1 - m) * forward(x_orig, t)
+            </p>
+
+            <p> Essentially, we leave everything inside the edit mask alone, but we replace everything outside the edit mask with our original image — with the correct amount of noise added for timestep t.
+            </p>
+          <img src="partA/1-73-1.png" alt="1-73-1">
+          <img src="partA/1-73-2.png" alt="1-73-2">
+          <img src="partA/1-73-3.png" alt="1-73-3">
+          <img src="partA/1-73-4.png" alt="1-73-4">
+          <img src="partA/1-73-5.png" alt="1-73-5">
+          <img src="partA/1-73-6.png" alt="1-73-6">
+      </section>
+
+    <!-- Section for 1-74 -->
+    <section id="1-74">
+      <h2>Section 1-7.3</h2>
+
+      <p> Now, instead of starting with a random high-quality image, we can also start with a text of our choosing!</p>
+
+      <p> below are the results: </p>
+      <img src="partA/1-74-1.png" alt="1-74-1">
+      <img src="partA/1-74-2.png" alt="1-74-2">
+      <img src="partA/1-74-3.png" alt="1-74-3">
+      <img src="partA/1-74-4.png" alt="1-74-4">
+      <img src="partA/1-74-5.png" alt="1-74-5">
+      <img src="partA/1-74-6.png" alt="1-74-6">
+  </section>
+
+    <!-- Section for 1-8 -->
+    <section id="1-8">
+        <h2>Section 1-8</h2>
+
+        <p> In this part, we are finally ready to implement Visual Anagrams and create optical illusions with diffusion models. Here, we create an image that, when flipped, showcases a different image!</p>
+        <p> We start by creating an image that looks like "an oil painting of people around a campfire", but when flipped upside down will reveal "an oil painting of an old man".</p>
+        <p> To do this, we will denoise an image x_t at step t normally with the prompt "an oil painting of an old man", to obtain noise estimate e1. </p>
+
+        <p>  But at the same time, we will flip x_t upside down, and denoise with the prompt "an oil painting of people around a campfire", to get noise estimate e2. We can flip e2 back, to make it right-side up, and average the two noise estimates.<
+          /p>
+        <p> We can then perform a reverse/denoising diffusion step with the averaged noise estimate.</p>
+
+        <p> e1 = UNet(x_t, t, p1)</p>
+        <p>e2 = flip(UNet(flip(x_t), t, p2))</p>
+        <p>e = (e1 + e2) / 2 </p>
+
+        <p> where UNet is the diffusion model UNet from before, flip(·) is a function that flips the image, and p1 and p2 are two different text prompt embeddings. And our final noise estimate is e. Please implement the above algorithm and show an example of an illusion.
+        </p>
+        <img src="partA/1-8-1.png" alt="1-8-1">
+        <img src="partA/1-8-2.png" alt="1-8-2">
+        <img src="partA/1-8-3.png" alt="1-8-3">
+    </section>
+
+    <!-- Section for 1-9 -->
+    <section id="1-9">
+        <h2>Section 1-9</h2>
+
+        <p> We can also consturct hybrids like in project 2!</p>
+
+        <p> In order to create hybrid images with a diffusion model we can use a similar technique as above. We will create a composite noise estimate e, by estimating the noise with two different prompts, and then combining low frequencies from one noise estimate with high frequencies of the other. The algorithm is:
+          </p>
+          <p>e1 = UNet(x_t, t, p1)</p>
+          <p>e2 = UNet(x_t, t, p2)</p>
+          <p>e = f_lowpass(e1) + f_highpass(e2)
+          </p>
+
+          <p> where UNet is the diffusion model UNet, f_lowpass is a low pass function, f_highpass is a high pass function, and p1 and p2 are two different text prompt embeddings. Our final noise estimate is e.</p>
+        <img src="partA/1-9-1.png" alt="1-9-1">
+        <img src="partA/1-9-2.png" alt="1-9-2">
+        <img src="partA/1-9-3.png" alt="1-9-3">
+    </section>
+    <h1> Project 5B</h1>
+
+    <p> In this potion, we will train your own diffusion model on MNIST
+    </p>
+
+    <h3> Part 1.1 </h3>
+
+    <p> We train a UNet to remove Gaussian noise from images. The UNet architecture is good for this task due to its ability to capture both local and global features through its encoder-decoder structure with skip connections. The implementation starts by defining the fundamental components of the UNet model.</p>
+
+    <img src="partB/1.png">
+    <p> We mainly follow this scheme, where the blocks are defined as follows</p>
+
+    <img src="partB/2.png">
+
+    <p> Below is us adding noise to the image: </p>
+
+    <img src="partB/noisy.png">
+
+    <p> And here is the training data once we go ahead and train the model. </p>
+
+    <img src="partB/T1.png">
+
+    <p> Furthermore, here are the denoised results at the first and fifth epoch.</p>
+
+    <img src = 'partB/E1.png'>
+    <img src = 'partB/E2.png'>
+
+    <p> Our denoiser was trained on a sigma val of 0.5. Here are the reuslts when being tested on a varying amount of noise. </p>
+
+    <img src = 'partB/VaryingNoise.png'>
+    <p> Here is the time-conditioned UNet training loss graph</p>
+
+    <img src = 'partB/T2.png'>
+
+    <p> And here are the gifs for the epochs:</p>
+
+    <img src = 'partB/1a5.gif'>
+    <img src = 'partB/1a10.gif'>
+    <img src = 'partB/1a15.gif'>
+    <img src = 'partB/1a20.gif'>
+
+    <p> Here is the class-conditioned UNet training loss graph</p>
+
+    <img src = 'partB/T3.png'>
+
+    <p> Here are the gifs for the epochs</p>
+
+    <img src = 'partB/2a5.gif'>
+    <img src = 'partB/2a10.gif'>
+    <img src = 'partB/2a15.gif'>
+    <img src = 'partB/2a20.gif'>
+
+</body>
+</html>
