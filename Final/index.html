@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      table {
+          border-collapse: collapse;
+          margin-top: 1em;
+      }
+      td {
+          border: 1px solid #000;
+          padding: 0.5em;
+          vertical-align: top;
+      }
+      td:nth-child(1) {
+          width: 3em;
+          text-align: center;
+      }
+      td:nth-child(2) {
+          width: 30em;
+      }
+      td:nth-child(3) {
+          width: 30em;
+      }
+  </style>
+    <title>Project 1</title>
+
+    <h1> Overview of Final Project</h1>
+
+    <P> As we come to the end of the semester, I decided to implement two projects for my final project.</P>
+
+    <p> The first one "Gradient Domain Fusion" and the second being "Light Field Camera".</p>
+
+    <h2> Gradient Domain Fusion </h2>
+    <p>As mentioned in the project spec, we explore gradient-domain processing, a relatively simple technique for blending images together. In this case, we focus on "Poisson Blending".</p>
+
+    <p> The overall goal is to seamlessly blend an object/texture from a source image (object image) into a target image (background image).</p>
+
+    <p> Those who looked at my Project 2 implementation would know that we've done something similar already using Laplacian and Gaussian Pyramids.</p>
+
+    <p> For that project, we cared about overall intensity of the pixels. Instead, for this project, we'll look more into the gradient of the image. So, we set up the problem to find values for target pixels that MAXIMALLY preserve the gradient of the source region without altering the background pixels. Notice that we are completely ignoring the intensity of the images!</p>
+
+    <h3> Part 1: Toy Problem </h3>
+
+    <p> Before we actually implement the Poisson Blend, we should probably first have a sanity check. Firstly, we'll compute the gradients in the x and y direction of our source image, s. Then, using these graidents, plus a pixel intensity, we'll attempto to reconstruct an image, v. </p>
+
+    <p> We'll be using this toy image as our source image.</p>
+    <img src="grad/toy.png" alt="Image 1" style="max-width:50%;">
+
+    <p>
+      Denote the intensity of the source image at <code>(x, y)</code> as 
+        <code>s(x,y)</code> and the values of the image to solve for as 
+        <code>v(x,y)</code>. For each pixel, then, we have two objectives:
+    </p>
+
+    <table>
+        <tr>
+            <td>1.</td>
+            <td>minimize &nbsp; (<code>v(x+1,y) – v(x,y) – ( s(x+1,y) – s(x,y) )</code>)<sup>2</sup></td>
+            <td>the x-gradients of <em>v</em> should closely match the x-gradients of <em>s</em></td>
+        </tr>
+        <tr>
+            <td>2.</td>
+            <td>minimize &nbsp; (<code>v(x,y+1) – v(x,y) – ( s(x,y+1) – s(x,y) )</code>)<sup>2</sup></td>
+            <td>the y-gradients of <em>v</em> should closely match the y-gradients of <em>s</em></td>
+        </tr>
+    </table>
+
+    <p>
+        Note that these could be solved while adding any constant value to <em>v</em>, 
+        so we will add one more objective:
+    </p>
+
+    <table>
+        <tr>
+            <td>3.</td>
+            <td>minimize &nbsp; (<code>v(1,1) – s(1,1)</code>)<sup>2</sup></td>
+            <td>The top left corners of the two images should be the same color</td>
+        </tr>
+    </table>
+
+    <p> If our solution is correct, then the overall error between both images should be negligble and the images should look more or less the same.</p>
+
+    <p> Below are the images of the Toy Problem.</p>
+
+    <div style="display:flex;">
+      <img src="grad/toy.png" alt="Image 1" style="max-width:50%;">
+      <img src="grad/toy_reconstructed.png" alt="Image 2" style="max-width:50%;">
+    </div>
+    
+    <p> The Max error between the two images is 0.0010002051356685637.</p>
+
+    <h4> Algo Breakdown </h4>
+
+    <p> We create a system of linear equations that enforces gradient matching. For horzontal gradients, v(x, y + 1) - v(x, y) should match closely s(x, y + 1) - s(x, y). Similarly, for vertical gradients, v(x + 1, y) - v(x, y) should match closely with s(x + 1, y) - s(x, y). </p>
+
+    <p> We create a sparse matrix 'A' for the linear constraints and a vector 'b' captures gradient differences from source image.</p>
+
+    <p> We also ensure the top-left pixel matches the source's top-left pixel and use least squares sparse solution (LSQR) to solve our system, where we are minimizing the squared differences in the gradients.</p>
+
+    <p> Finally, we iterate through the image's pixels, building hte linera constraints. Finally, we solve the system to obtain our reconstructed image, v.</p>
+
+    <h3> Poisson Blending </h3>
+
+    <p> Now that we've done the Toy Problem, let's start with the Poisson Blending!</p>
+
+    <p> For this portion, we will be solving the following problem: </p>
+    <img src="grad/eq.png" style="max-width:95%;">
+
+    <p> where 'v' is the output image, s is the source image we are blending, t is the target image, and (i, j) refers to the pixel that we are on.</p>
+
+    <p> The equation is minimizing two terms. The left term enforces that the gradients in v match the gradients in s. The sceond term enforces that the reconstructed values of vi should match ti, while perserving the gradients from the s.</p>
+
+    <p> You can think of the argmin as us finding the values of v that minimiize the overall expression. </p>
+
+    <p> Below are the results of a Naive implementation </p>
+
+    <h4> Algo Breakdown </h4>
+
+    <p> We iterate through our three color channels. For each channel, we create a mapping 'im2var' that assigns a unique index to each pixel within the object mask. We set up a sparse linear system A and vector b for the Poisson blending constraints. The function then solves the sparse system using lsqr and applies the reconstructed v to our output image within the region of designation.</p>
+
+    <h2> Bells and Whistles!</h2>
+
+    <p> On top of Poisson Blending, we can also do Mixed Blending. Mixed blending follows the same formate as Poisson blending, but we use the gradient in the source or target image with the LARGER magnitutde instead of just the source gradient.</p>
+
+    <p> Remember, the constraints of v should match the gradient of the object image within the region of designation. Furthermore, for pixels on the boundary of the object region, we use the difference between the object image and the background image as a constraint.</p>
+
+    <img src="grad/eq2.png" style="max-width:95%;">
+
+    <p> Here "d_ij" is the value of the gradient from the source or the target image with larger magnitude, i.e. if abs(s_i-s_j) > abs(t_i-t_j), then d_ij = s_i-s_j; else d_ij = t_i-t_j. Show at least one result of blending using mixed gradients. One possibility is to blend a picture of writing on a plain background onto another image.</p>
+
+    <div style="display:flex;">
+      <img src="grad/penNaive.png"alt = 'naive' style="max-width:33%;">
+      <img src="grad/penPoi.png" alt = 'poison' style="max-width:33%;">
+      <img src="grad/penMix.png" alt = 'mix' style="max-width:33%;">
+    </div>
+
+    <p> Above is the Naive, Poison, and Mixed blends respectively.</p>
+
+    We do the same for more examples, here is a flower in a moutain.
+
+    <div style="display:flex;">
+      <img src="grad/flowerPoi.png" alt = 'poison' style="max-width:50%;">
+      <img src="grad/flowerPoi.png" alt = 'mix' style="max-width:50%;">
+    </div>
+
+    <h2>Now here's my favorite example! A mouse on a textured wall!</h2>
+
+    <div style="display:flex;">
+      <img src="grad/mousePoi.png" alt = 'poison' style="max-width:50%;">
+      <img src="grad/mouseMix.png" alt = 'mix' style="max-width:50%;">
+    </div>
+
+    <p> It really showcases the strongsuit of the Mixed blending, while also demonstrating the Possion blending being useful to a degree!</p>
+
+    Now here's a failure case:
+
+    <div style="display:flex;">
+      <img src="grad/crocPoi.png" alt = 'poison' style="max-width:50%;">
+      <img src="grad/crocMix.png" alt = 'mix' style="max-width:50%;">
+    </div>
+
+    <p> The reason why I think this fails is the fact that the source image in itself has a lot of textures. Furthermore, the texture is too drastic compared to the wall for the mouse example.</p>
+
+    <p> NOTE: I used a square for the mask for each of the images. </p>
+
+    <h2> Light Field Camera </h2>
+
+    <p> For our second project, we attempt to reproduce some cool effects using lightfield data. </p>
+
+    <p> A Lightfield camera takes images by absording light rays from every direction. As such, we can create images that look like they're moving!</p>
+
+    <h3> Depth Refocusing </h3>
+
+    The objects which are far away from the camera do not vary their position significantly when the camera moves around while keeping the optical axis direction unchanged. The nearby objects, on the other hand, vary their position significantly across images. Averaging all the images in the grid without any shifting will produce an image which is sharp around the far-away objects but blurry around the nearby ones. Similarly, shifting the images 'appropriately' and then averaging allows one to focus on object at different depths.
+
+  <p>In this part of the project, you will implement this idea to generate multiple images which focus at different depths.</p>
+
+  <p> Each dataset contains many images in a 17x17 grid where each (u, v) value represents the camera's location. </p>
+
+  <p> To refocus our image, we shift every image in the lightfield by shifting every sub-aperture towards the center image. Afterwards, we can average all the images together to 'refocus' the camera to the center point. We control the center point by a variable 'C'.</p>
+
+  <p> Below are some examples of this phenemena: </p>
+
+  <img id='cG' src="light/C_gif.gif" style="max-width:50%;"/>
+  <button onclick="document.getElementById('cG').src='light/C_gif.gif?'+new Date().getTime();">
+    Replay GIF
+  </button>
+
+  <p> Here are the C Values that we are using: [-0.4 -1 0.4 0.8 1 1.25 1.5 2]</p>
+
+  <img id='lC'src="light/legoC.gif" style="max-width:50%;">
+  <button onclick="document.getElementById('lC').src='light/legoC.gif?'+new Date().getTime();">
+    Replay GIF
+  </button>
+  <p> Here are the C Values that I used: [-0.4 -1 0.4 1 1.25 1.6 2.1 2.8 3.3]</p>
+
+  <h3> Aperture Adjustment </h3>
+
+  <p> Similarly, we can simulate readjusting the aperture by averaging a smaller subset of our images. In other words, the more images that we sample, the more larger our aperture is. We use a variable 'r' to determine which images to average. 'r' represnts the radius parameter, in which it is the maximum distance a sub-aperature can be from the center image that is allowable. In other words, the greater the 'r' value, the more images we allow, the more larger the aperture, the closer we are focused on the center point of our image. The 'r' value is compared with the (u, v) positions of the sub-aperatures.</p>
+
+
+  <p> Below are some examples!</p>
+  <img id='rG' src="light/r_gif.gif" style="max-width:50%;"/>
+  <button onclick="document.getElementById('rG').src='light/r_gif.gif?'+new Date().getTime();">
+    Replay GIF
+  </button>
+
+  <p> Here are the R Values that were used: [0, 8, 16, 32, 64, 128]</p>
+
+  <p> The common point is set to a value of 0</p>
+
+  <img id='lR'src="light/legoR.gif" style="max-width:50%;">
+  <button onclick="document.getElementById('lR').src='light/legoR.gif?'+new Date().getTime();">
+    Replay GIF
+  </button>
+
+  <p> Here are the R Values that were used: [0, 8, 16, 32, 64, 128, 256]</p>
+  <p> Furthermore, the common point is set to -1.</p>
+
+  <p> One of the things that I enjoyed from this portion is, for the aperture ajustment, the images ACTUALLY look like they're moving, when in reality, nothing of that sort is occuring!</p>
+
+</head>
