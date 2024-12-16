@@ -128,7 +128,7 @@
 
 <body>
     <div class="title">BEAMS</div>
-    <p class="byline">EE290-010 Final Project by Aditya Tummala and Arjun Damerla, Professor Parekh</p>
+    <p class="byline">Graduate Wireless Networks Final Project - Aditya Tummala and Arjun Damerla, Prof. Parekh</p>
     <p class="byline">Beamforming and Enhanced Algorithms for MmWave Systems</p>
     <h3 style="font-weight: normal; font-size: 1.5em;">Table of Contents</h3>
     <ul class="toc">
@@ -141,20 +141,15 @@
     </ul>
 
     &nbsp;
-<!-- 
-    <div class="center-container">
+
+    <div class="container">
         <a href="https://github.com/ShonenMind/EE290-Final-Project" class="github-button left" target="_blank">
-            Click Here for GitHub
+            GitHub
+        </a>
+        <a href="https://docs.google.com/presentation/d/e/2PACX-1vSkA-HHpvhNP0YjEDb52MWjip3pjCqV4b9PrhQSWXUQ8s6PFJ5ArR0U9x0dlI-2WsmNQ4RAAHurinZi/pub?start=false&loop=false&delayms=3000&slide=id.p" class="github-button right" target="_blank">
+            Slides
         </a>
     </div>
-
-    &nbsp;
-
-    <div class="center-container">
-        <a href="https://docs.google.com/presentation/d/1ubH-FBG0ocIo_t4kei2dvTSBeOPlsx90s2gPVIWXNe8/edit#slide=id.g317f763dc2b_0_55" class="github-button right" target="_blank">
-            Click Here for Slides
-        </a>
-    </div> -->
 
     <h4>Project Inspiration: <a href="https://ieeexplore.ieee.org/document/9024543" target="_blank">https://ieeexplore.ieee.org/document/9024543</a></h4>
 
@@ -276,7 +271,7 @@
     <p>The first <i>(and typically most important)</i> step of any ML-based project is to collect lots of <a href="https://www.linkedin.com/pulse/what-good-quality-training-dataset-machine-learning-tagx" target="_blank">good</a> data.</p>
 
     <p> Problem is... we don't have access to this data, and most papers on beamforming do not share their data.
-      As a result, we had to implement our own data generation script that follows the paper's implementaiton.
+      As a result, we had to implement our own data generation script.
 
       This meant curating a large dataset that followed a HPPP. Here are the system parameters:
 
@@ -396,7 +391,9 @@
         </div>
     </body>
 
-
+    <p> Many of these parameters are tunable and can be adjusted to form either easier or harder problems. Furthermore, we can specifically curate a variety of channels the SBS can have in order to form a more diverse dataset. 
+        However, we stay with these parameters to simplify the problem to focus on the <b>beam selection</b> problem.
+    </p>
 
 
   <h2 id="SVM">Why use SMOs?</h2>
