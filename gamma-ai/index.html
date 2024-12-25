@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      table {
+          border-collapse: collapse;
+          margin-top: 1em;
+      }
+      td {
+          border: 1px solid #000;
+          padding: 0.5em;
+          vertical-align: top;
+      }
+      td:nth-child(1) {
+          width: 3em;
+          text-align: center;
+      }
+      td:nth-child(2) {
+          width: 30em;
+      }
+      td:nth-child(3) {
+          width: 30em;
+      }
+      
+  </style>
+
+  <title>Gamma AI</title>
+
+  <h1> Developing an EnergyLossEstimator for Gamma AI</h1>
+
+  <p>The goal of this research was to develop an EnergyLossEstimator for <a href="https://cosi.ssl.berkeley.edu/">COSI</a>.</p>
+
+  <h2> Overview </h2>
+  <div class="physics-explanation">
+    <div class="introduction">
+        <p>
+            In order to develop reliable and accurate reconstruction techniques for the measured events, 
+            it is essential to first gain a detailed understanding of the photons' possible interactions in 
+            the detector. In keeping with the type of instrument discussed in this work, photo absorption 
+            is mentioned only in the context of fully contained Compton scattering events, and Rayleigh 
+            scattering is ignored since its effects in a MEGA-type telescope are negligible.
+        </p>
+        
+        <p>
+            All relevant photon interactions — photo-absorption, Compton scattering, and pair production — 
+            can be detected only via interactions resulting in energetic electrons and positrons in 
+            the instrument. Using the idealized interactions of gamma-ray photons with matter as a starting point, 
+            each section subsequently describes the multitude of effects that occur in a real instrument.
+        </p>
+    </div>
+
+    <section class="electron-interactions">
+        <h2>Interactions of electrons with matter</h2>
+        
+        <p>
+            When an electron (or positron) passes through matter, it interacts with the atoms' Coulomb 
+            potentials: It undergoes many small-angle scatterings (Molière scattering) and loses energy 
+            mostly via ionization and bremsstrahlung.
+        </p>
+    </section>
+</div>
+
+  <div class="physics-explanation">
+    <p>
+        Six processes contribute to the energy loss of electrons and positrons, two of which dominate 
+        in a MEGA-type Silicon tracker: ionization at low energies, bremsstrahlung at high energies. 
+        The electron energy for which both loss rates are equal is called the critical energy. It can 
+        be approximated by E<sub>c</sub> = (800 MeV)/(Z + 1.2) ≈ 53 MeV for Si (<cite>Berger and Seltzer</cite>, 1964). 
+        Electron and positron interactions in MEGA are thus dominated by ionization. A welcome 
+        consequence of this is that MEGA tracks are not going to be "polluted" by a significant amount 
+        of additional bremsstrahlung hits, making the tracking much easier than for higher energy 
+        gamma-ray telescopes like GLAST. Other energy loss mechanisms are Møller scattering for 
+        electrons, Bhabha scattering for positrons respectively, positron annihilation before the positron 
+        is completely stopped, and δ-rays (knock-on electrons) (see e.g. <cite>Particle Data Group</cite>, 2004). 
+        None of the latter play an important role for MEGA.
+    </p>
+</div>
+
+<p> Essentially, the problem is to predict the inital energy of an electron from its final energy and the energy loss of the electron through various processes. </p>
+
+<h2> One approach: Machine Learning</h2>
+
+<p> Naturally, if we can learn the energy loss of an electron through many of these events, maybe we can predict the inital energy.</p>
+
+</head>
