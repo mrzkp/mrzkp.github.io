@@ -3,30 +3,609 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamescrafters</title>
     <style>
-      table {
-          border-collapse: collapse;
-          margin-top: 1em;
-      }
-      td {
-          border: 1px solid #000;
-          padding: 0.5em;
-          vertical-align: top;
-      }
-      td:nth-child(1) {
-          width: 3em;
-          text-align: center;
-      }
-      td:nth-child(2) {
-          width: 30em;
-      }
-      td:nth-child(3) {
-          width: 30em;
-      }
-      
-  </style>
-
-  <title>Gamescraftesrs</title>
-
-  <p> Work in progress...</p>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            max-width: 900px;
+            margin: 20px auto;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .center-container {
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Georgia', serif;
+            font-size: 2.5em;
+            color: #2c3e50;
+            text-align: center;
+            margin: 30px 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-family: 'Georgia', serif;
+            font-size: 1.8em;
+            color: #34495e;
+            margin: 25px 0 15px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        h3 {
+            font-family: 'Georgia', serif;
+            font-size: 1.4em;
+            color: #34495e;
+            margin: 20px 0 10px;
+        }
+        h4 {
+            font-size: 1.2em;
+            color: #34495e;
+            margin: 15px 0;
+        }
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #e74c3c;
+        }
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+            text-align: left;
+        }
+        li {
+            margin: 8px 0;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 0.9em;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            color: #212529;
+        }
+        code {
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
+            background-color: #f1f3f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+            color: #212529;
+        }
+        /* Syntax highlighting - light theme */
+        .keyword { color: #8250df; font-weight: bold; }
+        .type { color: #953800; }
+        .function { color: #0550ae; }
+        .string { color: #0a3069; }
+        .comment { color: #6e7781; font-style: italic; }
+        .number { color: #0550ae; }
+        .operator { color: #0550ae; }
+        .variable { color: #953800; }
+        
+        /* Code example section styling */
+        .code-example {
+            margin: 25px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+        .code-example h4 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        .algorithm {
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .algorithm h4 {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .algorithm pre {
+            background-color: #f8f9fa;
+            border: none;
+            box-shadow: none;
+        }
+        img {
+            max-width: 60%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        figcaption {
+            text-align: center;
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        .toc {
+            list-style-type: decimal;
+            padding-left: 20px;
+            margin: 20px auto;
+            text-align: left;
+            max-width: 600px;
+        }
+        .toc a {
+            color: #3498db;
+        }
+        .toc a:hover {
+            color: #e74c3c;
+        }
+        .github-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        .github-button:hover {
+            background-color: #e74c3c;
+        }
+    </style>
 </head>
+<body>
+    <h1>Gamescrafters: GamesmanClassic Introductory Guide</h1>
+    <div class="center-container">
+        <a href="https://github.com/GamesCrafters/GamesmanClassic" class="github-button" target="_blank">GitHub</a>
+        <a href="https://nyc.cs.berkeley.edu/uni/games/abrobad/variants/standard" class="github-button" target="_blank">Play Abrobad</a>
+    </div>
+
+    <h3>Table of Contents</h3>
+    <ul class="toc">
+        <li><a href="#beginnings">Beginnings</a></li>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#tic-tac-toe">Solving Tic-Tac-Toe</a></li>
+        <li><a href="#abrobad">Dissecting Abrobad</a></li>
+        <li><a href="#solving-abrobad">Solving Abrobad</a></li>
+        <li><a href="#autogui">AutoGUI</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+    </ul>
+
+    <h2 id="beginnings">Beginnings...</h2>
+    <p>So, you want to add a game to <em>Gamesman Classic</em>! Well, you've come to the right place. This document provides an in-depth explanation of how a game, such as <em>Abrobad</em>, can be integrated into the system.</p>
+    <p>You can learn more about the game <a href="https://ludii.games/details.php?keyword=Abrobad">here</a>.</p>
+    <p>This guide is divided into three main sections:</p>
+    <ol>
+        <li>Solving <em>Tic-Tac-Toe</em></li>
+        <li><strong>New Game</strong>: Dissecting <em>Abrobad</em></li>
+        <li>Solving <em>Abrobad</em></li>
+    </ol>
+
+    <h2 id="prerequisites">Prerequisites</h2>
+    <p>Before we begin, one should be familiar with Classic's hashing scheme, which can be read <a href="https://github.com/GamesCrafters/GamesmanClassic/blob/master/doc/files/generic_hash_api.pdf">here</a>. Furthermore, you should have fully implemented Homefun 1.</p>
+    <p>Needless to say, you should have GamesmanClassic downloaded to your device for the entire 'solver' portion, and need GamesmanUWAPI and GamesmanUni for the AutoGUI portion. You can find all the repos <a href="https://github.com/GamesCrafters">here</a>.</p>
+
+    <h3>Terminology</h3>
+    <p>Piece and Stone may be used interchangeably.<br>Slot refers to one of the 12 places a piece can be placed or moved to.</p>
+
+    <h2 id="tic-tac-toe">Solving <em>Tic-Tac-Toe</em></h2>
+    <p>Similar to a design document before starting a large project, it is important to understand your game's ins and outs and begin thinking of data structures and algorithms that you can leverage to solve the game!</p>
+    <p><em>Tic-Tac-Toe</em> (<em>TTT</em>) is a classic two-player, zero-sum game played on a 3×3 grid. Two players alternate marking the cells with their respective symbols (X and O). The game can end in either:</p>
+    <ol>
+        <li>A <strong>win</strong> for one player if they manage to place three of their marks in a row (horizontal, vertical, or diagonal).</li>
+        <li>A <strong>tie</strong> if all cells are filled and no three-in-a-row exists.</li>
+    </ol>
+
+    <h2>Gameboard Representation and Designing Data Structures</h2>
+    <h3>Board as a Base-3 Integer</h3>
+    <p>In the <code>mttt.c</code> code, each board position is represented internally as an integer in the range [0, 3⁹ - 1]. Each cell in the 3×3 grid can hold one of three values:</p>
+    <ul>
+        <li><code>Blank</code> → 0</li>
+        <li><code>o</code> → 1</li>
+        <li><code>x</code> → 2</li>
+    </ul>
+    <p>Hence, one integer in base-3 conveniently encodes all 9 slots.</p>
+
+    <h4>Example of Conversion to/from Base 3</h4>
+    <ul>
+        <li><code>PositionToBlankOX(POSITION thePos, BlankOX *theBlankOX)</code>: Decomposes the integer <code>thePos</code> into its base-3 digits (from least significant to most) and fills an array <code>theBlankOX</code> of size 9, specifying whether each cell is <code>Blank</code>, <code>o</code>, or <code>x</code>.</li>
+        <li><code>BlankOXToPosition(BlankOX *theBlankOX)</code>: Takes the array <code>theBlankOX</code> of 9 elements and combines them into a base-3 integer.</li>
+    </ul>
+
+    <h3>Symmetry Considerations (Optional)</h3>
+    <p>Because many <em>Tic-Tac-Toe</em> positions are symmetric via rotation or reflection, <code>mttt.c</code> optionally uses <em>canonicalization</em> to avoid storing equivalent positions in the database multiple times. This is controlled by:</p>
+    <div class="code-example">
+        <h4>Example: Symmetry Configuration</h4>
+        <pre><code><span class="comment">/**
+ * If kSupportsSymmetries is TRUE, we reduce memory usage by canonicalizing.
+ */</span>
+<span class="type">BOOLEAN</span> <span class="variable">kSupportsSymmetries</span> <span class="operator">=</span> <span class="keyword">TRUE</span>;
+
+<span class="comment">/**
+ * Maps any position to its canonical (smallest) form.
+ * @param position The position to canonicalize
+ * @return The canonical position
+ */</span>
+<span class="type">POSITION</span> <span class="function">GetCanonicalPosition</span>(<span class="type">POSITION</span> <span class="variable">position</span>) {
+    <span class="comment">// Rotates or flips 'position', picks the smallest</span>
+    <span class="comment">// integer encoding among them, and returns it</span>
+}</code></pre>
+    </div>
+
+    <h2 id="abrobad">Dissecting <em>Abrobad</em></h2>
+    <p>Similar to a design document before starting a large project, it is important to understand your game's ins and outs and begin thinking of data structures and algorithms that you can leverage to solve the game!</p>
+    <p>To start, <em>Abrobad</em> is a game involving the strategic placement and movement of pieces. The game concludes when the entire board is filled.</p>
+    <figure>
+        <img src="./images/empty_board.png" alt="An empty board">
+        <figcaption>Figure: An empty Abrobad board</figcaption>
+    </figure>
+    <p>The rules are as follows:</p>
+    <ol>
+        <li>Pieces can be placed in any open slot on the board where none of the adjacent slots contain a piece of your color.</li>
+        <li>If placement moves are unavailable, you may move a stone in any of the 6 main directions to the nearest open space in that direction (by jumping if necessary).</li>
+        <li>If placement moves are unavailable, you may opt to <strong>END GAME</strong>. Doing so fills all remaining open positions with the opponent's pieces. Additionally, if you place a piece in the last available open position, the game ends.</li>
+    </ol>
+    <p>A primitive position is a position where the board is completely filled. To determine the winner, count the number of <strong>strongly connected components (SCCs)</strong> for each player's pieces. If it is the case that your count of <strong>SCCs</strong> is less than or equal to the number of your opponent's <strong>SCCs</strong>, you win. Otherwise, you lose. By construction of the game, it is impossible to tie the game.</p>
+    <p>Algorithmically, if you recall CS61Bs or CS70s graph theory, we can count each player's SCCs using Depth First Search (DFS).</p>
+
+    <h2>Gameboard Representation and Designing Data Structures</h2>
+    <p>An important question that you should start thinking about early is how you want to represent the board. Typically, this is done through some string, where the <code>i-th</code> position of the string corresponds to the <code>i-th + 1</code> board position.</p>
+    <div class="code-example">
+        <h4>Example: Board State Extraction</h4>
+        <pre><code><span class="comment">/**
+ * Extracts the board state and current player from a position.
+ * @param position The game position to decode
+ */</span>
+<span class="type">void</span> <span class="function">get_board_and_player_from_position</span>(<span class="type">POSITION</span> <span class="variable">position</span>) {
+  <span class="type">char</span> <span class="variable">board</span>[<span class="variable">BOARDSIZE</span> <span class="operator">+</span> <span class="number">1</span>];
+  <span class="function">generic_hash_unhash</span>(<span class="variable">position</span>, <span class="variable">board</span>);
+  <span class="type">int</span> <span class="variable">player</span> <span class="operator">=</span> <span class="function">generic_hash_turn</span>(<span class="variable">position</span>);
+}</code></pre>
+    </div>
+    <p>However, with Abrobad, a string alone doesn't provide enough information necessary to implement the game functionality, as we need some manner of tracking adjacency in the board when we start generating moves. We note that Abrobad follows a unique board layout, we'll have to define a graph-like representation using an <a href="https://www.geeksforgeeks.org/graph-and-its-representations/">Adjacency Matrix</a>. I would recommend constructing this for every game.</p>
+    <div class="code-example">
+        <h4>Example: Adjacency List Representation</h4>
+        <pre><code><span class="type">void</span> <span class="function">print_entire_adj_list</span>(<span class="type">int</span> <span class="variable">adj_matrix</span>[<span class="variable">BOARDSIZE</span>][<span class="variable">BOARDSIZE</span>]) {
+  <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">i</span> <span class="operator">&lt;</span> <span class="variable">BOARDSIZE</span>; <span class="variable">i</span><span class="operator">++</span>) {
+    <span class="function">printf</span>(<span class="string">"Adjacency list for index %d: ["</span>, <span class="variable">i</span>);
+    <span class="type">int</span> <span class="variable">first</span> <span class="operator">=</span> <span class="number">1</span>;
+    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">j</span> <span class="operator">&lt;</span> <span class="variable">BOARDSIZE</span>; <span class="variable">j</span><span class="operator">++</span>) {
+      <span class="keyword">if</span> (<span class="variable">adj_matrix</span>[<span class="variable">i</span>][<span class="variable">j</span>]) {
+        <span class="keyword">if</span> (<span class="operator">!</span><span class="variable">first</span>) {
+          <span class="function">printf</span>(<span class="string">", "</span>);
+        }
+        <span class="function">printf</span>(<span class="string">"%d"</span>, <span class="variable">j</span>);
+        <span class="variable">first</span> <span class="operator">=</span> <span class="number">0</span>;
+      }
+    }
+    <span class="function">printf</span>(<span class="string">"]\n"</span>);
+  }
+}
+
+<span class="comment">/***************************************
+* Example output:
+* Adjacency list for index 0: [1, 2, 3]
+* Adjacency list for index 1: [0, 3, 4]
+* Adjacency list for index 2: [0, 3, 5, 6]
+* Adjacency list for index 3: [0, 1, 2, 4, 6, 7]
+{{ ... }}
+* Adjacency list for index 2: [0, 3, 5, 6]
+* Adjacency list for index 3: [0, 1, 2, 4, 6, 7]
+.
+.
+.
+***************************************/</span></code></pre>
+    </div>
+    <p>Using this adjacency matrix, when we begin implementing <code>GenerateMoves*()</code>, we can quickly discern if placement moves are possible by iterating over each of the slots of the board and checking if the adjacent slots contain the current player's piece.</p>
+    <p>If you recall the rules of moving a piece, the piece can potentially jump over other pieces, so maintaining just an adjacency matrix won't be sufficient. To support jumps, we note that there is a fixed set of options for the piece from any slot on the board. Therefore, similarly to the adjacency matrix, we can define the list of slots that we can jump our piece to, and check if that specific position is open. However, it goes a step further, Schrodingersince we are only jumping to the <em>nearest</em> adjacent position. We'll define as <code>int neighbors[BOARDSIZE][6][4]</code>.</p>
+    <p>To see these implementations, please see the Abrobad Implementation on <a href="https://github.com/GamesCrafters/GamesmanClassic/blob/master/src/mabrobad.c">GitHub</a>.</p>
+
+    <h2 id="solving-abrobad">Solving <em>Abrobad</em></h2>
+    <p>Now that we understand how <em>Abrobad</em> works, let's start implementing the game!</p>
+    <p>First, navigate to your project directory and copy the <code>mtemplate.c</code> file into a new file called <code>mabrobad.c</code>.</p>
+    <div class="code-example">
+        <h4>Setup: Creating the Game File</h4>
+        <pre><code><span class="function">cp</span> <span class="variable">mtemplate.c</span> <span class="variable">mabrobad.c</span></code></pre>
+    </div>
+    <p>In <code>mabrobad.c</code>, you'll find some configurable <code>BOOLEAN</code> values that determine game behavior. For <em>Abrobad</em>, we set the following:</p>
+    <div class="code-example">
+        <h4>Example: Game Configuration</h4>
+        <pre><code><span class="comment">/**
+ * Game configuration settings
+ */</span>
+<span class="variable">kLoopy</span> <span class="operator">=</span> <span class="keyword">TRUE</span>;             <span class="comment">// Abrobad can have loops in gameplay</span>
+<span class="variable">kSupportsSymmetries</span> <span class="operator">=</span> <span class="keyword">FALSE</span>; <span class="comment">// We are not implementing symmetries</span></code></pre>
+    </div>
+
+    <h3>Game Initialization</h3>
+    <p>The first function you'll encounter in <code>mabrobad.c</code> is <code>void InitializeGame(void)</code>. This function sets up the game by initializing the starting position of the game, constructing the number of positions the game has, and creating the hash data.</p>
+    <div class="code-example">
+        <h4>Example: Game Initialization</h4>
+        <pre><code><span class="comment">/**
+ * Initializes the game state and configuration.
+ * Sets up the board size, hash data, and initial position.
+ */</span>
+<span class="type">void</span> <span class="function">InitializeGame</span>(<span class="type">void</span>) {
+  <span class="type">int</span> <span class="variable">BOARDSIZE</span> <span class="operator">=</span> <span class="number">12</span>;
+  
+  <span class="comment">// Set canonical position function pointer</span>
+  <span class="variable">gCanonicalPosition</span> <span class="operator">=</span> <span class="function">GetCanonicalPosition</span>;
+  
+  <span class="comment">// Define hash data for board representation</span>
+  <span class="comment">// Format: [piece type, min count, max count, ...]</span>
+  <span class="type">int</span> <span class="variable">hash_data</span>[] <span class="operator">=</span> {<span class="string">'-'</span>, <span class="number">0</span>, <span class="number">12</span>, <span class="string">'X'</span>, <span class="number">0</span>, <span class="number">12</span>, <span class="string">'O'</span>, <span class="number">0</span>, <span class="number">12</span>, <span class="operator">-</span><span class="number">1</span>};
+  
+  <span class="comment">// Initialize hash and get total number of positions</span>
+  <span class="variable">gNumberOfPositions</span> <span class="operator">=</span> <span class="function">generic_hash_init</span>(<span class="variable">BOARDSIZE</span>, <span class="variable">hash_data</span>, <span class="keyword">NULL</span>, <span class="number">0</span>);
+  
+  <span class="comment">// Create initial empty board and hash it</span>
+  <span class="type">char</span> <span class="variable">start</span>[<span class="variable">BOARDSIZE</span> <span class="operator">+</span> <span class="number">1</span>] <span class="operator">=</span> <span class="string">"------------"</span>;
+  <span class="variable">gInitialPosition</span> <span class="operator">=</span> <span class="function">generic_hash_hash</span>(<span class="variable">start</span>, <span class="number">1</span>);
+  
+  <span class="comment">// Set position to string conversion function</span>
+  <span class="variable">gPositionToStringFunPtr</span> <span class="operator">=</span> <span class="operator">&</span><span class="function">PositionToString</span>;
+}</code></pre>
+    </div>
+    <p>We designate empty spaces as <em>-</em>, <strong>P1</strong> pieces as <em>X</em> and <strong>P2</strong> pieces as <em>O</em>. You can designate the player pieces as whatever you want, but empty spaces should be <em>-</em>.</p>
+    <p>Since <em>Abrobad</em> has 12 total slots, we set our hash data to the following:</p>
+    <div class="code-example">
+        <h4>Example: Hash Data Definition</h4>
+        <pre><code><span class="type">int</span> <span class="variable">hash_data</span>[] <span class="operator">=</span> {<span class="string">'-'</span>, <span class="number">0</span>, <span class="number">12</span>, <span class="string">'X'</span>, <span class="number">0</span>, <span class="number">12</span>, <span class="string">'O'</span>, <span class="number">0</span>, <span class="number">12</span>, <span class="operator">-</span><span class="number">1</span>};</code></pre>
+    </div>
+    <p>Given the <code>hash_data[]</code> array, we can set the total number of positions for the game by defining the value of <code>gNumberOfPositions</code>. Finally, we can construct the hash of the initial position of the game, <code>gInitialPosition</code>. I recommend reviewing the Hashing document if you are what we're doing here.</p>
+
+    <h2><code>GenerateMoves</code>, <code>DoMove</code>, and <code>Primitive</code></h2>
+    <p>Similarly to HF1, we'll need to define three core functions: <code>GenerateMoves()</code>, <code>DoMove()</code>, and <code>Primitive()</code></p>
+    <p>As a refresher, here's the high-level idea of how these functions work:</p>
+    <ol>
+        <li><code>MOVELIST GenerateMove*(POSITION position)</code>
+            <ol>
+                <li>"Return the head of a list of the legal moves from the input position."</li>
+                <li>Think of a LinkedList from CS61A. GenerateMove should return a *MOVELIST*, which essentially is a LinkedList. The head of a linked list of the legal moves from the input position.</li>
+            </ol>
+        </li>
+        <li><code>POSITION DoMove(POSITION position, MOVE move)</code>
+            <ol>
+                <li>Return the child position reached when the input move is made from the input position.</li>
+            </ol>
+        </li>
+        <li><code>VALUE Primitive(POSITION position)</code>
+            <ol>
+                <li>Return win, lose, or tie if the input position is primitive. Otherwise, return undecided.</li>
+            </ol>
+        </li>
+    </ol>
+
+    <h3>Completing <code>Primitive()</code></h3>
+    <p>To determine whether a position is primitive, we need to count the number of strongly connected components (SCCs) for the player's pieces. Say that we iterate through the game board starting from the top leftmost position. We use Depth First Search (DFS) from that slot to designate the entire "clump" of the player's pieces as a single SCC.</p>
+    <p>To avoid overcounting SCCs as we iterate through the board, we construct a copy of an empty board that gets filled with pieces visited during DFS. This copy allows us to efficiently check if a piece has already been accounted for as part of an SCC.</p>
+    <p>The approach is as follows:</p>
+    <ul>
+        <li>Start with an empty "visited" board to keep track of explored pieces.</li>
+        <li>For each position on the game board:
+            <ol>
+                <li>If the current position contains a player's piece and has not yet been visited in the "visited" board:
+                    <ul>
+                        <li>Perform DFS starting from this position.</li>
+                        <li>Mark all visited positions in the "visited" board.</li>
+                        <li>Increment the SCC count by 1.</li>
+                    </ul>
+                </li>
+                <li>Otherwise, skip the position (it has already been accounted for in a previous SCC).</li>
+            </ol>
+        </li>
+    </ul>
+
+    <h3>Counting Strongly Connected Components</h3>
+    <p>The function <code>CountPlayerGroups</code> identifies and counts the strongly connected components (SCCs) of pieces belonging to the given player. It uses DFS to traverse and mark visited components.</p>
+    <div class="algorithm">
+        <h4>Algorithm: Counting Strongly Connected Components</h4>
+        <div class="code-example">
+            <h4>Algorithm: Counting Connected Components</h4>
+            <pre><code><span class="comment">/**
+ * Counts the number of connected component groups for a player
+ *
+ * @param player  The player whose groups to count
+ * @param board   The current board state
+ * @return        The number of distinct groups
+ */</span>
+<span class="function">CountPlayerGroups</span>(<span class="variable">player</span>, <span class="variable">board</span>)
+    <span class="variable">groupCount</span> ← <span class="number">0</span>
+    <span class="variable">visited</span> ← <span class="type">Array</span> of size <span class="variable">BOARDSIZE</span> initialized to <span class="keyword">FALSE</span>
+    <span class="variable">piece</span> ← Player's piece identifier (e.g., <span class="string">'X'</span> or <span class="string">'O'</span>)
+    
+    <span class="keyword">FOR</span> <span class="variable">i</span> ← <span class="number">0</span> <span class="keyword">TO</span> <span class="variable">BOARDSIZE</span> <span class="operator">-</span> <span class="number">1</span>
+        <span class="keyword">IF</span> <span class="variable">board</span>[<span class="variable">i</span>] <span class="operator">=</span> <span class="variable">piece</span> <span class="keyword">AND</span> <span class="variable">visited</span>[<span class="variable">i</span>] <span class="operator">=</span> <span class="keyword">FALSE</span> <span class="keyword">THEN</span>
+            <span class="function">DFS</span>(<span class="variable">i</span>, <span class="variable">piece</span>, <span class="variable">visited</span>, <span class="variable">board</span>)
+            <span class="variable">groupCount</span> ← <span class="variable">groupCount</span> <span class="operator">+</span> <span class="number">1</span>
+        <span class="keyword">ENDIF</span>
+    <span class="keyword">ENDFOR</span>
+    
+    <span class="keyword">RETURN</span> <span class="variable">groupCount</span></code></pre>
+        </div>
+    </div>
+
+    <h3>Pseudocode for Primitive Evaluation</h3>
+    <div class="algorithm">
+        <h4>Algorithm: Primitive Evaluation in <em>Abrobad</em></h4>
+        <div class="code-example">
+            <h4>Algorithm: Primitive Position Evaluation</h4>
+            <pre><code><span class="comment">/**
+ * Determines if the current position is a primitive (terminal) position
+ * and returns the appropriate game value
+ *
+ * @param position  The position to evaluate
+ * @return          win, lose, tie, or undecided
+ */</span>
+<span class="type">VALUE</span> <span class="function">Primitive</span>(<span class="type">POSITION</span> <span class="variable">position</span>)
+    <span class="variable">board</span> ← Board representation derived from position
+    
+    <span class="comment">// If there are empty slots, the game is not over</span>
+    <span class="keyword">IF</span> <span class="variable">board</span> contains <span class="string">'-'</span> (empty slot) <span class="keyword">THEN</span>
+        <span class="keyword">RETURN</span> <span class="variable">undecided</span>
+    <span class="keyword">ENDIF</span>
+    
+    <span class="comment">// Determine current player and opponent</span>
+    <span class="variable">player</span> ← Player to move derived from position
+    <span class="variable">opponent</span> ← <span class="number">3</span> <span class="operator">-</span> <span class="variable">player</span>
+    
+    <span class="comment">// Count connected component groups for each player</span>
+    <span class="variable">playerGroups</span> ← <span class="function">CountPlayerGroups</span>(<span class="variable">player</span>, <span class="variable">board</span>)
+    <span class="variable">opponentGroups</span> ← <span class="function">CountPlayerGroups</span>(<span class="variable">opponent</span>, <span class="variable">board</span>)
+    
+    <span class="comment">// Apply Abrobad winning condition</span>
+    <span class="keyword">IF</span> <span class="variable">playerGroups</span> ≥ <span class="variable">opponentGroups</span> <span class="keyword">THEN</span>
+        <span class="keyword">RETURN</span> <span class="variable">lose</span>
+    <span class="keyword">ELSE</span>
+        <span class="keyword">RETURN</span> <span class="variable">win</span>
+    <span class="keyword">ENDIF</span></code></pre>
+        </div>
+    </div>
+    <p>The code is essentially a pseudo-solution to the leetcode problem <a href="https://leetcode.com/problems/number-of-islands/description/">'Number of Islands'</a>.</p>
+
+    <h3>Completing <code>GenerateMove*()</code></h3>
+    <p>Given a <code>position</code>, can we determine what moves are available? I like to tackle this problem case-by-case style. Firstly, there are placement moves and movement moves. If it were possible to have a placement move, then it wouldn't be possible to move any of our pieces, let alone declare to <code>END GAME</code>, so we'll start with placements.</p>
+
+    <h4>Placement Moves</h4>
+    <p>We can scan the board and determine the places where placements are possible. Recall that placement of one's piece is possible only when the adjacent tiles do not have the color of your piece. Reference the first half of <code>GenerateMove*()</code> if interested in how this is done, but should be pretty self-explanatory.</p>
+
+    <h4>Movement Moves</h4>
+    <p>Using the <code>int neighbors[BOARDSIZE][6][4]</code> data structure from the <code>mabrobad.c</code> file, we can implement the movement moves.</p>
+    <p>Firstly, if placement moves are possible, then we don't have to bother checking for movement moves. Otherwise, we can iterate through <code>neighbors</code> and determine if there is an open slot in that direction. We predefined the values such the values at the <code>0th</code>-index are closest to the piece, and the following values expand one piece further in that direction. After selecting all the nearest possible jumps a piece can take, we do the same for every other one of the player's pieces. Finally, we add the <code>END GAME</code> move to the end of our return value.</p>
+
+    <h4>Remarks</h4>
+    <p>Because we were methodical while constructing <code>neighbors</code>, we didn't have to construct an overly complicated or computationally expensive <code>GenerateMove*()</code>. If it were the case where your game is large, I would consider err-ing towards the side of creating helper functions to create these data structures rather than resorting to a complicated <code>GenerateMove*()</code>.</p>
+
+    <h3>Completing <code>DoMove()</code></h3>
+    <p>At a high-level, <code>DoMove()</code> is simpler to implement than the other two functions. Given the current position and a move to be made, we make the move for that particular player's turn, and return the new updated position. However, while we have talked about <em>Board</em> representation throughout this guide, we haven't mentioned <em>Move</em> representation, which is important for implementing <code>DoMove()</code>.</p>
+
+    <h4>Move Representation</h4>
+    <p>In <em>GamesmanClassic</em>, a move is stored as a single integer (<code>MOVE</code>), which serves as a compact way of encoding the necessary information for making a change to the board state. This integer encoding must capture:</p>
+    <ol type="a">
+        <li><strong>What type of move</strong> is being made (e.g., a placement, a piece movement, or a special move like END_MOVE).</li>
+        <li><strong>The move's parameters</strong>, such as which slot to place in or, for a movement, which slot is being moved from and to.</li>
+    </ol>
+    <p><strong>Why encode moves as integers?</strong></p>
+    <ul>
+        <li><strong>Solver Integration:</strong> Many of Gamesman's solvers store “child positions” as a result of applying integer-encoded moves to a parent position.</li>
+        <li><strong>Speed and Simplicity:</strong> Integers are fast to compare, hash, and pass around internally. This allows the solver code to remain lean and efficient.</li>
+        <li><strong>Generality:</strong> Even if your game’s logic involves complex movement (like multiple jumps), you can still encode that into a single integer according to your own scheme.</li>
+    </ul>
+    <h4>Example Scheme for <em>Abrobad</em></h4>
+    <p>In <code>mabrobad.c</code>, we use the following scheme to encode moves:</p>
+    <ul>
+        <li><code>#define END_MOVE 0</code>
+            <ul>
+                <li>Sentinel to indicate an <em>END GAME</em> move.</li>
+            </ul>
+        </li>
+        <li><code>#define PLACE_PIECE(pos) (pos)</code>
+            <ul>
+                <li>Board indices range from 1..12 (human-facing). Placing a piece on slot <em>i</em> is simply the integer <em>i</em>.</li>
+            </ul>
+        </li>
+        <li><code>#define MOVE_PIECE(start, end) (((start * 13) + end) + 12)</code>
+            <ul>
+                <li>For movement, note that the maximum <code>start</code> slot is 12 and the maximum <code>end</code> slot is also 12.</li>
+                <li>We pack them into a single integer by multiplying <em>start</em> by 13, adding <em>end</em>, and then offsetting by 12.</li>
+            </ul>
+        </li>
+    </ul>
+    <p>For this, we'll leverage concepts of modular arithmetic! Breaking this down:</p>
+    <ul>
+        <li><strong>Placing a piece</strong> on an empty slot <em>pos</em> is encoded directly by the integer <em>pos</em>. Since valid positions range from 1 to 12, any integer ≤ 12 corresponds to a placement move.</li>
+        <li><strong>Moving a piece</strong> from a slot <em>start</em> to a slot <em>end</em> is encoded by first multiplying <em>start</em> by 13, adding <em>end</em>, and then offsetting by <code>12</code>. Thus,
+            <code>move = (13 × start) + end + 12.</code>
+            Because <em>start</em> and <em>end</em> each range from 1..12, this formula ensures an unambiguous integer result that’s always ≥ 13.</li>
+        <li><strong>Ending the game</strong> (a forced fill of the remaining slots) is a move encoded as <code>END_MOVE = 0</code>.</li>
+    </ul>
+    <h4>Decoding the Move</h4>
+    <p>To <em>apply</em> a move, you must decode the integer to figure out which action to take. For <em>Abrobad</em>, we proceed as follows:</p>
+    <ul>
+        <li><code>void decode_move(MOVE move, int* start, int* end)</code>
+            <ul>
+                <li><code>int tmp = move - 12;</code></li>
+                <li><code>*start = tmp / 13;</code> // recover <code>start</code></li>
+                <li><code>*end = tmp % 13;</code> // recover <code>end</code></li>
+            </ul>
+        </li>
+        <li><strong>Pseudocode usage</strong>:
+            <ul>
+                <li><strong>Case 1:</strong> <code>if (move == END_MOVE)</code><br>Fill all remaining open positions with the opponent's pieces.</li>
+                <li><strong>Case 2:</strong> <code>else if (move <= 12)</code><br>Treat <code>move</code> as placing a piece on slot <code>move</code>.</li>
+                <li><strong>Case 3:</strong> <code>else</code><br>Decode the movement via <code>decode_move(move, &s, &e);</code> and move the piece from slot <code>s</code> to <code>e</code>.</li>
+            </ul>
+        </li>
+    </ul>
+    <p>This scheme cleanly divides possible <code>MOVE</code> values into distinct categories (end-game, placement, or movement) and allows for swift encoding/decoding within the solver and user-interface logic.</p>
+    <h4>Tips for Designing a Custom Move Encoding</h4>
+    <ul>
+        <li><strong>Reserve a sentinel value</strong> (like <code>0</code>) for special moves such as “pass” or “end the game.” If your game doesn't have any such moves, then don't worry about this!</li>
+        <li><strong>Ensure no overlap</strong> between placement and movement. In <em>Abrobad</em>, by offsetting movement moves by +12, we avoid clashing with the 1..12 range for placements.</li>
+        <li><strong>Keep expansions in mind.</strong> If new move types arise (e.g., multiple jumps, reconfigured boards), design an encoding that can scale without collisions.</li>
+    </ul>
+
+    <h3>Depth First Search (DFS) for SCC Detection</h3>
+    <p>The DFS function traverses all connected positions for a given piece, marking visited nodes as it goes. It recursively visits neighboring nodes.</p>
+    <div class="algorithm">
+        <h4>Algorithm: Depth First Search for SCC Detection</h4>
+        <div class="code-example">
+            <h4>Algorithm: Depth-First Search for Connected Components</h4>
+            <pre><code><span class="comment">/**
+ * Depth-First Search algorithm to identify connected components
+ * 
+ * @param node      The current node being visited
+ * @param piece     The piece type we're searching for ('X' or 'O')
+ * @param visited   Boolean array tracking visited nodes
+ * @param board     Current board state
+ */</span>
+<span class="function">DFS</span>(<span class="variable">node</span>, <span class="variable">piece</span>, <span class="variable">visited</span>, <span class="variable">board</span>)
+    <span class="comment">// Mark current node as visited</span>
+    <span class="variable">visited</span>[<span class="variable">node</span>] ← <span class="keyword">TRUE</span>
+    
+    <span class="comment">// Recursively visit all unvisited neighbors of the same piece type</span>
+    <span class="keyword">FOR</span> each <span class="variable">neighbor</span> in adjacency list of <span class="variable">node</span>
+        <span class="keyword">IF</span> <span class="variable">visited</span>[<span class="variable">neighbor</span>] <span class="operator">=</span> <span class="keyword">FALSE</span> <span class="keyword">AND</span> <span class="variable">board</span>[<span class="variable">neighbor</span>] <span class="operator">=</span> <span class="variable">piece</span> <span class="keyword">THEN</span>
+            <span class="function">DFS</span>(<span class="variable">neighbor</span>, <span class="variable">piece</span>, <span class="variable">visited</span>, <span class="variable">board</span>)
+        <span class="keyword">ENDIF</span>
+    <span class="keyword">ENDFOR</span></code></pre>
+        </div>
+    </div>
+
+    <h2 id="autogui">AutoGUI</h2>
+    <p><em>We'll be skipping the AutoGUI implementation (only going to give a quick primer) as the rest of the functions are relatively well documented and entirely up to you when it comes to designing (e.g., PrintPosition). Feel free to browse through other game implementations for inspiration.</em></p>
+    <p>The AutoGUI is how we'll bring our game to life! While we've been exclusively working on GamesmanClassic, the rest of the document will be worked on two additional repos, GamesmanUWAPI (middleware) and GamesmanUni (frontend).</p>
+    <p>This won't be a AutoGUI guide, as we already have a pre-existing <a href="https://docs.google.com/presentation/d/1GYycLPVysUYYnIJNQJVD6wkm9RrqjtdWGAnNxKJt0Hg/edit">guide</a> (this other <a href="https://docs.google.com/presentation/d/1dlmkFpWNQPv5xcX_ywzlFJk8qUSF9KLNv6k0EF9f8CA/edit">one</a> is outdated but has some important information that is necessary), so instead we'll go into the specifics of Abrobad AutoGUI design and how you can complete AutoGUI for your own game!</p>
+    <p>Recall that we've been representing the board as a string. What we want to do is represent each one of the slots in the string as a designated position on some image. What image you may ask? Well, the image that you see when you're playing any game on GamesmanUni! Take an empty board of Abrobad for example:</p>
+    <figure>
+        <img src="./images/empty_board.png" alt="An empty board">
+        <figcaption>Figure: An empty Abrobad board</figcaption>
+    </figure>
+    <p>Each one of the 12 slots in the position string should correspond to each one of the actual positions on the image. Depending on the dimensions of the image, we can define the tile centers to correspond to each of the 12 slots of the position string. When creating the actual image, I would just stick to using ChatGPT to come up with the .svg file. Alternate tools include Adobe Illustrator and Google Drawings.</p>
+    <p>The caveat with Abrobad is that we need to have a custom button, <code>ENDGAME</code>. We can include one additional slot to the AutoGUI position string for the new button and give it a custom value. We'll demark this value as <code>E</code> for <code>ENDGAME</code> and when the autogui position string has 'E' at the very end, that means the {ENDGAME} button should appear.</p>
+
+    <h2 id="conclusion">Conclusion</h2>
+    <p><em>Congrats if you've made it this far in the document!</em></p>
+    <p>Gamescrafters was a very rewarding and fun experience during my time at Cal, and I hope that you (the reader) will also take pride in the group similarly to how I felt. Feel free to <a href="https://www.linkedin.com/in/adityatummala/">contact me</a> if you are interested in talking more about Gamescrafters, Cal, or puzzles in general, I would love to talk!</p>
+    <p>In the meanwhile... check out <a href="https://nyc.cs.berkeley.edu/uni/games/abrobad/variants/standard">Abrobad</a>!</p>
+
+</body>
+</html>

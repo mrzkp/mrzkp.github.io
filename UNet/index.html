@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1</title>
+    <style>
+
+       .center-container {
+            text-align: center;
+        }
+
+        .github-button  {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: rgb(74, 114, 173);
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .github-button.left {
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .github-button.right {
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .github-button:hover {
+            background-color: rgb(161, 31, 31);
+        }
+        ul {
+            display: table; 
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+        figure {
+            margin: 0;
+        }
+        .toc {
+            list-style-type: decimal;
+            padding-left: 1; /* Removes unnecessary padding */
+            margin-left: 0; /* Ensures alignment to the left */
+            text-align: left; /* Aligns the text */
+        }
+        .toc a {
+            text-decoration: none;
+        }
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            max-width: 800px;
+            margin: 20px auto;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .algorithm {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+        }
+        .algorithm-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        .algorithm-block {
+            margin-left: 20px;
+        }
+        .comment {
+            color: #6c757d;
+            font-style: italic;
+        }
+        .keyword {
+            font-weight: bold;
+        }
+        .equation {
+            margin: 10px 0;
+        }
+        .title {
+            text-align: center;
+            font-size: 2em;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive; /* Fancy cursive font */
+            font-size: 3em;
+            color: #333;
+        }
+        .byline {
+            font-size: 1.2em;
+            color: rgb(0, 0, 0);
+            text-align: center;
+        }
+    </style>
+
+    <!-- MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [["$", "$"], ["\\(", "\\)"]],
+            },
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+</head>
+
+
+
+
+
+<body>
+    <div class="title">Math for UNet (simplified)</div>
+    <p class="byline">Case Study by Aditya Tummala</p>
+    <p class="byline">Deep Learning for Image Processing</p>
+    <h3 style="font-weight: normal; font-size: 1.5em;">Table of Contents</h3>
+    <ul class="toc">
+        <li><a href="#Preliminaries">Preliminaries</a></li>
+        <li><a href="#Trivia">Trivia</a></li>
+        <li><a href="#Overview">Overview</a></li>
+        <li><a href="#NN">Naive NN</a></li>
+        <li><a href="#results">Training Results</a></li>
+        <li><a href="#final">Final Thoughts and Future Modifications</a></li>
+    </ul>
+    &nbsp;
+
+
+    <h4> Preliminaries </h4>
+
+    <p>
+        This case study assumes basic understanding of NNs and Math for ML. If you are confused at any point, throw what I wrote into an LLM and maybe it will help =].
+    </p>
+
+    <h4> Trivia </h4>
+
+    <p>
+        <li>
+            UNet is a type of NN that is used for image processing tasks. The literal architecture is a "U" shape, hence the name.
+        </li>
+        <li>
+            The UNet was originally intended for medical image processing tasks, specifically for segmentation.
+        </li>
+    </p>
+
+    <h4> Overview </h4>
+        <p>
+        So, why UNet, and why is it a popular choice for nearly every image processing task? 
+        </p> 
+        
+        <p>
+            Simply enough, the UNet revolutionalized the idea of 'skip connections'. Essentially, as you encode information throughout the UNet, there are praticular
+        </p>
+
+</body>
