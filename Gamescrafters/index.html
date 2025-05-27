@@ -82,7 +82,6 @@
             border-radius: 3px;
             color: #212529;
         }
-        /* Syntax highlighting - light theme */
         .keyword { color: #8250df; font-weight: bold; }
         .type { color: #953800; }
         .function { color: #0550ae; }
@@ -91,8 +90,6 @@
         .number { color: #0550ae; }
         .operator { color: #0550ae; }
         .variable { color: #953800; }
-        
-        /* Code example section styling */
         .code-example {
             margin: 25px 0;
             padding: 20px;
@@ -105,52 +102,37 @@
             color: #2c3e50;
             font-weight: bold;
         }
-        .algorithm {
-            background-color: #ffffff;
-            padding: 20px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            margin: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .algorithm h4 {
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-        .algorithm pre {
-            background-color: #f8f9fa;
-            border: none;
-            box-shadow: none;
-        }
-        img {
-            max-width: 60%;
-            height: auto;
-            display: block;
-            margin: 20px auto;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        figcaption {
-            text-align: center;
-            font-style: italic;
-            color: #7f8c8d;
-            margin-top: 5px;
-        }
         .toc {
-            list-style-type: decimal;
-            padding-left: 20px;
-            margin: 20px auto;
-            text-align: left;
+            list-style: none;
+            padding: 0 0 0 20px;
+            margin: 20px auto 20px 40px;
             max-width: 600px;
         }
+        .toc li {
+            margin: 6px 0;
+            padding: 0;
+        }
         .toc a {
-            color: #3498db;
+            display: block;
+            padding: 10px 20px;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            border-radius: 0 4px 4px 0;
         }
         .toc a:hover {
+            background-color: #e9ecef;
             color: #e74c3c;
+            padding-left: 25px;
+        }
+        .toc a:active,
+        .toc a:focus {
+            background-color: #e9ecef;
+            outline: none;
+            padding-left: 25px;
         }
         .github-button {
             display: inline-block;
@@ -174,20 +156,22 @@
 <body>
     <h1>Gamescrafters: GamesmanClassic Introductory Guide</h1>
     <div class="center-container">
-        <a href="https://github.com/GamesCrafters/GamesmanClassic" class="github-button" target="_blank">GitHub</a>
+        <a href="https://github.com/GamesCrafters/GamesmanClassic/blob/master/src/mabrobad.c" class="github-button" target="_blank">GitHub</a>
         <a href="https://nyc.cs.berkeley.edu/uni/games/abrobad/variants/standard" class="github-button" target="_blank">Play Abrobad</a>
     </div>
 
     <h3>Table of Contents</h3>
-    <ul class="toc">
-        <li><a href="#beginnings">Beginnings</a></li>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#tic-tac-toe">Solving Tic-Tac-Toe</a></li>
-        <li><a href="#abrobad">Dissecting Abrobad</a></li>
-        <li><a href="#solving-abrobad">Solving Abrobad</a></li>
-        <li><a href="#autogui">AutoGUI</a></li>
-        <li><a href="#conclusion">Conclusion</a></li>
-    </ul>
+    <nav>
+        <ul class="toc">
+            <li><a href="#beginnings">Beginnings</a></li>
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#tic-tac-toe">Tic-Tac-Toe</a></li>
+            <li><a href="#abrobad">Abrobad</a></li>
+            <li><a href="#solving-abrobad">Solving</a></li>
+            <li><a href="#autogui">AutoGUI</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+        </ul>
+    </nav>
 
     <h2 id="beginnings">Beginnings...</h2>
     <p>So, you want to add a game to <em>Gamesman Classic</em>! Well, you've come to the right place. This document provides an in-depth explanation of how a game, such as <em>Abrobad</em>, can be integrated into the system.</p>
@@ -202,53 +186,186 @@
     <h2 id="prerequisites">Prerequisites</h2>
     <p>Before we begin, one should be familiar with Classic's hashing scheme, which can be read <a href="https://github.com/GamesCrafters/GamesmanClassic/blob/master/doc/files/generic_hash_api.pdf">here</a>. Furthermore, you should have fully implemented Homefun 1.</p>
     <p>Needless to say, you should have GamesmanClassic downloaded to your device for the entire 'solver' portion, and need GamesmanUWAPI and GamesmanUni for the AutoGUI portion. You can find all the repos <a href="https://github.com/GamesCrafters">here</a>.</p>
-
     <h3>Terminology</h3>
     <p>Piece and Stone may be used interchangeably.<br>Slot refers to one of the 12 places a piece can be placed or moved to.</p>
 
     <h2 id="tic-tac-toe">Solving <em>Tic-Tac-Toe</em></h2>
-    <p>Similar to a design document before starting a large project, it is important to understand your game's ins and outs and begin thinking of data structures and algorithms that you can leverage to solve the game!</p>
+    <p> To start, we'll go over how <em>Tic-Tac-Toe</em> is implemented in GamesmanClassic. Afterwards, we'll look into a more complicated example that I ended up solving, <em>Abrobad</em>.</p>
     <p><em>Tic-Tac-Toe</em> (<em>TTT</em>) is a classic two-player, zero-sum game played on a 3×3 grid. Two players alternate marking the cells with their respective symbols (X and O). The game can end in either:</p>
     <ol>
         <li>A <strong>win</strong> for one player if they manage to place three of their marks in a row (horizontal, vertical, or diagonal).</li>
         <li>A <strong>tie</strong> if all cells are filled and no three-in-a-row exists.</li>
     </ol>
+    <p>Before implementing *Tic-Tac-Toe* in GamesmanClassic, it’s crucial to understand its mechanics and design efficient data structures and algorithms to solve it. Below, we detail the key components of its implementation as found in `mttt.c`.</p>
 
-    <h2>Gameboard Representation and Designing Data Structures</h2>
-    <h3>Board as a Base-3 Integer</h3>
-    <p>In the <code>mttt.c</code> code, each board position is represented internally as an integer in the range [0, 3⁹ - 1]. Each cell in the 3×3 grid can hold one of three values:</p>
+    <h3>Gameboard Representation and Designing Data Structures</h3>
+    <h4>Board as a Base-3 Integer</h4>
+    <p>In `mttt.c`, each board position is represented as an integer in the range [0, 3⁹ - 1], where each of the 9 cells in the 3×3 grid can be in one of three states:</p>
     <ul>
         <li><code>Blank</code> → 0</li>
         <li><code>o</code> → 1</li>
         <li><code>x</code> → 2</li>
     </ul>
-    <p>Hence, one integer in base-3 conveniently encodes all 9 slots.</p>
-
-    <h4>Example of Conversion to/from Base 3</h4>
+    <p>This base-3 encoding offers several significant advantages:</p>
+    <ol>
+        <li><strong>Memory Efficiency</strong>: A single 32-bit integer (range up to 2,147,483,647) can easily represent all possible Tic-Tac-Toe positions (3⁹ = 19,683 total positions), making it extremely space-efficient.</li>
+        <li><strong>Fast Hashing</strong>: The integer itself serves as a perfect hash function, eliminating the need for complex hashing algorithms. Each position has a unique integer representation.</li>
+        <li><strong>Cache Performance</strong>: Single integer comparisons are among the fastest operations a CPU can perform, and the compact representation improves cache locality when storing many positions.</li>
+        <li><strong>Simplified State Management</strong>: The entire game state is contained in a single value, making it easy to copy, compare, and pass between functions.</li>
+    </ol>
+    <p>The array `g3Array` contains the powers of 3, where each element represents 3<sup>position</sup> for each cell in the grid. Since our board state is encoded as a base-3 integer, we can use this array to convert between the two representations. We'll precompute this array on the very top of the file.</p>
+    <div class="code-example">
+        <h4>Example: Base-3 Powers Array</h4>
+        <pre><code><span class="type">int</span> <span class="variable">g3Array</span>[] <span class="operator">=</span> { <span class="number">1</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">27</span>, <span class="number">81</span>, <span class="number">243</span>, <span class="number">729</span>, <span class="number">2187</span>, <span class="number">6561</span> };</code></pre>
+    </div>
+    <h4>Position Conversion Functions</h4>
+    <p>Two functions handle conversions between the integer representation and an array of cell states:</p>
     <ul>
-        <li><code>PositionToBlankOX(POSITION thePos, BlankOX *theBlankOX)</code>: Decomposes the integer <code>thePos</code> into its base-3 digits (from least significant to most) and fills an array <code>theBlankOX</code> of size 9, specifying whether each cell is <code>Blank</code>, <code>o</code>, or <code>x</code>.</li>
-        <li><code>BlankOXToPosition(BlankOX *theBlankOX)</code>: Takes the array <code>theBlankOX</code> of 9 elements and combines them into a base-3 integer.</li>
+        <li><code>PositionToBlankOX(POSITION thePos, BlankOX *theBlankOX)</code>: Converts the integer `thePos` into a 9-element array `theBlankOX` by extracting base-3 digits, mapping them to `Blank`, `o`, or `x`.</li>
+        <li><code>BlankOXToPosition(BlankOX *theBlankOX)</code>: Combines a 9-element `theBlankOX` array into a single base-3 integer using `g3Array`.</li>
     </ul>
-
-    <h3>Symmetry Considerations (Optional)</h3>
-    <p>Because many <em>Tic-Tac-Toe</em> positions are symmetric via rotation or reflection, <code>mttt.c</code> optionally uses <em>canonicalization</em> to avoid storing equivalent positions in the database multiple times. This is controlled by:</p>
+    <p>These conversions are critical for manipulating the board state efficiently.</p>
+    <h4>Symmetry Handling</h4>
+    <p>*Tic-Tac-Toe* exhibits symmetries (rotations and reflections), which `mttt.c` leverages to reduce the number of unique positions stored. This is optional and controlled by:</p>
     <div class="code-example">
         <h4>Example: Symmetry Configuration</h4>
         <pre><code><span class="comment">/**
  * If kSupportsSymmetries is TRUE, we reduce memory usage by canonicalizing.
  */</span>
-<span class="type">BOOLEAN</span> <span class="variable">kSupportsSymmetries</span> <span class="operator">=</span> <span class="keyword">TRUE</span>;
-
-<span class="comment">/**
- * Maps any position to its canonical (smallest) form.
- * @param position The position to canonicalize
- * @return The canonical position
- */</span>
-<span class="type">POSITION</span> <span class="function">GetCanonicalPosition</span>(<span class="type">POSITION</span> <span class="variable">position</span>) {
-    <span class="comment">// Rotates or flips 'position', picks the smallest</span>
-    <span class="comment">// integer encoding among them, and returns it</span>
+<span class="type">BOOLEAN</span> <span class="variable">kSupportsSymmetries</span> <span class="operator">=</span> <span class="keyword">TRUE</span>;</code></pre>
+    </div>
+    <p>The function `GetCanonicalPosition(POSITION position)` computes the smallest integer representation among all symmetric equivalents by applying 8 symmetry operations (4 rotations and 4 flipped rotations), defined in `gSymmetryMatrix`.</p>
+    <h4>Game-Specific Data Structures</h4>
+    <p>Several data structures are used:</p>
+    <ul>
+        <li><code>BlankOX</code>: An enum with values `Blank`, `o`, `x` to represent cell states.</li>
+        <li><code>gPosition</code>: A global struct containing:
+            <ul>
+                <li><code>BlankOX board[BOARDSIZE]</code>: The current board state.</li>
+                <li><code>BlankOX nextPiece</code>: The piece to be placed next (`x` or `o`).</li>
+                <li><code>int piecesPlaced</code>: The number of pieces on the board.</li>
+            </ul>
+        </li>
+        <li><code>g3Array</code>: An array of powers of 3 for position encoding.</li>
+        <li><code>gSymmetryMatrix[NUMSYMMETRIES][BOARDSIZE]</code>: A 2D array mapping each cell to its position under each symmetry operation.</li>
+    </ul>
+    <h2 id="core-functions">Core Functions: <code>GenerateMoves</code>, <code>DoMove</code>, and <code>Primitive</code></h2>
+    <p>Similarly to HF1, we'll need to define three core functions: <code>GenerateMoves()</code>, <code>DoMove()</code>, and <code>Primitive()</code></p>
+    <p>As a refresher, here's the high-level idea of how these functions work:</p>
+    <ol>
+        <li><code>MOVELIST GenerateMove*(POSITION position)</code>
+            <ol>
+                <li>"Return the head of a list of the legal moves from the input position."</li>
+                <li>Think of a LinkedList from CS61A. GenerateMove should return a *MOVELIST*, which essentially is a LinkedList. The head of a linked list of the legal moves from the input position.</li>
+            </ol>
+        </li>
+        <li><code>POSITION DoMove(POSITION position, MOVE move)</code>
+            <ol>
+                <li>Return the child position reached when the input move is made from the input position.</li>
+            </ol>
+        </li>
+        <li><code>VALUE Primitive(POSITION position)</code>
+            <ol>
+                <li>Return win, lose, or tie if the input position is primitive. Otherwise, return undecided.</li>
+            </ol>
+        </li>
+    </ol>
+    <h3 id="generating-moves">Generating Moves</h3>
+    <p>The <code>GenerateMoves(POSITION position)</code> function generates a linked list of all possible moves from a given position. In <em>Tic-Tac-Toe</em>, a move is placing a piece in an empty cell:</p>
+    <ul>
+        <li>It converts the position to a <code>BlankOX</code> array (if not using <code>gPosition</code>).</li>
+        <li>It iterates over the 9 cells, adding the index of each <code>Blank</code> cell to the move list using <code>CreateMovelistNode</code>.</li>
+    </ul>
+    <div class="code-example">
+        <h4>Example: Move Generation</h4>
+        <pre><code><span class="type">MOVELIST</span> <span class="operator">*</span><span class="function">GenerateMoves</span>(<span class="type">POSITION</span> <span class="variable">position</span>) {
+    <span class="type">int</span> <span class="variable">index</span>;
+    <span class="type">MOVELIST</span> <span class="operator">*</span><span class="variable">moves</span> <span class="operator">=</span> <span class="keyword">NULL</span>;
+    <span class="keyword">if</span> (<span class="operator">!</span><span class="variable">gUseGPS</span>)
+        <span class="function">PositionToBlankOX</span>(<span class="variable">position</span>, <span class="variable">gPosition</span>.<span class="variable">board</span>);
+    <span class="keyword">for</span> (<span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">index</span> <span class="operator"><</span> <span class="variable">BOARDSIZE</span>; <span class="operator">++</span><span class="variable">index</span>)
+        <span class="keyword">if</span> (<span class="variable">gPosition</span>.<span class="variable">board</span>[<span class="variable">index</span>] <span class="operator">==</span> <span class="variable">Blank</span>)
+            <span class="variable">moves</span> <span class="operator">=</span> <span class="function">CreateMovelistNode</span>(<span class="variable">index</span>, <span class="variable">moves</span>);
+    <span class="keyword">return</span> <span class="variable">moves</span>;
 }</code></pre>
     </div>
+    <p>Moves are represented as integers from 0 to 8, corresponding to the 9 cells.</p>
+
+    <h3 id="applying-moves">Applying Moves</h3>
+    <p>The <code>DoMove(POSITION position, MOVE move)</code> function applies a move to the current position and returns the new position. It supports two modes:</p>
+    <ul>
+        <li><strong>With `gUseGPS` (Global Position State):</strong>
+            <ul>
+                <li>Updates <code>gPosition.board[move]</code> with <code>gPosition.nextPiece</code>.</li>
+                <li>Toggles <code>gPosition.nextPiece</code> between <code>x</code> and <code>o</code>.</li>
+                <li>Increments <code>gPosition.piecesPlaced</code>.</li>
+                <li>Converts the updated board back to a position integer.</li>
+            </ul>
+        </li>
+        <li><strong>Without `gUseGPS`:</strong>
+            <ul>
+                <li>Converts the position to a <code>BlankOX</code> array.</li>
+                <li>Determines the current player with <code>WhoseTurn</code>.</li>
+                <li>Updates the position integer by adding the player’s value (1 for <code>o</code>, 2 for <code>x</code>) multiplied by the appropriate power of 3 from <code>g3Array</code>.</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="code-example">
+        <h4>Example: Applying a Move</h4>
+        <pre><code><span class="type">POSITION</span> <span class="function">DoMove</span>(<span class="type">POSITION</span> <span class="variable">position</span>, <span class="type">MOVE</span> <span class="variable">move</span>) {
+    <span class="keyword">if</span> (<span class="variable">gUseGPS</span>) {
+        <span class="variable">gPosition</span>.<span class="variable">board</span>[<span class="variable">move</span>] <span class="operator">=</span> <span class="variable">gPosition</span>.<span class="variable">nextPiece</span>;
+        <span class="variable">gPosition</span>.<span class="variable">nextPiece</span> <span class="operator">=</span> <span class="variable">gPosition</span>.<span class="variable">nextPiece</span> <span class="operator">==</span> <span class="variable">x</span> <span class="operator">?</span> <span class="variable">o</span> <span class="operator">:</span> <span class="variable">x</span>;
+        <span class="operator">++</span><span class="variable">gPosition</span>.<span class="variable">piecesPlaced</span>;
+        <span class="keyword">return</span> <span class="function">BlankOXToPosition</span>(<span class="variable">gPosition</span>.<span class="variable">board</span>);
+    } <span class="keyword">else</span> {
+        <span class="type">BlankOX</span> <span class="variable">board</span>[<span class="variable">BOARDSIZE</span>];
+        <span class="function">PositionToBlankOX</span>(<span class="variable">position</span>, <span class="variable">board</span>);
+        <span class="keyword">return</span> <span class="variable">position</span> <span class="operator">+</span> <span class="variable">g3Array</span>[<span class="variable">move</span>] <span class="operator">*</span> (<span class="type">int</span>) <span class="function">WhoseTurn</span>(<span class="variable">board</span>);
+    }
+}</code></pre>
+    </div>
+    <p>An <code>UndoMove(MOVE move)</code> function is also provided to revert moves when using <code>gUseGPS</code>.</p>
+
+    <h3 id="primitive-positions" class="font-weight-bold">Primitive Positions</h3>
+    <p>The <code>Primitive(POSITION position)</code> function determines if a position is terminal:</p>
+    <ul>
+        <li>Checks for three-in-a-row using <code>ThreeInARow</code> across all rows, columns, and diagonals.
+            <ul>
+                <li>If found, returns <code>lose</code> (standard game) or <code>win</code> (misère game) for the player to move, as the previous player won.</li>
+            </ul>
+        </li>
+        <li>Checks if the board is full (no <code>Blank</code> cells) using <code>AllFilledIn</code> or <code>gPosition.piecesPlaced</code>.
+            <ul>
+                <li>If full and no win, returns <code>tie</code>.</li>
+            </ul>
+        </li>
+        <li>Otherwise, returns <code>undecided</code>.</li>
+    </ul>
+    <div class="code-example">
+        <h4>Example: Primitive Position Check</h4>
+        <pre><code><span class="type">VALUE</span> <span class="function">Primitive</span>(<span class="type">POSITION</span> <span class="variable">position</span>) {
+    <span class="keyword">if</span> (<span class="operator">!</span><span class="variable">gUseGPS</span>)
+        <span class="function">PositionToBlankOX</span>(<span class="variable">position</span>, <span class="variable">gPosition</span>.<span class="variable">board</span>);
+    <span class="keyword">if</span> (<span class="function">ThreeInARow</span>(<span class="variable">gPosition</span>.<span class="variable">board</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>) <span class="operator">||</span>
+        <span class="function">ThreeInARow</span>(<span class="variable">gPosition</span>.<span class="variable">board</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>) <span class="operator">||</span>
+        <span class="function">ThreeInARow</span>(<span class="variable">gPosition</span>.<span class="variable">board</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>) <span class="operator">||</span>
+        <span class="function">ThreeInARow</span>(<span class="variable">gPosition</span>.<span class="variable">board</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">6</span>) <span class="operator">||</span>
+        <span class="function">ThreeInARow</span>(<span class="variable">gPosition</span>.<span class="variable">board</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">7</span>) <span class="operator">||</span>
+        <span class="function">ThreeInARow</span>(<span class="variable">gPosition</span>.<span class="variable">board</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">8</span>) <span class="operator">||</span>
+        <span class="function">ThreeInARow</span>(<span class="variable">gPosition</span>.<span class="variable">board</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">8</span>) <span class="operator">||</span>
+        <span class="function">ThreeInARow</span>(<span class="variable">gPosition</span>.<span class="variable">board</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>))
+        <span class="keyword">return</span> <span class="variable">gStandardGame</span> <span class="operator">?</span> <span class="variable">lose</span> <span class="operator">:</span> <span class="variable">win</span>;
+    <span class="keyword">else</span> <span class="keyword">if</span> ((<span class="variable">gUseGPS</span> <span class="operator">&&</span> (<span class="variable">gPosition</span>.<span class="variable">piecesPlaced</span> <span class="operator">==</span> <span class="variable">BOARDSIZE</span>)) <span class="operator">||</span>
+             ((<span class="operator">!</span><span class="variable">gUseGPS</span>) <span class="operator">&&</span> <span class="function">AllFilledIn</span>(<span class="variable">gPosition</span>.<span class="variable">board</span>)))
+        <span class="keyword">return</span> <span class="variable">tie</span>;
+    <span class="keyword">else</span>
+        <span class="keyword">return</span> <span class="variable">undecided</span>;
+}</code></pre>
+    </div>
+    <p>The helper function <code>ThreeInARow(BlankOX *theBlankOX, int a, int b, int c)</code> checks if three cells contain the same non-<code>Blank</code> value.</p>
+</body>
+</html>
 
     <h2 id="abrobad">Dissecting <em>Abrobad</em></h2>
     <p>Similar to a design document before starting a large project, it is important to understand your game's ins and outs and begin thinking of data structures and algorithms that you can leverage to solve the game!</p>
@@ -372,27 +489,6 @@
     </div>
     <p>Given the <code>hash_data[]</code> array, we can set the total number of positions for the game by defining the value of <code>gNumberOfPositions</code>. Finally, we can construct the hash of the initial position of the game, <code>gInitialPosition</code>. I recommend reviewing the Hashing document if you are what we're doing here.</p>
 
-    <h2><code>GenerateMoves</code>, <code>DoMove</code>, and <code>Primitive</code></h2>
-    <p>Similarly to HF1, we'll need to define three core functions: <code>GenerateMoves()</code>, <code>DoMove()</code>, and <code>Primitive()</code></p>
-    <p>As a refresher, here's the high-level idea of how these functions work:</p>
-    <ol>
-        <li><code>MOVELIST GenerateMove*(POSITION position)</code>
-            <ol>
-                <li>"Return the head of a list of the legal moves from the input position."</li>
-                <li>Think of a LinkedList from CS61A. GenerateMove should return a *MOVELIST*, which essentially is a LinkedList. The head of a linked list of the legal moves from the input position.</li>
-            </ol>
-        </li>
-        <li><code>POSITION DoMove(POSITION position, MOVE move)</code>
-            <ol>
-                <li>Return the child position reached when the input move is made from the input position.</li>
-            </ol>
-        </li>
-        <li><code>VALUE Primitive(POSITION position)</code>
-            <ol>
-                <li>Return win, lose, or tie if the input position is primitive. Otherwise, return undecided.</li>
-            </ol>
-        </li>
-    </ol>
 
     <h3>Completing <code>Primitive()</code></h3>
     <p>To determine whether a position is primitive, we need to count the number of strongly connected components (SCCs) for the player's pieces. Say that we iterate through the game board starting from the top leftmost position. We use Depth First Search (DFS) from that slot to designate the entire "clump" of the player's pieces as a single SCC.</p>
