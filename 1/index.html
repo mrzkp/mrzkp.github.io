@@ -1,236 +1,363 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 1</title>
-
-    <h2>Overview of Project</h2>
-    <p>
-        The goal of the project was to take the digitized Prokudin-Gorskii glass plate images and produce a colored image.
-    </p>
-    
-    <h2>Approach</h2>
-    <p>
-        Since .jpg files are small, it was possible to exhaustively search the entire image within a range of [-15, 15] in both horizontal and vertical directions. 
-        However, for .tif files, a different approach was necessary. The .tif images had to be recursively aligned via an image pyramid, starting from lower to higher 
-        resolutions, with each level of resolution scaled by a factor of 2.
-    </p>
-    
-    <h2>Bells and Whistles</h2>
-    
-    <h3>Sobel Edge Detection</h3>
-    <p>
-        Firstly, I started with Sobel edge detection. The thought process behind using it was that if I could identify edges, then I would have another feature to align the three channels on. 
-        "Surely this would help," I thought.
-    </p>
-    <p>
-        To my surprise, this did a great deal, especially for the Emir image.
-    </p>
-    <p>
-        To my understanding, Sobel detection works by identifying edges by calculating the gradients for each pixel. I used Sobel in two ways. One was during the alignment process, 
-        where I would iterate over the x-gradients and y-gradients to find the best alignment.
-    </p>
-    <p>
-        The second use of Sobel was in post-processing for auto cropping.
-    </p>
-    
-    <h3>Auto Cropping</h3>
-    <p>
-        I then constructed an auto-crop feature. The motivation behind this was to remove unsightly borders.
-    </p>
-    <p>
-        I used Sobel here as well. I generated a mask on a grayed version of the image. Afterwards, I created a threshold where I checked if the output edges were in the 95th percentile. 
-        If they were, I would iterate over the rows and columns of that section of the image and determine the boundaries of the image.
-    </p>
-    <p>
-        Finally, to ensure that I didn't shave off too much of the image, I added a limit to how much could be cropped.
-    </p>
-    
-    <h3>Auto Contrast</h3>
-    <p>
-        Lastly, I created an auto-contrast function. Some of the images were a bit too unrealistic to be photographs and were missing details, so I decided to add auto contrast.
-    </p>
-    <p>
-        Originally, I planned to implement the functionality of <code>cv2.exposure.equalize_adapthist()</code> myself. However, my implementation added some runtime and made the images grainier, 
-        so I decided to stick with OpenCV's implementation instead.
-    </p>
-
-    <style>
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            display: inline-block;
-            margin: 10px;
-            text-align: center;
-        }
-        figure {
-            margin: 0;
-        }
-    </style>
-</head>
-<body>
-    <h1>Project 1</h1>
-    <ul>
-        <li>
-            <figure>
-                <img src="media/cathedral.jpg" alt="Cathedral" width="300">
-                <figcaption>Cathedral - Green: [2, 5], Red: [3, 12]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/church.jpg" alt="Church" width="300">
-                <figcaption>Church - Green: [4, 25], Red: [-4, 58]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/emir.jpg" alt="Emir" width="300">
-                <figcaption>Emir - Green: [24, 49], Red: [40, 107]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/harvesters.jpg" alt="Harvesters" width="300">
-                <figcaption>Harvesters - Green: [17, 60], Red: [14, 124]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/icon.jpg" alt="Icon" width="300">
-                <figcaption>Icon - Green: [17, 42], Red: [23, 90]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/lady.jpg" alt="Lady" width="300">
-                <figcaption>Lady - Green: [9, 56], Red: [13, 119]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/melons.jpg" alt="Melons" width="300">
-                <figcaption>Melons - Green: [10, 80], Red: [13, 177]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/monastery.jpg" alt="Monastery" width="300">
-                <figcaption>Monastery - Green: [2, -3], Red: [2, 3]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/onion_church.jpg" alt="Onion Church" width="300">
-                <figcaption>Onion Church - Green: [26, 51], Red: [36, 107]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/sculpture.jpg" alt="Sculpture" width="300">
-                <figcaption>Sculpture - Green: [-11, 33], Red: [-26, 140]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/self_portrait.jpg" alt="Self Portrait" width="300">
-                <figcaption>Self Portrait - Green: [29, 78], Red: [37, 176]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/three_generations.jpg" alt="Three Generations" width="300">
-                <figcaption>Three Generations - Green: [12, 53], Red: [9, 111]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/tobolsk.jpg" alt="Tobolsk" width="300">
-                <figcaption>Tobolsk - Green: [3, 3], Red: [3, 6]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/train.jpg" alt="Train" width="300">
-                <figcaption>Train - Green: [2, 42], Red: [30, 86]</figcaption>
-            </figure>
-        </li>
-    </ul>
-
-    <h2>Additional Images</h2>
-    <ul>
-        <li>
-            <figure>
-                <img src="media/camel.jpg" alt="Camel" width="300">
-                <figcaption>Camel - Green: [-4, 47], Red: [-20, 98]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/table.jpg" alt="Table" width="300">
-                <figcaption>Table - Green: [22, 38], Red: [36, 77]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="media/house.jpg" alt="House" width="300">
-                <figcaption>House - Green: [15, 62], Red: [12, 158]</figcaption>
-            </figure>
-        </li>
-    </ul>
-    <h2>Images before Sobel Edge, Auto Contrasting, and Auto Cropping</h2>
-    <ul>
-        <li>
-            <figure>
-                <img src="before/camel.jpg" alt="Camel" width="300">
-                <figcaption>Camel - Green: [-4, 47], Red: [-20, 98]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="before/cathedral.jpg" alt="Cathedral" width="300">
-                <figcaption>Cathedral - Green: [2, 5], Red: [3, 12]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="before/church.jpg" alt="Church" width="300">
-                <figcaption>Church - Green: [4, 25], Red: [-4, 58]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="before/monastery.jpg" alt="Monastery" width="300">
-                <figcaption>Monastery - Green: [2, -3], Red: [2, 3]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="before/three_generations.jpg" alt="Three Generations" width="300">
-                <figcaption>Three Generations - Green: [12, 53], Red: [9, 111]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="before/tobolsk.jpg" alt="Tobolsk" width="300">
-                <figcaption>Tobolsk - Green: [3, 3], Red: [3, 6]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="before/train.jpg" alt="Train" width="300">
-                <figcaption>Train - Green: [2, 42], Red: [30, 86]</figcaption>
-            </figure>
-        </li>
-        <li>
-            <figure>
-                <img src="before/emir.jpg" alt="Emir" width="300">
-                <figcaption>Emir - Green: [24, 49], Red: [40, 107]</figcaption>
-            </figure>
-        </li>
-    </ul>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Colorizing the Prokudin-Gorskii Photo Collection</title>
+        <style>
+            @font-face {
+                font-family: "Alliance No.2";
+                src: url("fonts/AllianceNo2-Regular.otf") format("opentype");
+                font-weight: normal;
+                font-style: normal;
+            }
+            @font-face {
+                font-family: "Alliance No.2";
+                src: url("fonts/AllianceNo2-Bold.otf") format("opentype");
+                font-weight: bold;
+                font-style: normal;
+            }
+            body {
+                font-family: "Alliance No.2", Consolas, monospace;
+                margin: 20px;
+                letter-spacing: -0.025em;
+                font-weight: normal;
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: left;
+            }
+            h1 {
+                text-align: center;
+                letter-spacing: -0.01em;
+            }
+            h2 {
+                letter-spacing: -0.01em;
+            }
+            h3 {
+                letter-spacing: -0.01em;
+            }
+            ul {
+                list-style-type: none;
+                padding: 0;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                position: relative;
+                width: 100vw;
+                left: 50%;
+                margin-left: -50vw;
+                margin-right: -50vw;
+            }
+            li {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 10px;
+                flex: 1 1 300px;
+            }
+            figure {
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+            img {
+                width: 300px;
+                height: auto;
+                object-fit: contain;
+            }
+            figcaption {
+                margin-top: 5px;
+                font-size: 0.9em;
+                text-align: center;
+            }
+            code {
+                font-family: Consolas, monospace;
+                background-color: #f5f5f5;
+                padding: 2px 4px;
+                border-radius: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Colorizing the Prokudin-Gorskii Photo Collection</h1>
+        <h2>Overview</h2>
+        <p>
+            The goal was to take the digitized Prokudin-Gorskii glass plate
+            images and produce a colored image.
+        </p>
+        <h2>Approach</h2>
+        <p>
+            Since .jpg files are small, it was possible to exhaustively search
+            the entire image within a range of [-15, 15] in both horizontal and
+            vertical directions. However, for .tif files, a different approach
+            was necessary. The .tif images had to be recursively aligned via an
+            image pyramid, starting from lower to higher resolutions, with each
+            level of resolution scaled by a factor of 2.
+        </p>
+        <h2>Extras</h2>
+        <h3>Sobel Edge Detection</h3>
+        <p>
+            Firstly, I started with Sobel edge detection. The thought process
+            behind using it was that if I could identify edges, then I would
+            have another feature to align the three channels on. "Surely this
+            would help," I thought.
+        </p>
+        <p>
+            To my surprise, this did a great deal, especially for the Emir
+            image.
+        </p>
+        <p>
+            To my understanding, Sobel detection works by identifying edges by
+            calculating the gradients for each pixel. I used Sobel in two ways.
+            One was during the alignment process, where I would iterate over the
+            x-gradients and y-gradients to find the best alignment.
+        </p>
+        <p>The second use of Sobel was in post-processing for auto cropping.</p>
+        <h3>Auto Cropping</h3>
+        <p>
+            I then constructed an auto-crop feature. The motivation behind this
+            was to remove unsightly borders.
+        </p>
+        <p>
+            I used Sobel here as well. I generated a mask on a grayed version of
+            the image. Afterwards, I created a threshold where I checked if the
+            output edges were in the 95th percentile. If they were, I would
+            iterate over the rows and columns of that section of the image and
+            determine the boundaries of the image.
+        </p>
+        <p>
+            Finally, to ensure that I didn't shave off too much of the image, I
+            added a limit to how much could be cropped.
+        </p>
+        <h3>Auto Contrast</h3>
+        <p>
+            Lastly, I created an auto-contrast function. Some of the images were
+            a bit too unrealistic to be photographs and were missing details, so
+            I decided to add auto contrast.
+        </p>
+        <p>
+            Originally, I planned to implement the functionality of
+            <code>cv2.exposure.equalize_adapthist()</code> myself. However, my
+            implementation added some runtime and made the images grainier, so I
+            decided to stick with OpenCV's implementation instead.
+        </p>
+        <h2>Results</h2>
+        <ul>
+            <li>
+                <figure>
+                    <img src="media/cathedral.jpg" alt="Cathedral" />
+                    <figcaption>
+                        Cathedral - Green: [2, 5], Red: [3, 12]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/church.jpg" alt="Church" />
+                    <figcaption>
+                        Church - Green: [4, 25], Red: [-4, 58]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/emir.jpg" alt="Emir" />
+                    <figcaption>
+                        Emir - Green: [24, 49], Red: [40, 107]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/harvesters.jpg" alt="Harvesters" />
+                    <figcaption>
+                        Harvesters - Green: [17, 60], Red: [14, 124]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/icon.jpg" alt="Icon" />
+                    <figcaption>
+                        Icon - Green: [17, 42], Red: [23, 90]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/lady.jpg" alt="Lady" />
+                    <figcaption>
+                        Lady - Green: [9, 56], Red: [13, 119]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/melons.jpg" alt="Melons" />
+                    <figcaption>
+                        Melons - Green: [10, 80], Red: [13, 177]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/monastery.jpg" alt="Monastery" />
+                    <figcaption>
+                        Monastery - Green: [2, -3], Red: [2, 3]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/onion_church.jpg" alt="Onion Church" />
+                    <figcaption>
+                        Onion Church - Green: [26, 51], Red: [36, 107]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/sculpture.jpg" alt="Sculpture" />
+                    <figcaption>
+                        Sculpture - Green: [-11, 33], Red: [-26, 140]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/self_portrait.jpg" alt="Self Portrait" />
+                    <figcaption>
+                        Self Portrait - Green: [29, 78], Red: [37, 176]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img
+                        src="media/three_generations.jpg"
+                        alt="Three Generations"
+                    />
+                    <figcaption>
+                        Three Generations - Green: [12, 53], Red: [9, 111]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/tobolsk.jpg" alt="Tobolsk" />
+                    <figcaption>
+                        Tobolsk - Green: [3, 3], Red: [3, 6]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/train.jpg" alt="Train" />
+                    <figcaption>
+                        Train - Green: [2, 42], Red: [30, 86]
+                    </figcaption>
+                </figure>
+            </li>
+        </ul>
+        <h2>Additional Images</h2>
+        <ul>
+            <li>
+                <figure>
+                    <img src="media/camel.jpg" alt="Camel" />
+                    <figcaption>
+                        Camel - Green: [-4, 47], Red: [-20, 98]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/table.jpg" alt="Table" />
+                    <figcaption>
+                        Table - Green: [22, 38], Red: [36, 77]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="media/house.jpg" alt="House" />
+                    <figcaption>
+                        House - Green: [15, 62], Red: [12, 158]
+                    </figcaption>
+                </figure>
+            </li>
+        </ul>
+        <h2>Images before Sobel Edge, Auto Contrasting, and Auto Cropping</h2>
+        <ul>
+            <li>
+                <figure>
+                    <img src="before/camel.jpg" alt="Camel" />
+                    <figcaption>
+                        Camel - Green: [-4, 47], Red: [-20, 98]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="before/cathedral.jpg" alt="Cathedral" />
+                    <figcaption>
+                        Cathedral - Green: [2, 5], Red: [3, 12]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="before/church.jpg" alt="Church" />
+                    <figcaption>
+                        Church - Green: [4, 25], Red: [-4, 58]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="before/monastery.jpg" alt="Monastery" />
+                    <figcaption>
+                        Monastery - Green: [2, -3], Red: [2, 3]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img
+                        src="before/three_generations.jpg"
+                        alt="Three Generations"
+                    />
+                    <figcaption>
+                        Three Generations - Green: [12, 53], Red: [9, 111]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="before/tobolsk.jpg" alt="Tobolsk" />
+                    <figcaption>
+                        Tobolsk - Green: [3, 3], Red: [3, 6]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="before/train.jpg" alt="Train" />
+                    <figcaption>
+                        Train - Green: [2, 42], Red: [30, 86]
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="before/emir.jpg" alt="Emir" />
+                    <figcaption>
+                        Emir - Green: [24, 49], Red: [40, 107]
+                    </figcaption>
+                </figure>
+            </li>
+        </ul>
+    </body>
 </html>

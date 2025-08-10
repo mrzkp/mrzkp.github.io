@@ -1,356 +1,391 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part 1: Fun with Filters</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-        .long-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
-
-        h1, h2, h3 {
-            color: #2c3e50;
-        }   
-
-        h1 {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        h2 {
-            border-bottom: 2px solid #2980b9;
-            padding-bottom: 10px;
-            margin-top: 40px;
-        }
-
-        h3 {
-            margin-top: 30px;
-        }
-
-        p {
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        figure {
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        figure img {
-            max-width: 55%;
-            width: 32%;
-            height: auto;
-            border: 2px solid #ccc;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            margin: 0 10px;
-        }
-
-        figure figcaption {
-            width: 100%;
-            text-align: center;
-            margin-top: 10px;
-            font-size: 0.9em;
-            color: #7f8c8d;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .threshold {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-
-        code {
-            background-color: #ecf0f1;
-            padding: 2px 4px;
-            border-radius: 4px;
-        }
-
-        @media (min-width: 600px) {
-            figure img {
-                max-width: 45%;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Fun with Filters and Frequencies</title>
+        <style>
+            @font-face {
+                font-family: "Alliance No.2";
+                src: url("fonts/AllianceNo2-Regular.otf") format("opentype");
+                font-weight: normal;
+                font-style: normal;
             }
-        }
-    </style>
-</head>
-<body>
-    <h1> Project Overview </h1>
-
-    <p> In this project, we utilize guassian filters, 2d convolutions, pyramid and laplacian stacks, and various image manipulation tools to blur, sharpen, and combine (blending and creating hybrids) images!</p>
-    <h1>Part 1: Fun with Filters</h1>
-
-    <h2>Part 1.1: Finite Difference Operator</h2>
-    <figure>
-        <img src="part1/cameraman.png">
-        <figcaption>OG Picture</figcaption>
-    </figure>
-
-    <p> First, we compute the partial derivatives of the image in both x and y directions. We also define a ' humble' finite difference as our filter in the x and y directions as Dx = [1 -1] and Dy = [1 -1]^t.</p>
-
-    <h2>Finite Difference Operator</h2>
-
-    <h3>Partial Derivative in X and Y</h3>
-    <figure>
-        <img src="part1/camermangX.png" alt="Partial Derivative in X">
-        <figcaption>Partial Derivative in X</figcaption>
-    </figure>
-    <figure>
-        <img src="part1/camermangY.png" alt="Partial Derivative in Y">
-        <figcaption>Partial Derivative in Y</figcaption>
-    </figure>
-
-    <p>
-        Using these values, we convolve the image with these operators to obtain gradient components Gx and Gy, where Gx is the horizontal changes and vice versa.
-        
-        The gradient magnitude is calculated as the Euclidean norm of these components, which we can define as Gradient Magnitude = sqrt(Gx^2 + Gy^2). </p>
-
-    <h3>Gradient Magnitude Image</h3>
-    <figure>
-        <img src="part1/camermangGRAD.png" alt="Gradient Magnitude">
-        <figcaption>Gradient Magnitude</figcaption>
-    </figure>
-
-    <p> Finally, we can threshold the gradient magnitude to create a binarized mapping where the pixels shown are above the threshold of 0.289.</p>
-
-    <h3>Binarized</h3>
-    <figure>
-        <img src="part1/camermangBINARIZED.png">
-        <figcaption>With a threshold val of 0.289</figcaption>
-    </figure>
-
-    <h2>Part 1.2: Derivative of Gaussian (DoG) Filter</h2>
-
-    <p>
-        To make the results less noisy, we can use the Gaussian Filter. First, we apply the filter to blur the image. Only then do we apply the difference operators.
-    </p>
-
-    <p> Overall this process requires two convolutions: One of them for the Gaus Filter and the other one being the convoling the blurred image with the steps from part 1.1</p>
-
-    <h3> Images </h3>
-    <figure>
-        <img src="part1/grad_DOG.png">
-        <figcaption> Top row shows the Gaus Filter implementation results and the bottom shows the DOG filter</figcaption>
-    </figure>
-
-    <p> As you can see in the bottom row, I included something known as the "DOG FILTER". This is a slight alternation from what was outlined above, and instead we convole the filter with the difference operators, which would be computationally more efficient.</p>
-
-
-    <p>
-        In my code implementation, I wrote a line that essentially checks if the two images had values within a very small tolerance to see if they were equal, to which it returned true.</p>
-    <figure>
-        <img src = "part1/grad_DOG_BINARIZED.png">
-        <figcaption> BINARIZED </figcaption>
-    </figure>
-
-    <p> Notice that these results look the exact same!</p>
-
-    <h1>Part 2: Fun with Frequencies!</h1>
-
-    <h2>Part 2.1: Image "Sharpening"</h2>
-
-    <p> The idea behind image sharpening is to first blur the image, then subtract it from the original image. This leaves us with the higher frequencies since blurring leaves us with the lower frequencies.</p>
-
-    <p> We then can optionally increase the sharpness factor with an alpha (a) value, which scales proportionally to the higher frequency image.</p>
-
-        <img src="part2.1/taj_progression.png" width=94%>
-    
-        <img src="part2.1/flowers_progression.png" width = 94%>
-    
-    <p> Notice as the alpha value increases, the image appears to get more 'sharper'!</p>
-
-    <p> Below is one of my favorite portrays of Dante's Inferno when he is walking through the 'dense' forest in Canto 1</p>
-
-    <p> However, one exercise that we can do is to sharpen the blurred image to see if we can reproduce the same original image. Since there is information loss when we blur an image, sharpening that blurred image cannot produce the same results as the original image.</p>
-
-    <figure>
-        <img src="part2.1/dante.png">
-        <img src="part2.1/dante_blurred.png">
-        <img src="part2.1/dante_sharp2.png">
-        <img src="part2.1/dante_sharpTEST.png">
-        <figcaption> Original, Blurred, then followed with a sharpened version with an alpha val of 1.5 and then a sharpened version of 0.5</figcaption>
-    </figure>
-
-    <p> Notice that regardless of the alpha value, it seems like the image just looks pops more detail out, while also lossing some of the more subtle details from the original image.</p>
-
-    <h2>Part 2.2: Hybrid Images </h2>
-
-    <p> For the hybrid section, we can combine the low frequencies of one image with the high frequencies of another. The goal is to be able to see more of the lower frequency image when far away, but to see the higher frequency image when you are closer.</p>
-
-    <p> Once again, we apply a Gaussian filter to separate the lower and higher frequencies from the original images.</p>
-
-    <p> Here is the hybrid image of Derick and Nutmeg combined.</p>
-
-    <figure>
-        <img src = "part2.2/DerekPicture.jpg">
-        <img src = "part2.2/nutmeg.jpg">
-        <figcaption> Original Images</figcaption>
-    </figure>
-
-    <figure>
-        <img src = "part2.2/derekNONE.png">
-        <figcaption> Hybrid Img</figcaption>
-    </figure>
-
-    <p> I also incorporated color into the hybrid process to see how it would turn out. Below are the following results:</p>
-
-    <figure>
-        <img title="Low Freqs" src = "part2.2/derekLOW.png">
-        <img title="High Freqs" src = "part2.2/derekHIGH.png">
-        <img title = "Both" src = "part2.2/derekBOTH.png">
-    </figure>
-
-    <p> Personally, I think having color for only Nutmeg (high frequencies) was the best result.</p>
-    <p> Note: I used some color balancing to make the images darker for a better blend.</p>
-
-    <p> Here are some of the other hybrids that I created!</p>
-
-    <p> Here, I combined two of my favorite twitch emotes together: xdd and xpp to create a 'lovely' cat of sorts</p>
-
-    <figure>
-        <img src="part2.2/xdd.jpg">
-        <img src="part2.2/xpp.jpg">
-        <figcaption>Original Images</figcaption>
-    </figure>
-
-    <figure>
-        <img src="part2.2/xddBOTH.png">
-        <figcaption>A lovely cat?</figcaption>
-    </figure>
-
-    <p> Now for my personal favorite hybrid...</p>
-
-    <figure>
-        <img src = "part2.2/cat.jpeg">
-        <img src = "part2.2/dog.jpeg">
-        <figcaption>Original Images</figcaption>
-    </figure>
-
-    <figure>
-        <img src = "part2.2/animalsBOTH.png">
-        <figcaption>My Magnum Opus???</figcaption>
-    </figure>
-
-    <p>What a crazy picture!!!!</p>
-
-    <p> Here are the FFTs for the following pictures </p>
-
-    <figure>
-        <img src = "part2.2/dogfft1.png">
-        <img src = "part2.2/catfft1.png">
-        <img src = "part2.2/lowfreqfft.png">
-        <img src = "part2.2/highfreqfft1.png">
-        <img src = "part2.2/endfft.png">
-        <figcaption>FFTs</figcaption>
-    </figure>
-
-    <p> Now here's a failure case...</p>
-
-    <figure>
-        <img src = "part2.2/pepe1.jpeg">
-        <img src = "part2.2/pepe2.jpeg">
-        <figcaption>Original Images</figcaption>
-    </figure>
-
-    <figure>
-        <img src = "part2.2/failure.png">
-        <figcaption>Failure Hybrid</figcaption>
-    </figure>
-
-    <p> Pretty sure the failure in this case was the fact that the shapes of the two pepes were just TOO different with one another. At least the eyes lined up reasonably well...</p>
-
-    <h2>Part 2.3: Gaussian and Laplacian Stacks</h2>
-
-    <p> For the final portion of the project, we aim to create an Oraple!!!</p>
-
-    <figure>
-        <img src="part2.3/apple.jpeg">
-        <img src="part2.3/orange.jpeg">
-        <figcaption>The apple and orange that will be used to create our Oraple...</figcaption>
-    </figure>
-
-    <p> To do this, we first need to implement a Gaussian and Laplacian stack.</p>
-
-    <p> The Gaussian Stack was done by blurring an image with a Guassian over and over again, whereas the Laplacian stack was created by taking the difference between each of the layers in the Gaussian Stack.</p>
-
-    <p> Finally, to blend the images together, I created a vertical mask which is then placed over each layer of the stack, and then blended them together!</p>
-
-    <figure>
-        <img src = "part2.3/recreation.png" width = 65%>
-    </figure>
-
-    <p> One more note, since we are incorporating color, everything that we do has to be done on each of the separate color channels separatly, which means we'll have to recombine the results afterwards.</p>
-
-    <p> Our final results looks like this!!!</p>
-
-    <figure>
-        <img src="part2.3/XDDD.png", title="Oraple!!">
-    </figure>
-
-    <p>What a oraple... I achieved this with some extreme sigma values on the gaussian filter function, so my stacks may look a bit 'off', but if I tone them down, I risk ruining the perfection known as that Oraple above^^^. However, when lowering the values, the stacks looks much more normal.</p>
-
-
-    <h2>Part 2.4: Multiresolution Blending (a.k.a. the oraple!)"</h2>
-
-    <p> Now, time for some victory laps!</p>
-
-
-    <figure>
-        <img src="part2.4/dark.jpg">
-        <img src="part2.4/middle.jpg">
-        <figcaption>Images</figcaption>
-    </figure>
-
-    <figure>
-        <img src="part2.4/step1.png">
-        <figcaption>Blended</figcaption>
-    </figure>
-
-    <p> Before, we had a vertical mask, so this time, we'll custom make a unique shapped mask! In this case, a mask of Dante!</p>
-
-    <figure title="Irregular Shape">
-        <img src = "part2.4/dante.jpg">
-        <img src = "part2.4/castle2.jpg">
-        <figcaption>Blended</figcaption>
-    </figure>
-
-    <figure title = "Dante in a castle?">
-        <img src = "part2.4/danteINcastle.png">
-    </figure>
-
-    <p> and heres the mask that I used... Notice that there is a shadow on Dante's left... That was because my mask was not as close as it could of been to Dante.</p>
-    
-    <figure>
-        <img src = "part2.4/mask.png">
-    </figure>
-
-    <p> And finally here's the recreation of the figure for Dante in the Castle</p>
-
-    <figure>
-        <img src = "part2.4/recreationDANTE.png" width = 65%>
-    </figure>
-
-</body>
+            @font-face {
+                font-family: "Alliance No.2";
+                src: url("fonts/AllianceNo2-Bold.otf") format("opentype");
+                font-weight: bold;
+                font-style: normal;
+            }
+            body {
+                font-family: "Alliance No.2", Consolas, monospace;
+                margin: 20px;
+                letter-spacing: -0.025em;
+                font-weight: normal;
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: left;
+                background-color: #fff;
+                color: #333;
+            }
+            h1 {
+                text-align: center;
+                letter-spacing: -0.01em;
+                margin-bottom: 30px;
+            }
+            h2 {
+                letter-spacing: -0.01em;
+                margin-top: 40px;
+            }
+            h3 {
+                letter-spacing: -0.01em;
+                margin-top: 30px;
+            }
+            p {
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+            .long-image {
+                width: 100%;
+                height: auto;
+                display: block;
+                margin: 0 auto;
+            }
+            figure {
+                margin: 20px 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                position: relative;
+                width: 100vw;
+                left: 50%;
+                margin-left: -50vw;
+                margin-right: -50vw;
+            }
+            figure img {
+                width: 350px;
+                height: auto;
+                margin: 10px;
+            }
+            figure figcaption {
+                width: 100%;
+                text-align: center;
+                margin-top: 10px;
+                font-size: 0.9em;
+            }
+            .threshold {
+                color: #e74c3c;
+                font-weight: bold;
+            }
+            code {
+                font-family: Consolas, monospace;
+                background-color: #f5f5f5;
+                padding: 2px 4px;
+                border-radius: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Fun with Filters and Frequencies</h1>
+        <h2>Overview</h2>
+        <p>
+            We utilize gaussian filters, 2d convolutions, pyramid and laplacian
+            stacks, and various image manipulation tools to blur, sharpen, and
+            combine (blending and creating hybrids) images!
+        </p>
+        <h2>Part 1: Fun with Filters</h2>
+        <h3>Part 1.1: Finite Difference Operator</h3>
+        <figure>
+            <img src="part1/cameraman.png" />
+            <figcaption>OG Picture</figcaption>
+        </figure>
+        <p>
+            First, we compute the partial derivatives of the image in both x and
+            y directions. We also define a 'humble' finite difference as our
+            filter in the x and y directions as Dx = [1 -1] and Dy = [1 -1]^t.
+        </p>
+        <h3>Partial Derivative in X and Y</h3>
+        <figure>
+            <img src="part1/camermangX.png" alt="Partial Derivative in X" />
+            <figcaption>Partial Derivative in X</figcaption>
+        </figure>
+        <figure>
+            <img src="part1/camermangY.png" alt="Partial Derivative in Y" />
+            <figcaption>Partial Derivative in Y</figcaption>
+        </figure>
+        <p>
+            Using these values, we convolve the image with these operators to
+            obtain gradient components Gx and Gy, where Gx is the horizontal
+            changes and vice versa. The gradient magnitude is calculated as the
+            Euclidean norm of these components, which we can define as Gradient
+            Magnitude = sqrt(Gx^2 + Gy^2).
+        </p>
+        <h3>Gradient Magnitude Image</h3>
+        <figure>
+            <img src="part1/camermangGRAD.png" alt="Gradient Magnitude" />
+            <figcaption>Gradient Magnitude</figcaption>
+        </figure>
+        <p>
+            Finally, we can threshold the gradient magnitude to create a
+            binarized mapping where the pixels shown are above the threshold of
+            0.289.
+        </p>
+        <h3>Binarized</h3>
+        <figure>
+            <img src="part1/camermangBINARIZED.png" />
+            <figcaption>With a threshold val of 0.289</figcaption>
+        </figure>
+        <h3>Part 1.2: Derivative of Gaussian (DoG) Filter</h3>
+        <p>
+            To make the results less noisy, we can use the Gaussian Filter.
+            First, we apply the filter to blur the image. Only then do we apply
+            the difference operators.
+        </p>
+        <p>
+            Overall this process requires two convolutions: One of them for the
+            Gaussian Filter and the other one being the convolving the blurred
+            image with the steps from part 1.1
+        </p>
+        <h3>Images</h3>
+        <figure>
+            <img src="part1/grad_DOG.png" />
+            <figcaption>
+                Top row shows the Gaussian Filter implementation results and the
+                bottom shows the DOG filter
+            </figcaption>
+        </figure>
+        <p>
+            As you can see in the bottom row, I included something known as the
+            "DOG FILTER". This is a slight alternation from what was outlined
+            above, and instead we convolve the filter with the difference
+            operators, which would be computationally more efficient.
+        </p>
+        <p>
+            In my code implementation, I wrote a line that essentially checks if
+            the two images had values within a very small tolerance to see if
+            they were equal, to which it returned true.
+        </p>
+        <figure>
+            <img src="part1/grad_DOG_BINARIZED.png" />
+            <figcaption>BINARIZED</figcaption>
+        </figure>
+        <p>Notice that these results look the exact same!</p>
+        <h2>Part 2: Fun with Frequencies!</h2>
+        <h3>Part 2.1: Image "Sharpening"</h3>
+        <p>
+            The idea behind image sharpening is to first blur the image, then
+            subtract it from the original image. This leaves us with the higher
+            frequencies since blurring leaves us with the lower frequencies.
+        </p>
+        <p>
+            We then can optionally increase the sharpness factor with an alpha
+            (a) value, which scales proportionally to the higher frequency
+            image.
+        </p>
+        <figure>
+            <img src="part2.1/taj_progression.png" />
+        </figure>
+        <figure>
+            <img src="part2.1/flowers_progression.png" />
+        </figure>
+        <p>
+            Notice as the alpha value increases, the image appears to get more
+            'sharper'!
+        </p>
+        <p>
+            Below is one of my favorite portrays of Dante's Inferno when he is
+            walking through the 'dense' forest in Canto 1
+        </p>
+        <p>
+            However, one exercise that we can do is to sharpen the blurred image
+            to see if we can reproduce the same original image. Since there is
+            information loss when we blur an image, sharpening that blurred
+            image cannot produce the same results as the original image.
+        </p>
+        <figure>
+            <img src="part2.1/dante.png" />
+            <img src="part2.1/dante_blurred.png" />
+            <img src="part2.1/dante_sharp2.png" />
+            <img src="part2.1/dante_sharpTEST.png" />
+            <figcaption>
+                Original, Blurred, then followed with a sharpened version with
+                an alpha val of 1.5 and then a sharpened version of 0.5
+            </figcaption>
+        </figure>
+        <p>
+            Notice that regardless of the alpha value, it seems like the image
+            just pops more detail out, while also losing some of the more subtle
+            details from the original image.
+        </p>
+        <h3>Part 2.2: Hybrid Images</h3>
+        <p>
+            For the hybrid section, we can combine the low frequencies of one
+            image with the high frequencies of another. The goal is to be able
+            to see more of the lower frequency image when far away, but to see
+            the higher frequency image when you are closer.
+        </p>
+        <p>
+            Once again, we apply a Gaussian filter to separate the lower and
+            higher frequencies from the original images.
+        </p>
+        <p>Here is the hybrid image of Derek and Nutmeg combined.</p>
+        <figure>
+            <img src="part2.2/DerekPicture.jpg" />
+            <img src="part2.2/nutmeg.jpg" />
+            <figcaption>Original Images</figcaption>
+        </figure>
+        <figure>
+            <img src="part2.2/derekNONE.png" />
+            <figcaption>Hybrid Img</figcaption>
+        </figure>
+        <p>
+            I also incorporated color into the hybrid process to see how it
+            would turn out. Below are the following results:
+        </p>
+        <figure>
+            <img src="part2.2/derekLOW.png" />
+            <img src="part2.2/derekHIGH.png" />
+            <img src="part2.2/derekBOTH.png" />
+        </figure>
+        <p>
+            Personally, I think having color for only Nutmeg (high frequencies)
+            was the best result.
+        </p>
+        <p>
+            <b>Note:</b> I used some color balancing to make the images darker
+            for a better blend.
+        </p>
+        <p>Here are some of the other hybrids that I created!</p>
+        <p>
+            Here, I combined two of my favorite twitch emotes together: xdd and
+            xpp to create a 'lovely' cat of sorts
+        </p>
+        <figure>
+            <img src="part2.2/xdd.jpg" />
+            <img src="part2.2/xpp.jpg" />
+            <figcaption>Original Images</figcaption>
+        </figure>
+        <figure>
+            <img src="part2.2/xddBOTH.png" />
+            <figcaption>A lovely cat?</figcaption>
+        </figure>
+        <p>Now for my personal favorite hybrid...</p>
+        <figure>
+            <img src="part2.2/cat.jpeg" />
+            <img src="part2.2/dog.jpeg" />
+            <figcaption>Original Images</figcaption>
+        </figure>
+        <figure>
+            <img src="part2.2/animalsBOTH.png" />
+            <figcaption>My Magnum Opus???</figcaption>
+        </figure>
+        <p>What a crazy picture!!!!</p>
+        <p>Here are the FFTs for the following pictures</p>
+        <figure>
+            <img src="part2.2/dogfft1.png" />
+            <img src="part2.2/catfft1.png" />
+            <img src="part2.2/lowfreqfft.png" />
+            <img src="part2.2/highfreqfft1.png" />
+            <img src="part2.2/endfft.png" />
+            <figcaption>FFTs</figcaption>
+        </figure>
+        <p>Now here's a failure case...</p>
+        <figure>
+            <img src="part2.2/pepe1.jpeg" />
+            <img src="part2.2/pepe2.jpeg" />
+            <figcaption>Original Images</figcaption>
+        </figure>
+        <figure>
+            <img src="part2.2/failure.png" />
+            <figcaption>Failure Hybrid</figcaption>
+        </figure>
+        <p>
+            Pretty sure the failure in this case was the fact that the shapes of
+            the two pepes were just TOO different with one another. At least the
+            eyes lined up reasonably well...
+        </p>
+        <h3>Part 2.3: Gaussian and Laplacian Stacks</h3>
+        <p>For the final portion, we aim to create an Oraple!!!</p>
+        <figure>
+            <img src="part2.3/apple.jpeg" />
+            <img src="part2.3/orange.jpeg" />
+            <figcaption>
+                The apple and orange that will be used to create our Oraple...
+            </figcaption>
+        </figure>
+        <p>
+            To do this, we first need to implement a Gaussian and Laplacian
+            stack.
+        </p>
+        <p>
+            The Gaussian Stack was done by blurring an image with a Gaussian
+            over and over again, whereas the Laplacian stack was created by
+            taking the difference between each of the layers in the Gaussian
+            Stack.
+        </p>
+        <p>
+            Finally, to blend the images together, I created a vertical mask
+            which is then placed over each layer of the stack, and then blended
+            them together!
+        </p>
+        <figure>
+            <img src="part2.3/recreation.png" />
+        </figure>
+        <p>
+            One more note, since we are incorporating color, everything that we
+            do has to be done on each of the separate color channels separately,
+            which means we'll have to recombine the results afterwards.
+        </p>
+        <p>Our final results looks like this!!!</p>
+        <figure>
+            <img src="part2.3/XDDD.png" title="Oraple!!" />
+        </figure>
+        <p>
+            What an oraple... I achieved this with some extreme sigma values on
+            the gaussian filter function, so my stacks may look a bit 'off', but
+            if I tone them down, I risk ruining the perfection known as that
+            Oraple above^^^. However, when lowering the values, the stacks look
+            much more normal.
+        </p>
+        <h3>Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h3>
+        <p>Now, time for some victory laps!</p>
+        <figure>
+            <img src="part2.4/dark.jpg" />
+            <img src="part2.4/middle.jpg" />
+            <figcaption>Images</figcaption>
+        </figure>
+        <figure>
+            <img src="part2.4/step1.png" />
+            <figcaption>Blended</figcaption>
+        </figure>
+        <p>
+            Before, we had a vertical mask, so this time, we'll custom make a
+            unique shaped mask! In this case, a mask of Dante!
+        </p>
+        <figure>
+            <img src="part2.4/dante.jpg" />
+            <img src="part2.4/castle2.jpg" />
+            <figcaption>Blended</figcaption>
+        </figure>
+        <figure>
+            <img src="part2.4/danteINcastle.png" />
+        </figure>
+        <p>
+            and here's the mask that I used... Notice that there is a shadow on
+            Dante's left... That was because my mask was not as close as it
+            could have been to Dante.
+        </p>
+        <figure>
+            <img src="part2.4/mask.png" />
+        </figure>
+        <p>
+            And finally here's the recreation of the figure for Dante in the
+            Castle
+        </p>
+        <figure>
+            <img src="part2.4/recreationDANTE.png" />
+        </figure>
+    </body>
 </html>
