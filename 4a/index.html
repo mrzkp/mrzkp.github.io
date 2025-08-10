@@ -84,21 +84,25 @@
     </head>
     <body>
         <h1>Image Warping and Mosaicing</h1>
-
         <h2>Overview</h2>
         <p>
-            Given two or more photographs, we aim to create an image mosaic by
+            Given two or more photographs, I aim to create an image mosaic by
             registering, projective warping, resampling, and compositing them.
-            To accomplish this, we compute homographies to warp images.
+            To accomplish this, I compute homographies to warp images.
         </p>
-
+        <p>
+            <strong>Key techniques implemented:</strong> Homography estimation
+            using SVD, inverse warping with bilinear interpolation, image
+            rectification, multi-resolution blending using distance transforms,
+            Harris corner detection with ANMS, feature descriptor extraction,
+            KD-tree matching with Lowe's ratio test, RANSAC for robust fitting.
+        </p>
         <h2>Shooting the Images</h2>
         <p>
-            Unfortunately, at the time of me shooting these images, I am
-            TERRIBLY sick. So, had to result in taking photos of my messy
-            apartment and from the balcony of FSM at UC Berkeley...
+            Unfortunately, at the time of shooting these images, I was TERRIBLY
+            sick. So, had to resort to taking photos of my messy apartment and
+            from the balcony of FSM...
         </p>
-
         <div class="image-row">
             <figure>
                 <img src="images/C1_25.png" alt="Counter1" width="275" />
@@ -109,7 +113,6 @@
                 <figcaption>Picture of Counter Angle 2</figcaption>
             </figure>
         </div>
-
         <div class="image-row">
             <figure>
                 <img src="images/fsm1_25.jpg" alt="FSM1" width="275" />
@@ -122,7 +125,6 @@
                 </figcaption>
             </figure>
         </div>
-
         <div class="image-row">
             <figure>
                 <img src="images/gate1_25.jpg" alt="gate1" width="275" />
@@ -133,7 +135,6 @@
                 <figcaption>Picture of a Gate more included</figcaption>
             </figure>
         </div>
-
         <div class="image-row">
             <figure>
                 <img src="images/garden1_25.jpg" alt="garden1" width="275" />
@@ -144,20 +145,17 @@
                 <figcaption>Another picture of the Garden</figcaption>
             </figure>
         </div>
-
         <h2>Recover Homographies</h2>
         <p>
-            Before we warp the images into alignment, we must first recover the
+            Before warping the images into alignment, I must first recover the
             parameters of the transformation between each pair of images.
         </p>
-
         <h3>We want to recover a projective transformation such that</h3>
         <p>
             \[ \begin{bmatrix} a & b & c \\ d & e & f \\ g & h & 1 \end{bmatrix}
             \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} = \begin{bmatrix} wx' \\
             wy' \\ w \end{bmatrix} \]
         </p>
-
         <h3>
             Notice that if we expand this out, then we have the following system
             of equations:
@@ -169,7 +167,6 @@
             \begin{cases} ax + by + c - gxx' - hyx' = x' \\ dx + ey + f - gxy' -
             hyy' = y' \end{cases} \]
         </p>
-
         <h3>Which we can finally transform to...</h3>
         <p>
             \[ \implies \begin{bmatrix} x & y & 1 & 0 & 0 & 0 & -xx' & -yx' \\ 0
@@ -177,37 +174,31 @@
             b \\ c \\ d \\ e \\ f \\ g \\ h \end{bmatrix} = \begin{bmatrix} x'
             \\ y' \end{bmatrix} \]
         </p>
-
         <p>
-            Thus, given some n amount of correspondence points, we can stack
+            Thus, given some n amount of correspondence points, I can stack
             these equations to form a 2n * 9 matrix A. For each correspondence
-            point (x, y) -> (x', y'), we formulate two equations:
+            point (x, y) -> (x', y'), I formulate two equations:
         </p>
-
         <div class="centered-text">
             <p>x'(h31x + h32y + h33) = h11x + h12y + h13</p>
             <p>y'(h31x + h32y + h33) = h21x + h22y + h23</p>
         </div>
-
         <p>These equations are what is used to construct A.</p>
         <p>
-            Afterwards, we use SVD on A to solve for AH = b to construct H,
-            which is our homography matrix.
+            Afterwards, I use SVD on A to solve for AH = b to construct H, which
+            is the homography matrix.
         </p>
-
         <h2>Warping Images</h2>
         <p>
-            For warping, we take our Homography matrix H, and inverse it to an
+            For warping, I take the Homography matrix H, and inverse it to an
             adjusted coordinate plane and warped points. This essentially maps
-            out points in the warped image to the original image that we are
+            out points in the warped image to the original image that I am
             attaching the warp to.
         </p>
-
         <p>
             Below are the correspondence points for the 'Counter' Images that I
             used.
         </p>
-
         <div class="image-row">
             <figure>
                 <img src="warp/warp.png" alt="correspondence1" width="275" />
@@ -218,12 +209,10 @@
                 <figcaption>Correspondences on Counter 2</figcaption>
             </figure>
         </div>
-
         <p>
-            Afterwards, we can apply warp either Counter 1 to Counter 2, or vice
+            Afterwards, I can apply warp either Counter 1 to Counter 2, or vice
             versa. Shown below are both results!
         </p>
-
         <div class="image-row">
             <figure>
                 <img src="warp/warped1.jpg" alt="warped1" width="275" />
@@ -234,28 +223,24 @@
                 <figcaption>Counter 2 Warped to Counter 1</figcaption>
             </figure>
         </div>
-
         <p>
             <b>NOTE:</b> Warping the same image to itself results in the same
-            image! A good sanity check to ensure your warp function isn't doing
+            image! A good sanity check to ensure the warp function isn't doing
             something crazy...
         </p>
-
         <h2>Image Rectification</h2>
         <p>
-            Given that we are able to warp our images, we can rectify specific
-            objects in an image! Essentially we take an irregular quadrilateral
-            and can turn it into a regular rectangle. This can be done by
-            selecting the correspondence points solely around the corners around
-            the area of desire and choosing the second set of points as the
-            corners of the image.
+            Given that I am able to warp images, I can rectify specific objects
+            in an image! Essentially I take an irregular quadrilateral and can
+            turn it into a regular rectangle. This can be done by selecting the
+            correspondence points solely around the corners around the area of
+            desire and choosing the second set of points as the corners of the
+            image.
         </p>
-
         <p>
             Below are two examples of image rectification on some books that I
             enjoyed reading!
         </p>
-
         <div class="image-row">
             <figure>
                 <img src="rect/rect1_25.jpg" alt="Rezero" width="275" />
@@ -266,9 +251,7 @@
                 <figcaption>Picture of JoJo's Part 3 Vol 1</figcaption>
             </figure>
         </div>
-
         <p>And the results...</p>
-
         <div class="image-row">
             <figure>
                 <img src="rect/res1.png" alt="Rezero" width="275" />
@@ -279,39 +262,34 @@
                 <figcaption>Rectified JoJo's Part 3 Vol 1</figcaption>
             </figure>
         </div>
-
         <h2>Blending Images to Create Mosaics</h2>
         <p>
-            Finally, using our warping function, we can construct a mosaic
-            between warped and original images (even warped to warped images if
-            you really want).
+            Using the warping function, I can construct a mosaic between warped
+            and original images (even warped to warped images if desired).
         </p>
-
         <p>
             The process goes as follows... Compute Homography Matrix H between
             correspondence points from both images and choose either image (in
-            our case, the first one, even both work). Given this image and H, we
-            then apply our warping. During our warping process, I also
+            this case, the first one, though both work). Given this image and H,
+            I then apply warping. During the warping process, I also
             specifically constructed output based on the warped image to help in
             creating the width and height of the final mosaic, as well as
-            accommodating for any translations. Afterwards, we place the warped
+            accommodating for any translations. Afterwards, I place the warped
             image on the left and the unaltered second image on the right.
-            Finally, to ensure clean results, we apply some blending techniques.
-            The only difference is, we have to accommodate for an irregular mask
-            here. We can construct one by creating binary masks of both images
-            on where there are pixels located and computing the distance
-            transform on each of these masks to create weights for each image.
-            The lowest frequency component is then blended using weights
-            computed from distance transforms. For the higher frequency, we use
-            a binary to select between the two images based on which is closer
-            at each pixel.
+            Finally, to ensure clean results, I apply some blending techniques.
+            The only difference is, I have to accommodate for an irregular mask
+            here. I can construct one by creating binary masks of both images on
+            where there are pixels located and computing the distance transform
+            on each of these masks to create weights for each image. The lowest
+            frequency component is then blended using weights computed from
+            distance transforms. For the higher frequency, I use a binary to
+            select between the two images based on which is closer at each
+            pixel.
         </p>
-
         <p>
-            Here we showcase two standard examples, one simple example, and one
-            more extreme example of mosaics created from the pictures.
+            Here are two standard examples, one simple example, and one more
+            extreme example of mosaics created from the pictures.
         </p>
-
         <div class="image-row">
             <figure>
                 <img src="images/C1_25.png" alt="Counter1" width="275" />
@@ -322,7 +300,6 @@
                 <figcaption>Picture of Counter Angle 2</figcaption>
             </figure>
         </div>
-
         <div style="text-align: center">
             <figure>
                 <img
@@ -333,12 +310,10 @@
                 <figcaption>Standard Example - Mosaic of Counter</figcaption>
             </figure>
         </div>
-
         <p>
             Don't get tricked by bottom left! The shadow of the chair was
             naturally 'off-looking'... =]
         </p>
-
         <div class="image-row">
             <figure>
                 <img src="images/fsm1_25.jpg" alt="FSM1" width="275" />
@@ -351,7 +326,6 @@
                 </figcaption>
             </figure>
         </div>
-
         <div style="text-align: center">
             <figure>
                 <img src="mosaics/FSM_final.jpg" alt="FSM mosaic" width="450" />
@@ -360,9 +334,7 @@
                 </figcaption>
             </figure>
         </div>
-
         <p>Now here's a simple example.</p>
-
         <div class="image-row">
             <figure>
                 <img src="images/gate1_25.jpg" alt="gate1" width="275" />
@@ -373,19 +345,16 @@
                 <figcaption>Picture of a Gate more included</figcaption>
             </figure>
         </div>
-
         <div style="text-align: center">
             <figure>
                 <img src="mosaics/g_test.jpg" alt="Gate mosaic" width="450" />
                 <figcaption>Simple Example - Mosaic of a Gate</figcaption>
             </figure>
         </div>
-
         <p>
             This is simple since there is a lot of similarities between the two
             images.
         </p>
-
         <div class="image-row">
             <figure>
                 <img src="images/garden1_25.jpg" alt="garden1" width="275" />
@@ -396,9 +365,7 @@
                 <figcaption>Another picture of the Garden</figcaption>
             </figure>
         </div>
-
         <p>Now for an extreme example!</p>
-
         <div style="text-align: center">
             <figure>
                 <img
@@ -409,19 +376,16 @@
                 <figcaption>Extreme Example - Mosaic of a Garden</figcaption>
             </figure>
         </div>
-
         <p>
             This is more extreme since the angle of the pictures had been
             shifted from one to the other, hence the extreme tilt in the warped
             image compared to the non-warped image.
         </p>
-
         <p>
             Previously, correspondence points were selected manually, which was
-            time-consuming. Now, we'll automate this process!
+            time-consuming. Now, I automate this process!
         </p>
-
-        <p>For this, we'll use another set of images.</p>
+        <p>For this, I use another set of images.</p>
         <div class="image-row">
             <figure>
                 <img src="images/kitch1_25.jpg" alt="kitchen1" width="275" />
@@ -432,58 +396,48 @@
                 <figcaption>Another picture of a messy kitchen.</figcaption>
             </figure>
         </div>
-
         <p>
-            How we'll be accomplishing this is by the following: (1) Detecting
-            corners from an image. (2) Extracting feature descriptors from the
-            images given the corners. (3) Matching these descriptors to the
-            images. (4) Using RANSAC to compute a homography. (5) Using what we
-            built earlier to warp the images together.
+            This is accomplished by the following: (1) Detecting corners from an
+            image. (2) Extracting feature descriptors from the images given the
+            corners. (3) Matching these descriptors to the images. (4) Using
+            RANSAC to compute a homography. (5) Using what I built earlier to
+            warp the images together.
         </p>
-
         <h2>Detecting Corner Features in an Image</h2>
-
         <p>
             Below is a naive Harris corner detection on the left. On the right,
-            we implemented ANMS to select the points. I believe my ANMS looks
-            better than other people simply due to the high amount of points
-            that are available in the image, and how well-defined the corners
-            are. For reference, there are 500 points on the right that are
-            outputted.
+            I implemented ANMS to select the points. The ANMS looks good due to
+            the high amount of points that are available in the image, and how
+            well-defined the corners are. For reference, there are 500 points on
+            the right that are outputted.
         </p>
-
         <div style="text-align: center">
             <figure>
                 <img src="corner/anms_out.png" alt="ANMS" width="450" />
                 <figcaption>ANMS over Picture of Messy Kitchen</figcaption>
             </figure>
         </div>
-
         <p>
-            To accomplish this, we implement the Adaptive Non-Maximal
-            Suppression (ANMS) process. First, we sort the corner points based
-            on their Harris response strength. For each corner point
-            <em>xi</em>, we find all points that have a strength greater than
-            0.9 times the response strength of <em>xi</em>. This helps us
-            identify stronger points in the vicinity. Next, we calculate the
-            minimum distance from <em>xi</em> to these stronger points, which we
-            designate as the point's "suppression radius." Finally, we select
+            To accomplish this, I implement the Adaptive Non-Maximal Suppression
+            (ANMS) process. First, I sort the corner points based on their
+            Harris response strength. For each corner point
+            <em>xi</em>, I find all points that have a strength greater than 0.9
+            times the response strength of <em>xi</em>. This helps identify
+            stronger points in the vicinity. Next, I calculate the minimum
+            distance from <em>xi</em> to these stronger points, which is
+            designated as the point's "suppression radius." Finally, I select
             the top 500 points with the largest suppression radii.
         </p>
-
         <h2>Extracting a Feature Descriptor for each Feature Point</h2>
-
         <p>
-            From the ANMS points, we iterate through each one and extract a
+            From the ANMS points, I iterate through each one and extract a
             square patch of size (40x40). To ensure noise doesn't play an
-            effect, we apply a Gaussian Blur.
+            effect, I apply a Gaussian Blur.
         </p>
-
         <p>
-            For each of the patches, we can resize it to a 8x8 descriptor.
-            Finally we vectorize and normalize it.
+            For each of the patches, I can resize it to a 8x8 descriptor.
+            Finally I vectorize and normalize it.
         </p>
-
         <div style="text-align: center">
             <figure>
                 <img src="corner/features_out.png" alt="Features" width="450" />
@@ -493,41 +447,33 @@
                 </figcaption>
             </figure>
         </div>
-
         <p>
-            We do this because even though we have these points, we want to gain
-            some 'feature' from them for matching, which is the next section!
+            This is done because even though there are these points, I want to
+            gain some 'feature' from them for matching, which is the next
+            section!
         </p>
-
         <h2>Feature Matching</h2>
-
         <p>
-            Afterwards, we can now use these descriptors to start matching
-            features with one another, which we can use to create
-            correspondences. This means we'll be repeating the above process
-            twice.
+            Afterwards, I can now use these descriptors to start matching
+            features with one another, which I can use to create
+            correspondences. This means repeating the above process twice.
         </p>
-
         <p>
-            For each image, we iterate through each feature of the image and
+            For each image, I iterate through each feature of the image and
             match it to whatever is the best matching feature of the other
-            image. We utilize KDTrees for this for efficient querying.
+            image. I utilize KDTrees for this for efficient querying.
         </p>
-
         <p>
-            Afterwards, we ensure that a match in one direction is also the best
-            match in the other direction. If not, then we do not include it.
+            Afterwards, I ensure that a match in one direction is also the best
+            match in the other direction. If not, then I do not include it.
         </p>
-
         <p>
-            To ensure highest quality, we also utilized Lowe's ratio test, which
-            we used to compare the closest and second-closest feature matches.
-            If it is the case that these distances are too close to one another,
-            then we consider the match unreliable.
+            To ensure highest quality, I also utilized Lowe's ratio test, which
+            I used to compare the closest and second-closest feature matches. If
+            it is the case that these distances are too close to one another,
+            then I consider the match unreliable.
         </p>
-
         <p>Below are the results of doing the outlined steps.</p>
-
         <div style="text-align: center">
             <figure>
                 <img src="corner/matches.png" alt="Matches" width="450" />
@@ -536,38 +482,31 @@
                 </figcaption>
             </figure>
         </div>
-
         <h2>RANSAC</h2>
-
         <p>
-            Some matches can be misleading, hence why we utilize RANSAC to
+            Some matches can be misleading, hence why I utilize RANSAC to
             further reduce the number of outliers, since outliers can greatly
             change the output.
         </p>
-
         <p>
-            We randomly select 4 pairs of points, then we compute the homography
-            matrix given these points. During this process, we construct a list
+            I randomly select 4 pairs of points, then I compute the homography
+            matrix given these points. During this process, I construct a list
             of inliers from this homography matrix.
         </p>
-
         <p>
-            For each point in an image, we determine the other images warped
+            For each point in an image, I determine the other images warped
             position by using the homography. Then, using the literal position
             of the point of the other image and determine if the distance
             between the estimated point from the homography matrix and the
             original point vs the actual point from the other image is less than
-            some error (this is to ensure robustness). If it is the case, then
-            we add it to the list of inliers.
+            some error (this is to ensure robustness). If it is the case, then I
+            add it to the list of inliers.
         </p>
-
         <p>
-            After some predetermined amount of iterations (500 in my case), we
+            After some predetermined amount of iterations (500 in my case), I
             use the homography that constructed the most amount of inliers.
         </p>
-
-        <p>Below are some of my results:</p>
-
+        <p>Below are some results:</p>
         <div style="text-align: center">
             <figure>
                 <img
@@ -578,7 +517,6 @@
                 <figcaption>Mosaic of Kitchen.</figcaption>
             </figure>
         </div>
-
         <div class="image-row">
             <figure>
                 <img src="corner/C_final.jpg" alt="counter1" width="275" />
@@ -589,7 +527,6 @@
                 <figcaption>New Mosaic for Counter</figcaption>
             </figure>
         </div>
-
         <div class="image-row">
             <figure>
                 <img src="corner/FSM_final.jpg" alt="FSM1" width="275" />
@@ -600,16 +537,13 @@
                 <figcaption>New Mosaic for FSM.</figcaption>
             </figure>
         </div>
-
         <p>
             Give or take the automated selection of points does a reasonably
-            good job compared to when I was manually clicking. If you include
-            the actual effort that went into clicking all those points, I'd say
+            good job compared to when I was manually clicking. If including the
+            actual effort that went into clicking all those points, I'd say
             these results are very successful!
         </p>
-
         <h2>What I've learned!</h2>
-
         <p>
             Learning how to filter out Harris corner detection and make the
             outputs more robust is DEFINITELY something that I'll be using for

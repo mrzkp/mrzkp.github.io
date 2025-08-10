@@ -1,268 +1,372 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 3</title>
-    <style>
-        .image-row {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .image-row figure {
-            margin: 10px;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        .gif-container {
-            text-align: center;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <h2>Face Morphing Project</h2>
-    <h3> Part 1 </h3>
-    <p>
-        In this portion, we define corresponding points for both images. We use the software provided from the student last year, and we define 64 points.
-    </p>
-
-    <p>Below are the two images that I'll be performing face morphing on.</p>
-
-    <div class="image-row">
+<!doctype html>
+<html>
+    <head>
+        <title>Face Morphing</title>
+        <style>
+            @font-face {
+                font-family: "Alliance No.2";
+                src: url("fonts/AllianceNo2-Regular.otf") format("opentype");
+                font-weight: normal;
+                font-style: normal;
+            }
+            @font-face {
+                font-family: "Alliance No.2";
+                src: url("fonts/AllianceNo2-Bold.otf") format("opentype");
+                font-weight: bold;
+                font-style: normal;
+            }
+            body {
+                font-family: "Alliance No.2", Consolas, monospace;
+                margin: 20px;
+                letter-spacing: -0.025em;
+                font-weight: normal;
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: left;
+                background-color: #fff;
+                color: #333;
+                line-height: 1.6;
+            }
+            h1 {
+                text-align: center;
+                letter-spacing: -0.01em;
+                margin-bottom: 30px;
+            }
+            h2 {
+                letter-spacing: -0.01em;
+                margin-top: 40px;
+            }
+            h3 {
+                letter-spacing: -0.01em;
+                margin-top: 30px;
+            }
+            h4 {
+                letter-spacing: -0.01em;
+                margin-top: 20px;
+            }
+            p {
+                margin-bottom: 20px;
+            }
+            figcaption {
+                font-style: italic;
+                text-align: center;
+                margin-top: 5px;
+                font-size: 0.9em;
+            }
+            .image-row {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                flex-wrap: wrap;
+                margin-bottom: 30px;
+            }
+            figure {
+                margin: 20px;
+            }
+            .centered-text {
+                text-align: center;
+            }
+            .gif-container {
+                text-align: center;
+            }
+            button {
+                margin-top: 20px;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+        </style>
+        <script
+            id="MathJax-script"
+            async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+        ></script>
+        <script>
+            window.MathJax = {
+                tex: {
+                    inlineMath: [["\\(", "\\)"]],
+                    displayMath: [["\\[", "\\]"]],
+                },
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Face Morphing</h1>
+        <h2>Overview</h2>
+        <p>
+            This explores computational face morphing techniques through several
+            key components: correspondence point definition, triangulation-based
+            warping, and cross-dissolving. I demonstrate these concepts by
+            morphing between my face and Professor Satish Rao's, computing
+            population averages using the FEI Face Database, and creating
+            caricatures through extrapolation from the mean. This culminates
+            with explorations in automatic correspondence detection and
+            cross-demographic morphing experiments.
+        </p>
+        <p>
+            <strong>Key techniques implemented:</strong> Delaunay triangulation,
+            affine transformations, bilinear interpolation, and geometric
+            warping algorithms.
+        </p>
+        <h2>Defining Corresponding Points</h2>
+        <p>
+            I define 64 corresponding points between both images to establish
+            the geometric relationship needed for morphing.
+        </p>
+        <p>The two images used for face morphing are shown below.</p>
+        <div class="image-row">
+            <figure>
+                <img src="part1/adi.jpg" alt="adi" width="275" />
+                <figcaption>Aditya (Me)</figcaption>
+            </figure>
+            <figure>
+                <img src="part1/rao.jpg" alt="rao" width="275" />
+                <figcaption>Satish Rao (EECS Professor)</figcaption>
+            </figure>
+        </div>
+        <p>
+            The correspondence points and their Delaunay triangulation are
+            visualized below.
+        </p>
+        <div class="image-row">
+            <figure>
+                <img src="part1/adiPOINTS.jpg" alt="AdityaPoints" width="275" />
+                <figcaption>Triangulation on Aditya</figcaption>
+            </figure>
+            <figure>
+                <img src="part1/raoPOINTS.jpg" alt="RaoPoints" width="275" />
+                <figcaption>Triangulation on Satish Rao</figcaption>
+            </figure>
+        </div>
+        <h2>Mid-Way Face</h2>
+        <p>
+            I create a mid-way face between Professor Rao and myself by
+            averaging both geometry and appearance.
+        </p>
+        <p>
+            Each triangle from both triangulations is transformed to its
+            midpoint position using affine transformations computed through
+            change-of-basis matrices. The pixel values are then cross-dissolved
+            at a 50% blend ratio.
+        </p>
+        <div class="image-row">
+            <figure>
+                <img src="part2/adi.jpg" alt="Aditya" width="275" />
+                <figcaption>Aditya</figcaption>
+            </figure>
+            <figure>
+                <img src="part2/rao.jpg" alt="Rao" width="275" />
+                <figcaption>Satish Rao</figcaption>
+            </figure>
+            <figure>
+                <img src="part2/mid.jpg" alt="Mid-Way Face" width="275" />
+                <figcaption>Mid-Way Face</figcaption>
+            </figure>
+        </div>
+        <h2>Morph Sequence</h2>
+        <p>
+            I extend the mid-way face concept to create a smooth morphing
+            sequence. The warping and cross-dissolving parameters vary linearly
+            from 0 to 1 across 45 frames, where 0 represents my face and 1
+            represents Professor Rao's face.
+        </p>
+        <div class="gif-container">
+            <img id="gif" src="part3/morph.gif" alt="GIF" width="450" />
+            <br />
+            <button onclick="restartGIF()">Repeat</button>
+        </div>
+        <script>
+            function restartGIF() {
+                var gif = document.getElementById("gif");
+                var src = gif.src;
+                gif.src = "";
+                gif.src = src;
+            }
+        </script>
+        <p>
+            <strong>Observations:</strong> The morph achieves a smooth
+            transition overall. I included correspondence points on our shirts
+            to improve the warping quality. However, some areas could be
+            improved: the left sides appear slightly jarring due to insufficient
+            correspondence points, and hair morphing becomes unnatural in the
+            later frames. Despite these minor issues, the result demonstrates
+            effective face morphing techniques.
+        </p>
+        <h2>Mean Face of a Population</h2>
+        <p>
+            Using the FEI Face Database, I compute the average face and average
+            geometry of the population, then apply these transformations to
+            individual faces.
+        </p>
+        <p>The average face and geometry computed from the FEI database:</p>
+        <div class="image-row">
+            <figure>
+                <img src="part4/avg_face.jpg" alt="Rao" width="275" />
+                <figcaption>Average Face of FEI Database</figcaption>
+            </figure>
+            <figure>
+                <img
+                    src="part4/avg_geometry.jpg"
+                    alt="Mid-Way Face"
+                    width="275"
+                />
+                <figcaption>Average Geometry</figcaption>
+            </figure>
+        </div>
+        <p>
+            Examples of individuals from the dataset warped to the average
+            geometry:
+        </p>
+        <div class="image-row">
+            <figure>
+                <img src="part4/10a_warped.jpg" alt="Rao" width="275" />
+                <figcaption>Subject 10a Warped</figcaption>
+            </figure>
+            <figure>
+                <img
+                    src="part4/15a_warped.jpg"
+                    alt="Mid-Way Face"
+                    width="275"
+                />
+                <figcaption>Subject 15a Warped</figcaption>
+            </figure>
+        </div>
+        <div class="image-row">
+            <figure>
+                <img
+                    src="part4/20a_warped.jpg"
+                    alt="Mid-Way Face"
+                    width="275"
+                />
+                <figcaption>Subject 20a Warped</figcaption>
+            </figure>
+            <figure>
+                <img
+                    src="part4/50a_warped.jpg"
+                    alt="Mid-Way Face"
+                    width="275"
+                />
+                <figcaption>Subject 50a Warped</figcaption>
+            </figure>
+        </div>
+        <p>
+            Most transformations appear natural given the limited correspondence
+            points used. Subject 50a appears distorted because the original
+            image shows the person facing slightly upward, making it an outlier
+            in the dataset's pose distribution.
+        </p>
         <figure>
-            <img src="part1/adi.jpg" alt="adi" width="450">
-            <figcaption>Aditya (Me)</figcaption>
+            <img src="part4/50a.jpg" alt="Mid-Way Face" width="450" />
+            <figcaption>Original Subject 50a</figcaption>
         </figure>
+        <p>Subject 20a demonstrates the most successful transformation:</p>
         <figure>
-            <img src="part1/rao.jpg" alt="rao" width="450">
-            <figcaption>Satish Rao (EECS Professor)</figcaption>
+            <img src="part4/20a.jpg" alt="Mid-Way Face" width="450" />
+            <figcaption>Original Subject 20a</figcaption>
         </figure>
-    </div>
-
-    <p>Below are the vertices and the triangulation of said points results.</p>
-
-    <div class="image-row">
-        <figure>
-            <img src="part1/adiPOINTS.jpg" alt="AdityaPoints" width="450">
-            <figcaption>Triangulation on points on Aditya</figcaption>
-        </figure>
-        <figure>
-            <img src="part1/raoPOINTS.jpg" alt="RaoPoints" width="450">
-            <figcaption>Triangulation on points on Satish Rao</figcaption>
-        </figure>
-    </div>
-
-    <h3> Part 2 </h3>
-    <p>In this portion, we create the a mid-way face between Rao and I.</p>
-
-    <p> We accomplish this by transforming the triangles from the tirangulations of each image to their mid-way values. This was done by a Affine Transformation which was computed through a change of basis matrices.</p>
-
-    <div class="image-row">
-        <figure>
-            <img src="part2/adi.jpg" alt="Aditya" width="450">
-            <figcaption>Aditya</figcaption>
-        </figure>
-        <figure>
-            <img src="part2/rao.jpg" alt="Rao" width="450">
-            <figcaption>Satish Rao</figcaption>
-        </figure>
-        <figure>
-            <img src="part2/mid.jpg" alt="Mid-Way Face" width="450">
-            <figcaption>Mid-Way Face</figcaption>
-        </figure>
-    </div>
-
-    <h3> Part 3 </h3>
-
-    <p> We do similar steps as from Part 2, but instead we continously warp and cross-disolve throughout the process. We control the amount of warping and cross-dissolving from 0 to 1, where 0 is my face and 1 is rao's face. Finally, said values are determined by which frame we are on in the morphed gif. So, at frame 1, we have 1/45 for warp and cross-dissolve values. </p>
-
-    <div class="gif-container">
-        <img id="gif" src="part3/morph.gif" alt="GIF" width="450">
-
-        <br>
-        <button onclick="restartGIF()">Repeat</button>
-    </div>
-
-    <script>
-        function restartGIF() {
-            var gif = document.getElementById('gif');
-            var src = gif.src;
-            gif.src = '';
-            gif.src = src;
-        }
-    </script>
-
-    <p> Observations: Overall, pretty good morph if I do say so myself. I added a few correspondence points to our shirts, but I think our left sides could have used more points since it looked a bit jarring. Furthermore, a small bunch of our hair seems to be morphing a bit unnaturally near the later end of the gif. However, the morph is overall pretty clean and I am proud of it.</p>
-
-    <h3> Part 4 </h3>
-
-    <p>
-        For this portion, we attempt to take the average face of the FEI Face Database and apply the average geometry on other faces!
-    </p>
-
-    <p>
-        To start, we warp some pictures from the FEI database and determine the average face, and the average geometry.
-    </p>
-
-
-    <div class="image-row">
-        <figure>
-            <img src="part4/avg_face.jpg" alt="Rao" width="450">
-            <figcaption>Avg Face of FEI DB</figcaption>
-        </figure>
-        <figure>
-            <img src="part4/avg_geometry.jpg" alt="Mid-Way Face" width="450">
-            <figcaption>AVG Geometry</figcaption>
-        </figure>
-    </div>
-
-    <p> Now, let's see how some people from the dataset look when they are warped to the average face.</p>
-
-    <div class="image-row">
-        <figure>
-            <img src="part4/10a_warped.jpg" alt="Rao" width="450">
-            <figcaption>10a Warped</figcaption>
-        </figure>
-        <figure>
-            <img src="part4/15a_warped.jpg" alt="Mid-Way Face" width="450">
-            <figcaption>15a Warped</figcaption>
-        </figure>
-        <figure>
-            <img src="part4/20a_warped.jpg" alt="Mid-Way Face" width="450">
-            <figcaption>20a Warped</figcaption>
-        </figure>
-        <figure>
-            <img src="part4/50a_warped.jpg" alt="Mid-Way Face" width="450">
-            <figcaption>50a Warped</figcaption>
-        </figure>
-    </div>
-
-    <p> Pretty good overall considering I did not add too many correspondce points. However, 50a looks very unnatural. I think this is due to that picture being an outlier in terms of positoning, since the original image the person was facing a bit upwards. Also, the person's face is a bit unique.</p>
-
-    <figure>
-        <img src="part4/50a.jpg" alt="Mid-Way Face" width="450">
-        <figcaption>Original 50a</figcaption>
-    </figure>
-
-    <p> For reference, here is 20a looked (the most natural looking transformation of the 4).</p>
-
-    <figure>
-        <img src="part4/20a.jpg" alt="Mid-Way Face" width="450">
-        <figcaption>Original 20a</figcaption>
-    </figure>
-
-    <p> I would not have been able to tell it was a different picture if I was not looking at the ears!</p>
-
-    <p> 
-        Now, we (1) warp my 11th grade picture into the average geometry and (2) warp the average face into my 11th grade picture's geometry!
-    </p>
-
-    <div class="image-row">
-        <figure>
-            <img src="part4/old_adi.png" alt="Aditya" width="450">
-            <figcaption>11th Grade Aditya</figcaption>
-        </figure>
-        <figure>
-            <img src="part4/adi_to_avg.jpg" alt="Aditya" width="450">
-            <figcaption>11th Grade Aditya to Avg</figcaption>
-        </figure>
-        <figure>
-            <img src="part4/avg_to_adi.jpg" alt="Rao" width="450">
-            <figcaption>Avg Face to 11th Grade Aditya</figcaption>
-        </figure>
-    </div>
-
-    <h3> Part 5 </h3>
-
-    <p> In this portion, we produce a caricature of my face by extrapolating from the population mean from the previous step.</p>
-
-    <p>
-        I calculated p + 1.5(q - p) as the target correspondences, found the extrapolated triangulation, and then I finally warped my face to those targets.
-    </p>
-
-    <div class="image-row"></div>
-        <figure>
-            <img src="part5/0_25.jpg" alt="0.25" width="450">
-            <figcaption>alpha = 0.25</figcaption>
-        </figure>
-        <figure>
-            <img src="part5/0_85.jpg" alt="0.85" width="450">
-            <figcaption>alpha = 0.85</figcaption>
-        </figure>
-    </div>
-
-    <div class="image-row"></div>
-        <figure>
-            <img src="part5/1_5.jpg" alt="1_5" width="450">
-            <figcaption>alpha = 1.5</figcaption>
-        </figure>
-        <figure>
-            <img src="part5/3.jpg" alt="3" width="450">
-            <figcaption>alpha = 3</figcaption>
-        </figure>
-    </div>
-
-    <h3> Bells and Whistles </h3>
-
-    <h4> 'something else that is fun in this space' - Auto Correspondence</h4>
-
-    <p>
-        Something that was mildy annoying while going through this project was the fact that I had to manually determine all the points in the images. This was time consuming and there was some backtracking involved when I had to include more points than what I had originally put down. Then, as I was scrolling through some past submissions, I see a student had implemented a "auto correspondence" using some python library. I figured, "why not, that sounds useful". So, here are the results of the auto correspondence feature!
-    </p>
-
-    <div class="image-row"></div>
-        <figure>
-            <img src="part6/notsooldman.png" alt="1_5" width="450">
-            <figcaption>Auto Correspondeces for Adi</figcaption>
-        </figure>
-        <figure>
-            <img src="part6/oldman.png" alt="3" width="450">
-            <figcaption>Auto Correspondences for Rao</figcaption>
-        </figure>
-    </div>
-
-
-    <h4> 'Change age/gender/ethnicity/smile/etc of your (or your friend's) face.' </h4>
-
-    <p> So, I decided to look online ofr the average face of a turkish woman. For reference, I am a Indian man, so I was trying to change ethnicity and gender.</p>
-
-    <p> Below are the results... </p>
-
-    <div class="image-row"></div>
-        <figure>
-            <img src="part6/better_crop.png" alt="1_5" width="450">
-            <figcaption>Original Image of Me.</figcaption>
-        </figure>
-        <figure>
-            <img src="part6/avgturkishwoman.png" alt="3" width="450">
-            <figcaption>Average Turkish Woman</figcaption>
-        </figure>
-        <figure>
-            <img src="part6/adi_to_average_turkish_woman.jpg" alt="3" width="450">
-            <figcaption>Adi to Average Turkish Woman</figcaption>
-        </figure>
-    
-    <p>
-        Although the resulting image is a bit off, I would argue that it is more about my specfic image being a bit 'crooked'. Specifically, my nose is PRETTY crooked in the picture. Furthermore, the focal point are much different for the images. Specifically, my Focal Point is much higher than the average turkish woman's image.
-    </p>
-
-    <p> I also think that I could have selected the correspondce points on my face better.</p>
-
-    <p> Furthermore, in the previous portion of the project (p4), when I morphed my face into the average face provided from the FEI face database, I morphed my self into the average Brazillian.</p>
-
-    </div>
-
-</body>
+        <p>
+            The transformation is so natural that only the ears reveal it's a
+            different person!
+        </p>
+        <p>
+            I now demonstrate bidirectional warping: (1) my 11th grade photo
+            warped to average geometry, and (2) the average face warped to my
+            photo's geometry.
+        </p>
+        <div class="image-row">
+            <figure>
+                <img src="part4/old_adi.png" alt="Aditya" width="275" />
+                <figcaption>11th Grade Aditya</figcaption>
+            </figure>
+            <figure>
+                <img src="part4/adi_to_avg.jpg" alt="Aditya" width="275" />
+                <figcaption>Aditya → Average Geometry</figcaption>
+            </figure>
+            <figure>
+                <img src="part4/avg_to_adi.jpg" alt="Rao" width="275" />
+                <figcaption>Average Face → Aditya's Geometry</figcaption>
+            </figure>
+        </div>
+        <h2>Caricatures: Extrapolating from the Mean</h2>
+        <p>
+            I create caricatures by extrapolating beyond the population mean
+            using the formula: p + α(q - p), where p is the population mean, q
+            is my face, and α controls the extrapolation strength.
+        </p>
+        <p>Results with varying α values:</p>
+        <div class="image-row">
+            <figure>
+                <img src="part5/0_25.jpg" alt="0.25" width="275" />
+                <figcaption>α = 0.25</figcaption>
+            </figure>
+            <figure>
+                <img src="part5/0_85.jpg" alt="0.85" width="275" />
+                <figcaption>α = 0.85</figcaption>
+            </figure>
+        </div>
+        <div class="image-row">
+            <figure>
+                <img src="part5/1_5.jpg" alt="1_5" width="275" />
+                <figcaption>α = 1.5</figcaption>
+            </figure>
+            <figure>
+                <img src="part5/3.jpg" alt="3" width="275" />
+                <figcaption>α = 3</figcaption>
+            </figure>
+        </div>
+        <h2>Bells and Whistles</h2>
+        <h3>Automatic Correspondence</h3>
+        <p>
+            To address the time-consuming nature of manual point annotation, I
+            implemented automatic correspondence detection using Python
+            libraries. This eliminates the need for manual point selection and
+            reduces backtracking when additional points are needed.
+        </p>
+        <div class="image-row">
+            <figure>
+                <img src="part6/notsooldman.png" alt="1_5" width="275" />
+                <figcaption>Auto-detected Points on Aditya</figcaption>
+            </figure>
+            <figure>
+                <img src="part6/oldman.png" alt="3" width="275" />
+                <figcaption>Auto-detected Points on Rao</figcaption>
+            </figure>
+        </div>
+        <h3>Cross-Demographic Morphing</h3>
+        <p>
+            I experiment with changing both gender and ethnicity by morphing my
+            face (Indian male) with the average face of a Turkish woman.
+        </p>
+        <div class="image-row">
+            <figure>
+                <img src="part6/better_crop.png" alt="1_5" width="275" />
+                <figcaption>Original Image of Me</figcaption>
+            </figure>
+            <figure>
+                <img src="part6/avgturkishwoman.png" alt="3" width="275" />
+                <figcaption>Average Turkish Woman</figcaption>
+            </figure>
+            <figure>
+                <img
+                    src="part6/adi_to_average_turkish_woman.jpg"
+                    alt="3"
+                    width="275"
+                />
+                <figcaption>Aditya → Turkish Woman</figcaption>
+            </figure>
+        </div>
+        <p>
+            While the result shows some distortion, this is primarily due to
+            differences in image quality and focal points between the source
+            images. My photo has a notably crooked nose and higher focal point
+            compared to the reference image. Better correspondence point
+            selection could improve the results.
+        </p>
+        <p>
+            Note that the earlier morphing with the FEI database effectively
+            demonstrated morphing from Indian to Brazilian demographics, showing
+            the technique's versatility across different ethnic groups.
+        </p>
+    </body>
 </html>
