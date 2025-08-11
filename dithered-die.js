@@ -318,7 +318,7 @@ class Die {
                     this.momX = 0;
                     this.momY = 0;
                 }
-            }, 3000);
+            }, 1000);
         });
        
         document.addEventListener('touchend', () => {
