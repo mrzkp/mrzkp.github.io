@@ -6,66 +6,42 @@
             @font-face {
                 font-family: "Alliance No.2";
                 src: url("fonts/AllianceNo2-Regular.otf") format("opentype");
-                font-weight: normal;
+                font-weight: normal; /* 400 - Default regular, but if too heavy, try renaming a lighter file here if available */
                 font-style: normal;
             }
             @font-face {
                 font-family: "Alliance No.2";
-                src: url("fonts/AllianceNo2-Bold.otf") format("opentype");
-                font-weight: bold;
+                src: url("fonts/AllianceNo2-Bold.otf") format("opentype"); /* Only use for <b> tags if needed */
+                font-weight: bold; /* 700 */
                 font-style: normal;
             }
+            /* Add more @font-face for Light (300) or other weights if you download them */
             body {
                 font-family: "Alliance No.2", Consolas, monospace;
                 margin: 20px;
-                letter-spacing: -0.025em;
-                font-weight: normal;
+                letter-spacing: -0.025em; /* Tightens spacing; adjust negative value as needed (e.g., -0.03em for more) */
+                font-weight: normal; /* Ensures regular; use 300 if you load a Light variant */
                 max-width: 800px;
                 margin-left: auto;
                 margin-right: auto;
                 text-align: left;
-                background-color: #fff;
-                color: #333;
-                line-height: 1.6;
+                background-color: #f4f4f4; /* Light gray background for a professional, minimalist look */
+                color: #333333; /* Dark gray text for readability */
             }
-            h1 {
-                text-align: center;
-                letter-spacing: -0.01em;
-                margin-bottom: 30px;
-            }
+            /* Optional: Loosen or adjust for headings if body fix over-tightens them */
             h2 {
-                letter-spacing: -0.01em;
-                margin-top: 40px;
+                letter-spacing: -0.01em; /* Less tightening for larger text */
+                color: #333333; /* Ensure headings match text color */
             }
-            h3 {
-                letter-spacing: -0.01em;
-                margin-top: 30px;
+            a {
+                color: #4a90e2; /* Muted blue for links, professional and visible */
+                text-decoration: none; /* Remove underline for cleaner look */
             }
-            h4 {
-                letter-spacing: -0.01em;
-                margin-top: 20px;
+            a:hover {
+                text-decoration: underline; /* Underline on hover for interaction */
             }
-            p {
-                margin-bottom: 20px;
-            }
-            figcaption {
-                font-style: italic;
-                text-align: center;
-                margin-top: 5px;
-                font-size: 0.9em;
-            }
-            .image-row {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                flex-wrap: wrap;
-                margin-bottom: 30px;
-            }
-            figure {
-                margin: 20px;
-            }
-            .centered-text {
-                text-align: center;
+            a:visited {
+                color: #4a90e2; /* Keep same color for visited links */
             }
         </style>
         <script
@@ -83,7 +59,7 @@
         </script>
     </head>
     <body>
-        <h1>Image Warping and Mosaicing</h1>
+        <h1 style="text-align:">Image Warping and Mosaicing</h1>
         <h2>Overview</h2>
         <p>
             Given two or more photographs, I aim to create an image mosaic by
