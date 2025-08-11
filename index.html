@@ -87,13 +87,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     </head>
     <body>
-        <canvas id="dieCanvas" width="450" height="450"></canvas>
-        
-        <div id="asciiAnimation"></div>
-        
-        <p style="text-align: center">
-            Hello, my name is Aditya (Adi) Tummala.
-        </p>
+        <div class="main-content">
+            <canvas id="dieCanvas" width="450" height="450"></canvas>
+            
+            <div id="asciiAnimation"></div>
+            
+            <p style="text-align: center">
+                Hello, my name is Aditya (Adi) Tummala.
+            </p>
         <p>
             I'm a Masters student at CMU studying Computer Vision. I graduated
             with a BA from UC Berkeley in 2025. My current focus areas include
@@ -204,18 +205,18 @@
                 <a href="https://github.com/mrzkp" target="_blank">GitHub</a>
             </li>
         </ul>
+        </div>
         
-        <!-- Import the dithered die component -->
+        <!-- Import components -->
+        <script src="math-quiz.js"></script>
         <script src="dithered-die.js"></script>
         <script>
-            // Initialize the dithered die component
             const die = new Die('dieCanvas', {
                 size: 450,
                 opacity: 0.3,
                 position: { top: '35%', left: '22%' }
             });
             
-            // ASCII Animation - Bouncing Ball with Trail
             const asciiAnimationDiv = document.getElementById('asciiAnimation');
             let ballX = 0;
             let ballY = 0;
@@ -230,11 +231,9 @@
             const trailChars = ['·', '∘', '˙', '⋅'];
             
             function updateBall() {
-                // Update position
                 ballX += velocityX;
                 ballY += velocityY;
                 
-                // Bounce off walls
                 if (ballX <= 0 || ballX >= width - 1) {
                     velocityX = -velocityX;
                     ballX = Math.max(0, Math.min(width - 1, ballX));
@@ -251,7 +250,6 @@
                 // Age trail
                 trail.forEach(t => t.age++);
                 
-                // Create ASCII field
                 let field = [];
                 for (let y = 0; y < height; y++) {
                     field[y] = [];
@@ -260,14 +258,12 @@
                     }
                 }
                 
-                // Draw trail
                 trail.forEach((t, i) => {
                     if (t.age < trailChars.length) {
                         field[Math.floor(t.y)][Math.floor(t.x)] = trailChars[t.age];
                     }
                 });
                 
-                // Draw ball
                 const ballChar = ballChars[frame % ballChars.length];
                 field[Math.floor(ballY)][Math.floor(ballX)] = ballChar;
                 
@@ -281,9 +277,13 @@
                 frame++;
             }
             
-            // Start ASCII animation
             setInterval(updateBall, 150);
             updateBall();
+            
+            const mathQuiz = new MathQuiz('mathQuiz', {
+                position: 'fixed-right',
+                width: '250px'
+            });
         </script>
     </body>
 </html>

@@ -211,9 +211,9 @@ class Die {
         this.isRot = false;
         this.lstMX = 0;
         this.lstMY = 0;
-        this.rotVX = 0.012;
-        this.rotVY = 0.018;
-        this.rotVZ = 0.008;
+        this.rotVX = 0.0075;
+        this.rotVY = 0.012;
+        this.rotVZ = 0.0045;
         this.autoRot = true;
        
         this.momX = 0;
@@ -312,9 +312,9 @@ class Die {
             setTimeout(() => {
                 if (!this.isRot) {
                     this.autoRot = true;
-                    this.rotVX = 0.012;
-                    this.rotVY = 0.018;
-                    this.rotVZ = 0.008;
+                    this.rotVX = 0.0075;
+                    this.rotVY = 0.012;
+                    this.rotVZ = 0.0045;
                     this.momX = 0;
                     this.momY = 0;
                 }
@@ -347,9 +347,9 @@ class Die {
             setTimeout(() => {
                 if (!this.isRot) {
                     this.autoRot = true;
-                    this.rotVX = 0.012;
-                    this.rotVY = 0.018;
-                    this.rotVZ = 0.008;
+                    this.rotVX = 0.0075;
+                    this.rotVY = 0.012;
+                    this.rotVZ = 0.0045;
                     this.momX = 0;
                     this.momY = 0;
                 }
