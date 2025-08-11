@@ -142,14 +142,14 @@ class MathQuiz {
        
         switch(op) {
             case '+':
-                n1 = Math.floor(Math.random() * 100) + 1;
-                n2 = Math.floor(Math.random() * 100) + 1;
+                n1 = Math.floor(Math.random() * 100) + 2;
+                n2 = Math.floor(Math.random() * 100) + 2;
                 a = n1 + n2;
                 break;
                
             case '-':
-                n1 = Math.floor(Math.random() * 100) + 1;
-                n2 = Math.floor(Math.random() * n1) + 1;
+                n1 = Math.floor(Math.random() * 100) + 2;
+                n2 = Math.floor(Math.random() * n1) + 2;
                 a = n1 - n2;
                 break;
                
