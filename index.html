@@ -45,29 +45,29 @@
             a:visited {
                 color: #4a90e2; /* Keep same color for visited links */
             }
-            
+
             /* WebGL Canvas for 3D die */
             #dieCanvas {
                 position: fixed;
-                top: 35%;
-                left: 22%;
-                transform: translate(-50%, -50%);
-                z-index: 1;
+                top: 45%;
+                right: 15%;
+                transform: translate(50%, -50%);
+                z-index: -1;
                 opacity: 0.3;
                 pointer-events: auto;
                 cursor: grab;
                 transition: opacity 0.2s ease;
             }
-            
+
             #dieCanvas:hover {
                 opacity: 0.5;
             }
-            
+
             #dieCanvas:active {
                 cursor: grabbing;
                 opacity: 0.6;
             }
-            
+
             /* ASCII Animation Display */
             #asciiAnimation {
                 position: fixed;
@@ -81,7 +81,7 @@
                 line-height: 1;
                 white-space: pre;
                 color: #777;
-                text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
             }
         </style>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -89,135 +89,144 @@
     <body>
         <div class="main-content">
             <canvas id="dieCanvas" width="450" height="450"></canvas>
-            
+
             <div id="asciiAnimation"></div>
-            
+
             <p style="text-align: center">
                 Hello, my name is Aditya (Adi) Tummala.
             </p>
-        <p>
-            I'm a Masters student at CMU studying Computer Vision. I graduated
-            with a BA from UC Berkeley in 2025. My current focus areas include
-            Deep Learning Systems, Robotics, and Computer Vision.
-        </p>
-        <p>
-            Outside of these domains, I have been
-            <i>(at least attempting to)</i>
-            building low-latency applications, specifically within HFT and ML
-            systems.
-        </p>
-        <p>
-            I'm enjoy problem solving and enjoy working alongside
-            others on challenging problems.
-        </p>
-        <p>
-            <span><b>Email</b>: atummala [at] andrew [dot] cmu [dot] edu.</span>
-        </p>
-        <p><b>NOTE:</b> Site is under construction!</p>
-        <p style="text-align: center">
-            <a href="#projects">Projects</a> |
-            <a href="#coursework">Coursework</a> |
-            <a href="#links">Links</a>
-        </p>
-        <h2 id="projects">Some cool projects =]</h2>
-        <p>More to be listed...</p>
-        <ul>
-            <li>
-                <a href="./290/index.html"
-                    >Graduate Wireless Networks: Final Project - B.E.A.M.S.</a
+            <p>
+                I'm a Masters student at CMU studying Computer Vision. I
+                graduated from UC Berkeley with a Bachelor's degree in Computer Science. Main interests include Deep Learning Systems, Robotics, and Computer
+                Vision.
+            </p>
+            <p>
+                Outside of these domains, I have been
+                <i>(at least attempting to)</i>
+                building low-latency applications, specifically within HFT and
+                ML systems.
+            </p>
+            <p>
+                I enjoy problem solving and enjoy working alongside others on
+                challenging problems.
+            </p>
+            <p>
+                <span
+                    ><b>Email</b>: atummala [at] andrew [dot] cmu [dot]
+                    edu.</span
                 >
-            </li>
-            <li>
-                <a href="./1/index.html"
-                    >Computer Vision (CV): Colorizing the Prokudin-Gorskii photo
-                    collection.</a
-                >
-            </li>
-            <li>
-                <a href="./2/index.html"
-                    >(CV): Fun with Filters and Frequencies!</a
-                >
-            </li>
-            <li><a href="./3/index.html">(CV): Face Morphing!</a></li>
-            <li>
-                <a href="./4a/index.html"
-                    >(CV): [Auto]Stitching Photo Mosaics.</a
-                >
-            </li>
-            <li>
-                <a href="./5/index.html"
-                    >(CV & ML): Fun With Diffusion Models!
-                </a>
-            </li>
-            <li>
-                <a href="./Final/index.html"
-                    >(CV): Gradient Domain Fusion and Light Field Camera.
-                </a>
-            </li>
-            <li>
-                <a href="./gamma-ai/index.html"
-                    ><b>WEBSITE IN PROGRESS</b>(ML): Gamma-AI: Enhancing the
-                    Data-Analysis Pipeline of Gamma-Ray Telescopes with Machine
-                    Learning.
-                </a>
-            </li>
-            <li>
-                <a href="./Gamescrafters/index.html"
-                    ><b></b>(GT): Uploading a game to GamesmanClassic.
-                </a>
-            </li>
-        </ul>
-        <h2 id="coursework">Noteworthy CS-related Coursework</h2>
-        <p>
-            Grad coursework is in the 200 series. Courses are roughly in order
-            by recency.
-        </p>
-        <ul>
-            <li>CS 162: Operating Systems and System Programming</li>
-            <li>CS 174: Combinatorics and Discrete Probability</li>
-            <li>
-                ELENG 290: Advanced Topics in Electrical Engineering - Wireless
-                Networks
-            </li>
-            <li>CS 270: Combinatorial Algorithms and Data Structures</li>
-            <li>
-                CS 180: Intro to Computer Vision and Computational Photography
-            </li>
-            <li>CS 189: Introduction to Machine Learning</li>
-            <li>CS 278: Machine-Based Complexity Theory</li>
-            <li>
-                CS 168: Introduction to the Internet - Architecture and
-                Protocols
-            </li>
-            <li>CS 171: Cryptography</li>
-            <li>CS 188: Introduction to Artificial Intelligence</li>
-            <li>CS 161: Computer Security</li>
-            <li>CS 170: Efficient Algorithms and Intractable Problems</li>
-        </ul>
-        <h2 id="links">Relevant Links</h2>
-        <ul>
-            <li>
-                <a href="https://linkedin.com/in/adityatummala/" target="_blank"
-                    >LinkedIn</a
-                >
-            </li>
-            <li>
-                <a href="https://github.com/mrzkp" target="_blank">GitHub</a>
-            </li>
-        </ul>
+            </p>
+            <p><b>NOTE:</b> Site is under construction!</p>
+            <p style="text-align: center">
+                <a href="#projects">Projects</a> |
+                <a href="#coursework">Coursework</a> |
+                <a href="#links">Links</a>
+            </p>
+            <h2 id="projects">Some cool projects =]</h2>
+            <p>More to be listed...</p>
+            <ul>
+                <li>
+                    <a href="./290/index.html"
+                        >Graduate Wireless Networks: Final Project -
+                        B.E.A.M.S.</a
+                    >
+                </li>
+                <li>
+                    <a href="./1/index.html"
+                        >Computer Vision (CV): Colorizing the Prokudin-Gorskii
+                        photo collection.</a
+                    >
+                </li>
+                <li>
+                    <a href="./2/index.html"
+                        >(CV): Fun with Filters and Frequencies!</a
+                    >
+                </li>
+                <li><a href="./3/index.html">(CV): Face Morphing!</a></li>
+                <li>
+                    <a href="./4a/index.html"
+                        >(CV): [Auto]Stitching Photo Mosaics.</a
+                    >
+                </li>
+                <li>
+                    <a href="./5/index.html"
+                        >(CV & ML): Fun With Diffusion Models!
+                    </a>
+                </li>
+                <li>
+                    <a href="./Final/index.html"
+                        >(CV): Gradient Domain Fusion and Light Field Camera.
+                    </a>
+                </li>
+                <li>
+                    <a href="./gamma-ai/index.html"
+                        ><b>WEBSITE IN PROGRESS</b>(ML): Gamma-AI: Enhancing the
+                        Data-Analysis Pipeline of Gamma-Ray Telescopes with
+                        Machine Learning.
+                    </a>
+                </li>
+                <li>
+                    <a href="./Gamescrafters/index.html"
+                        ><b></b>(GT): Uploading a game to GamesmanClassic.
+                    </a>
+                </li>
+            </ul>
+            <h2 id="coursework">Noteworthy CS-related Coursework</h2>
+            <p>
+                Grad coursework is in the 200 series. Courses are roughly in
+                order by recency.
+            </p>
+            <ul>
+                <li>CS 162: Operating Systems and System Programming</li>
+                <li>CS 174: Combinatorics and Discrete Probability</li>
+                <li>
+                    ELENG 290: Advanced Topics in Electrical Engineering -
+                    Wireless Networks
+                </li>
+                <li>CS 270: Combinatorial Algorithms and Data Structures</li>
+                <li>
+                    CS 180: Intro to Computer Vision and Computational
+                    Photography
+                </li>
+                <li>CS 189: Introduction to Machine Learning</li>
+                <li>CS 278: Machine-Based Complexity Theory</li>
+                <li>
+                    CS 168: Introduction to the Internet - Architecture and
+                    Protocols
+                </li>
+                <li>CS 171: Cryptography</li>
+                <li>CS 188: Introduction to Artificial Intelligence</li>
+                <li>CS 161: Computer Security</li>
+                <li>CS 170: Efficient Algorithms and Intractable Problems</li>
+            </ul>
+            <h2 id="links">Relevant Links</h2>
+            <ul>
+                <li>
+                    <a
+                        href="https://linkedin.com/in/adityatummala/"
+                        target="_blank"
+                        >LinkedIn</a
+                    >
+                </li>
+                <li>
+                    <a href="https://github.com/mrzkp" target="_blank"
+                        >GitHub</a
+                    >
+                </li>
+            </ul>
         </div>
-        
+
         <!-- Import components -->
         <script src="math-quiz.js"></script>
         <script src="dithered-die.js"></script>
         <script>
-            const die = new Die('dieCanvas', {
+            const die = new Die("dieCanvas", {
                 size: 450,
                 opacity: 0.3,
-                position: { top: '35%', left: '22%' }
+                position: { top: "35%", left: "22%" },
             });
-            
-            const asciiAnimationDiv = document.getElementById('asciiAnimation');
+
+            const asciiAnimationDiv = document.getElementById("asciiAnimation");
             let ballX = 0;
             let ballY = 0;
             let velocityX = 1;
@@ -226,14 +235,14 @@
             const height = 12;
             let trail = [];
             let frame = 0;
-            
-            const ballChars = ['●', '◉', '○', '◯', '⚬', '⚪'];
-            const trailChars = ['·', '∘', '˙', '⋅'];
-            
+
+            const ballChars = ["●", "◉", "○", "◯", "⚬", "⚪"];
+            const trailChars = ["·", "∘", "˙", "⋅"];
+
             function updateBall() {
                 ballX += velocityX;
                 ballY += velocityY;
-                
+
                 if (ballX <= 0 || ballX >= width - 1) {
                     velocityX = -velocityX;
                     ballX = Math.max(0, Math.min(width - 1, ballX));
@@ -242,47 +251,48 @@
                     velocityY = -velocityY;
                     ballY = Math.max(0, Math.min(height - 1, ballY));
                 }
-                
+
                 // Add to trail
                 trail.push({ x: ballX, y: ballY, age: 0 });
                 if (trail.length > 8) trail.shift();
-                
+
                 // Age trail
-                trail.forEach(t => t.age++);
-                
+                trail.forEach((t) => t.age++);
+
                 let field = [];
                 for (let y = 0; y < height; y++) {
                     field[y] = [];
                     for (let x = 0; x < width; x++) {
-                        field[y][x] = ' ';
+                        field[y][x] = " ";
                     }
                 }
-                
+
                 trail.forEach((t, i) => {
                     if (t.age < trailChars.length) {
-                        field[Math.floor(t.y)][Math.floor(t.x)] = trailChars[t.age];
+                        field[Math.floor(t.y)][Math.floor(t.x)] =
+                            trailChars[t.age];
                     }
                 });
-                
+
                 const ballChar = ballChars[frame % ballChars.length];
                 field[Math.floor(ballY)][Math.floor(ballX)] = ballChar;
-                
+
                 // Convert to string
-                let output = '';
+                let output = "";
                 for (let y = 0; y < height; y++) {
-                    output += field[y].join('') + '\n';
+                    output += field[y].join("") + "\n";
                 }
-                
+
                 asciiAnimationDiv.textContent = output;
                 frame++;
             }
-            
+
             setInterval(updateBall, 150);
             updateBall();
-            
-            const mathQuiz = new MathQuiz('mathQuiz', {
-                position: 'fixed-right',
-                width: '250px'
+
+            const mathQuiz = new MathQuiz("mathQuiz", {
+                position: "fixed-right",
+                width: "250px",
             });
         </script>
     </body>
