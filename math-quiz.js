@@ -133,7 +133,7 @@ class MathQuiz {
   }
 
   generateNewEquation() {
-    const operations = ["+", "-", "×", "÷"];
+    const operations = ["+", "-", "*", "/"];
     const operation = operations[Math.floor(Math.random() * operations.length)];
 
     let num1, num2, answer;
@@ -151,13 +151,13 @@ class MathQuiz {
         answer = num1 - num2;
         break;
 
-      case "×":
+      case "*":
         num1 = Math.floor(Math.random() * 11) + 2; // 2-12
         num2 = Math.floor(Math.random() * 99) + 1; // 1-100
         answer = num1 * num2;
         break;
 
-      case "÷":
+      case "/":
         answer = Math.floor(Math.random() * 99) + 1; // 1-100
         num2 = Math.floor(Math.random() * 11) + 2; // 2-12
         num1 = answer * num2;

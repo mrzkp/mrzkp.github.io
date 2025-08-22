@@ -6,47 +6,47 @@
             @font-face {
                 font-family: "Alliance No.2";
                 src: url("fonts/AllianceNo2-Regular.otf") format("opentype");
-                font-weight: normal; /* 400 - Default regular, but if too heavy, try renaming a lighter file here if available */
+                font-weight: normal; 
                 font-style: normal;
             }
             @font-face {
                 font-family: "Alliance No.2";
-                src: url("fonts/AllianceNo2-Bold.otf") format("opentype"); /* Only use for <b> tags if needed */
-                font-weight: bold; /* 700 */
+                src: url("fonts/AllianceNo2-Bold.otf") format("opentype");
+                font-weight: bold;
                 font-style: normal;
             }
-            /* Add more @font-face for Light (300) or other weights if you download them */
+            
             body {
                 font-family: "Alliance No.2", Consolas, monospace;
                 margin: 20px;
-                letter-spacing: -0.025em; /* Tightens spacing; adjust negative value as needed (e.g., -0.03em for more) */
-                font-weight: normal; /* Ensures regular; use 300 if you load a Light variant */
+                letter-spacing: -0.025em;
+                font-weight: normal;
                 max-width: 800px;
                 margin-left: auto;
                 margin-right: auto;
                 text-align: left;
-                background-color: #f4f4f4; /* Light gray background for a professional, minimalist look */
-                color: #333333; /* Dark gray text for readability */
+                background-color: #f4f4f4;
+                color: #333333;
                 position: relative;
                 overflow-x: hidden;
             }
-            /* Optional: Loosen or adjust for headings if body fix over-tightens them */
+
             h2 {
-                letter-spacing: -0.01em; /* Less tightening for larger text */
-                color: #333333; /* Ensure headings match text color */
+                letter-spacing: -0.01em; 
+                color: #333333; 
             }
             a {
-                color: #4a90e2; /* Muted blue for links, professional and visible */
-                text-decoration: none; /* Remove underline for cleaner look */
+                color: #4a90e2;
+                text-decoration: none; 
             }
             a:hover {
-                text-decoration: underline; /* Underline on hover for interaction */
+                text-decoration: underline; 
             }
             a:visited {
-                color: #4a90e2; /* Keep same color for visited links */
+                color: #4a90e2; 
             }
 
-            /* WebGL Canvas for 3D die */
+            /* webGL canvas for 3D die */
             #dieCanvas {
                 position: fixed;
                 top: 45%;
@@ -68,7 +68,7 @@
                 opacity: 0.6;
             }
 
-            /* ASCII Animation Display */
+            /* ascii animation display */
             #asciiAnimation {
                 position: fixed;
                 bottom: 15%;
@@ -162,9 +162,16 @@
                     </a>
                 </li>
             </ul>
-            <h2 id="coursework">Noteworthy CS-related Coursework</h2>
+            <h2 id="coursework" style="color: #C41E3A;">CMU Coursework</h2>
+            <ul>
+                <li>16-820: Advanced Computer Vision</li>
+                <li>16-822: Geometry-Based Methods in Vision</li>
+                <li>10-714: Deep Learning Systems</li>
+            </ul>
+            
+            <h2 style="color: #003262;">Berkeley Coursework</h2>
             <p>
-                Grad coursework is in the 200 series. Courses are roughly in
+                Relevant undergraduate coursework at UC Berkeley. Courses are roughly in
                 order by recency.
             </p>
             <ul>
@@ -207,9 +214,10 @@
             </ul>
         </div>
 
-        <!-- Import components -->
+        <!-- components -->
         <script src="math-quiz.js"></script>
         <script src="dithered-die.js"></script>
+        <script src="moving-ball.js"></script>
         <script>
             const die = new Die("dieCanvas", {
                 size: 450,
@@ -217,69 +225,7 @@
                 position: { top: "35%", left: "22%" },
             });
 
-            const asciiAnimationDiv = document.getElementById("asciiAnimation");
-            let ballX = 0;
-            let ballY = 0;
-            let velocityX = 1;
-            let velocityY = 1;
-            const width = 20;
-            const height = 12;
-            let trail = [];
-            let frame = 0;
-
-            const ballChars = ["●", "◉", "○", "◯", "⚬", "⚪"];
-            const trailChars = ["·", "∘", "˙", "⋅"];
-
-            function updateBall() {
-                ballX += velocityX;
-                ballY += velocityY;
-
-                if (ballX <= 0 || ballX >= width - 1) {
-                    velocityX = -velocityX;
-                    ballX = Math.max(0, Math.min(width - 1, ballX));
-                }
-                if (ballY <= 0 || ballY >= height - 1) {
-                    velocityY = -velocityY;
-                    ballY = Math.max(0, Math.min(height - 1, ballY));
-                }
-
-                // Add to trail
-                trail.push({ x: ballX, y: ballY, age: 0 });
-                if (trail.length > 8) trail.shift();
-
-                // Age trail
-                trail.forEach((t) => t.age++);
-
-                let field = [];
-                for (let y = 0; y < height; y++) {
-                    field[y] = [];
-                    for (let x = 0; x < width; x++) {
-                        field[y][x] = " ";
-                    }
-                }
-
-                trail.forEach((t, i) => {
-                    if (t.age < trailChars.length) {
-                        field[Math.floor(t.y)][Math.floor(t.x)] =
-                            trailChars[t.age];
-                    }
-                });
-
-                const ballChar = ballChars[frame % ballChars.length];
-                field[Math.floor(ballY)][Math.floor(ballX)] = ballChar;
-
-                // Convert to string
-                let output = "";
-                for (let y = 0; y < height; y++) {
-                    output += field[y].join("") + "\n";
-                }
-
-                asciiAnimationDiv.textContent = output;
-                frame++;
-            }
-
-            setInterval(updateBall, 150);
-            updateBall();
+            const movingBall = new MovingBall("asciiAnimation");
 
             const mathQuiz = new MathQuiz("mathQuiz", {
                 position: "fixed-right",
