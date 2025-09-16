@@ -3,122 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Gallery</title>
+    <title>Fun With Diffusion Models!</title>
+    <!-- MathJax Configuration -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+    </script>
     <style>
-      body {
-          font-family: Arial, sans-serif;
-          line-height: 1.6;
-          margin: 0;
-          padding: 0;
-          background-color: #f9f9f9;
-          color: #333;
-      }
+        @font-face {
+            font-family: "Alliance No.2";
+            src: url("../fonts/AllianceNo2-Regular.otf") format("opentype");
+            font-weight: normal; 
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "Alliance No.2";
+            src: url("../fonts/AllianceNo2-Bold.otf") format("opentype");
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        body {
+            font-family: "Alliance No.2", Consolas, monospace;
+            margin: 20px;
+            letter-spacing: -0.025em;
+            font-weight: normal;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+            background-color: #f4f4f4;
+            color: #333333;
+            line-height: 1.6;
+        }
 
-      h1, h2, h3, h4 {
-          color: #222;
-          margin-bottom: 10px;
-      }
+        h1, h2, h3, h4 {
+            letter-spacing: -0.01em; 
+            color: #333333;
+            margin-bottom: 15px;
+        }
 
-      h1 {
-          text-align: center;
-          padding: 20px 0;
-          background-color: #4CAF50;
-          color: #fff;
-      }
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 2em;
+        }
 
-      section {
-          margin: 20px auto;
-          padding: 20px;
-          max-width: 900px;
-          background: #fff;
-          border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
 
-      p {
-          margin-bottom: 15px;
-      }
+        h3 {
+            font-size: 1.3em;
+            margin-top: 25px;
+        }
 
-      img {
-          display: inline-block;
-          margin: 10px;
-          max-width: 100%;
-          height: auto;
-          border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
+        h4 {
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
 
-      .large-image {
-          max-width: 100%;
-          height: auto;
-          margin: 20px 0;
-      }
+        section {
+            margin: 30px 0;
+            padding: 0;
+        }
 
-      #1-1 img, #1-2 img, #1-3 img {
-          max-width: 30%;
-          display: inline-block;
-      }
+        p {
+            margin-bottom: 15px;
+        }
 
-      h2 {
-          border-bottom: 2px solid #4CAF50;
-          padding-bottom: 5px;
-      }
+        a {
+            color: #D4A574;
+            text-decoration: none; 
+        }
+        
+        a:hover {
+            text-decoration: underline;
+            color: #C19A6B; 
+        }
+        
+        a:visited {
+            color: #D4A574; 
+        }
 
-      h3 {
-          font-size: 1.5em;
-          margin-top: 30px;
-      }
+        img {
+            display: inline-block;
+            margin: 10px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
 
-      h4 {
-          font-size: 1.2em;
-          margin-top: 20px;
-      }
+        .large-image {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
 
-      code, pre {
-          background: #f4f4f4;
-          padding: 5px;
-          border-radius: 4px;
-          font-family: 'Courier New', Courier, monospace;
-          display: block;
-          margin: 10px 0;
-      }
+        code, pre {
+            background: #e8e8e8;
+            padding: 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            display: block;
+            margin: 10px 0;
+        }
 
-      img[src$=".gif"] {
-          display: block;
-          margin: 20px auto;
-          border: 2px solid #ddd;
-          padding: 5px;
-          background: #fff;
-          border-radius: 10px;
-      }
+        img[src$=".gif"] {
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            padding: 5px;
+            background: #fff;
+            border-radius: 6px;
+        }
 
-      #1-1 img, #1-2 img, #1-3 img {
-          display: inline-block;
-          margin: 10px;
-          max-width: 30%;
-          height: auto;
-      }
+        #1-1 img, #1-2 img, #1-3 img {
+            display: inline-block;
+            margin: 10px;
+            max-width: 30%;
+            height: auto;
+        }
 
-      #1-4 img, #1-5 img, #1-6 img, #1-7 img {
-          display: inline-block;
-          margin: 10px;
-          max-width: 40%;
-          height: auto;
-      }
+        #1-4 img, #1-5 img, #1-6 img, #1-7 img {
+            display: inline-block;
+            margin: 10px;
+            max-width: 40%;
+            height: auto;
+        }
 
-      #1-74 img, #1-8 img {
-          display: block;
-          margin: 10px auto;
-          max-width: 50%;
-      }
-
-      footer {
-          text-align: center;
-          padding: 10px;
-          margin-top: 20px;
-          background-color: #4CAF50;
-          color: white;
-      }
+        #1-74 img, #1-8 img {
+            display: block;
+            margin: 10px auto;
+            max-width: 50%;
+        }
 
     </style>
 </head>
@@ -127,7 +155,7 @@
   <p> NOTE: Apogloies for any small screenshots.</p>
   <p> In this project, we will implement and deploy diffusion models for image generation</p>
   <h4> Part 0</h4>
-  <p> Before we begin, we first set the seed for everything, which we use a value of 8481923857. Any value works typically, I just facerolled on my keyboard to get that number. Afterwards, we generate the following images</p>
+  <p> Before we begin, we first set the seed for everything, which we use a value of $8481923857$. Any value works typically, I just facerolled on my keyboard to get that number. Afterwards, we generate the following images</p>
   <img src = 'partA/0.png'>
   <p> Quality looks good and the images follow the text-prompt pretty well.</p>
 
@@ -137,11 +165,15 @@
   <section id="1-1">
     <h2>Section 1.1</h2>
 
-  <img src = 'partA/EQ1.png'>
+  <p><strong>Forward Process Equations:</strong></p>
+  
+  <p>$$q(x_t|x_0) = \mathcal{N}(x_t; \sqrt{\bar{\alpha}_t} x_0, (1 - \bar{\alpha}_t)I)$$</p>
+  
+  <p>$$x_t = \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 - \bar{\alpha}_t} \epsilon \quad \text{where } \epsilon \sim \mathcal{N}(0, 1)$$</p>
 
-  <p> First, we implement these equations (which are equivalent) to add noise to an image. This is otherwise known as the forward process.</p>
+  <p> These equations (which are equivalent) define how to add noise to an image in the forward diffusion process. The first equation shows the probability distribution of the noisy image $x_t$ given the original image $x_0$, which follows a Gaussian distribution. The second equation provides the direct sampling formula: we take a weighted sum of the original image and Gaussian noise, where $\bar{\alpha}_t$ controls how much of the original image remains at timestep $t$. As $t$ increases, $\bar{\alpha}_t$ decreases, meaning more noise is added and less of the original image is preserved.</p>
 
-  <p> Here are test image at noise level [250, 500, 750].</p>
+  <p> Here are test image at noise level $[250, 500, 750]$.</p>
 
         <img src="partA/1-1.png" alt="1-1">
         <img src="partA/1-1-2.png" alt="1-1-2">
@@ -150,7 +182,7 @@
 
     <section id="1-2">
       <h2>Section 1-2</h2>
-    <p> Here, we take noisy images for timesteps [250, 500, 750], but use Gaussian blur filtering to try to remove the noise.</p>
+    <p> Here, we take noisy images for timesteps $[250, 500, 750]$, but use Gaussian blur filtering to try to remove the noise.</p>
 
         <img src="partA/1-2.png" alt="1-2">
 <p> As you can see, it's not that effective.</p>
@@ -164,11 +196,11 @@
 
       <p> We do the following for this section: </p>
   
-      <p>For the 3 noisy images from 1.2 (t = [250, 500, 750]):
-        (1) Using the UNet, denoise the image by estimating the noise.
-        (2) Estimate the noise in the new noisy image
-        (3) Remove the noise from the noisy image to obtain an estimate of the original image.
-        (4) Visualize the original image, the noisy image, and the estimate of the original image</p>
+      <p>For the 3 noisy images from 1.2 ($t = [250, 500, 750]$):
+        $(1)$ Using the UNet, denoise the image by estimating the noise.
+        $(2)$ Estimate the noise in the new noisy image
+        $(3)$ Remove the noise from the noisy image to obtain an estimate of the original image.
+        $(4)$ Visualize the original image, the noisy image, and the estimate of the original image</p>
       </p>
 
       <p> Furthermore, I scaled the noise according to specific coefficients associated with each timestep. This process involves dividing the noisy image by the estimated noise at each step, adjusting for each image's noise level to maximize clarity.</p><p></p>
@@ -182,12 +214,20 @@
         <h2>Section 1-4</h2>
 
         <p> Using the following equation: </p>
-        <img src = "partA/EQ2.png" width="300" height="200" >
+        
+        <p>$$x_{t'} = \frac{\sqrt{\alpha_{t'}} \beta_t}{1 - \bar{\alpha}_t} x_0 + \frac{\sqrt{\alpha_t}(1 - \bar{\alpha}_{t'})}{1 - \bar{\alpha}_t} x_t + v_\sigma$$</p>
 
         <p> where: </p>
-        <img src = "partA/EQ3.png">
+        <ul>
+            <li>$x_t$ is your image at timestep $t$</li>
+            <li>$x_{t'}$ is your noisy image at timestep $t'$ where $t' < t$ (less noisy)</li>
+            <li>$\bar{\alpha}_t$ is defined by alphas_cumprod, as explained above</li>
+            <li>$\alpha_t = \frac{\bar{\alpha}_t}{\bar{\alpha}_{t'}}$</li>
+            <li>$\beta_t = 1 - \alpha_t$</li>
+            <li>$x_0$ is our current estimate of the clean image using equation A.2 just like in section 1.3</li>
+        </ul>
 
-        <p> We will implement iterative denoising!</p>
+        <p> We will implement iterative denoising! This equation represents the reverse diffusion step, which allows us to progressively remove noise from an image. The equation takes a noisy image at timestep $t$ and produces a less noisy version at timestep $t'$. The coefficients ensure that the denoising process maintains the correct statistical properties while gradually reconstructing the original image.</p>
 
         <p> Unlike a single-step approach, iterative denoising gradually reconstructs the image by removing noise over multiple steps, producing finer details and better image quality, especially for heavily degraded images. At each step, noise is incrementally removed based on specific calculations involving noise scaling coefficients, which balance the levels of signal and noise at each stage</p>
         <p> Iterative denoising recreates the image via removing itertativly noise. At each step, noise is incrementally removed based off specific calculations using noise scaling coefficinets, which help balance levels of signal and noise at every stage.</p>
@@ -198,7 +238,7 @@
 
     <section id="1-5">
         <h2>Section 1-5</h2>
-        <p> In part 1.4, we use the diffusion model to denoise an image. Another thing we can do with the iterative_denoise function is to generate images from scratch</p>
+        <p> In part $1.4$, we use the diffusion model to denoise an image. Another thing we can do with the iterative_denoise function is to generate images from scratch</p>
 
         <p> This effectively denoises pure noise.</p>
 
@@ -210,7 +250,7 @@
     <section id="1-6">
         <h2>Section 1-6</h2>
 
-        <p>In 1.6, we utilize classifer-free guidance (CFG) to the diffusion model to improve image quality. CFG utlizes both conditional and uncondintional noise estimates, which allows the model to emphasize relevant details while keeping some randomness.
+        <p>In $1.6$, we utilize classifer-free guidance (CFG) to the diffusion model to improve image quality. CFG utlizes both conditional and uncondintional noise estimates, which allows the model to emphasize relevant details while keeping some randomness.
 
           CFG essentially combines two noise estimates to porduce more coherent and detailed images. We utilize CFG ontop of the iterative denoising that we implemented in the previous sections, but, of course, CFG combines the noise estimate at each iteration.
           
@@ -222,12 +262,12 @@
 
         <section id="1-71">
           <h2>Section 1-7</h2>
-          <p> In part 1.4, we take a real image, add noise to it, and then denoise. This effectively allows us to make edits to existing images. The more noise we add, the larger the edit will be. This works because in order to denoise an image, the diffusion model must to some extent "hallucinate" new things -- the model has to be "creative." Another way to think about it is that the denoising process "forces" a noisy image back onto the manifold of natural images.
+          <p> In part $1.4$, we take a real image, add noise to it, and then denoise. This effectively allows us to make edits to existing images. The more noise we add, the larger the edit will be. This works because in order to denoise an image, the diffusion model must to some extent "hallucinate" new things -- the model has to be "creative." Another way to think about it is that the denoising process "forces" a noisy image back onto the manifold of natural images.
 
             Here, we're going to take the original test image, noise it a little, and force it back onto the image manifold without any conditioning. Effectively, we're going to get an image that is similar to the test image (with a low-enough noise level). This follows the SDEdit algorithm.</p>
 
           
-            <p> We start by running the forward process to the original image. The noise varies across predefined noise levels of [1, 3, 5, 7, 10, 20]. Afterwards, we apply the CFG based iterative denoising. Below are the results.</p>
+            <p> We start by running the forward process to the original image. The noise varies across predefined noise levels of $[1, 3, 5, 7, 10, 20]$. Afterwards, we apply the CFG based iterative denoising. Below are the results.</p>
 
             <P> Once again, we are starting from a "high quality photo".  Our first result is of the Campinelle</P>
 
@@ -257,12 +297,12 @@
 
           <p> 
             
-            We can use the same procedure to implement inpainting. That is, given an image x_orig, and a binary mask m, we can create a new image that has the same content where m is 0, but new content wherever m is 1.
+            We can use the same procedure to implement inpainting. That is, given an image $x_{\text{orig}}$, and a binary mask $m$, we can create a new image that has the same content where $m = 0$, but new content wherever $m = 1$.
             
-            To do this, we can run the diffusion denoising loop. But at every step, after obtaining x_t, we "force" x_t to have the same pixels as x_orig where m is 0, i.e.: x_t <- m * x_t + (1 - m) * forward(x_orig, t)
+            To do this, we can run the diffusion denoising loop. But at every step, after obtaining $x_t$, we "force" $x_t$ to have the same pixels as $x_{\text{orig}}$ where $m$ is $0$, i.e.: $x_t \leftarrow m \cdot x_t + (1 - m) \cdot \text{forward}(x_{\text{orig}}, t)$
             </p>
 
-            <p> Essentially, we leave everything inside the edit mask alone, but we replace everything outside the edit mask with our original image — with the correct amount of noise added for timestep t.
+            <p> Essentially, we leave everything inside the edit mask alone, but we replace everything outside the edit mask with our original image — with the correct amount of noise added for timestep $t$.
             </p>
             <p> Our first result is of the Campinelle</p>
           <img src="partA/1-73-1.png" alt="1-73-1">
@@ -296,17 +336,16 @@
 
         <p> In this part, we are finally ready to implement Visual Anagrams and create optical illusions with diffusion models. Here, we create an image that, when flipped, showcases a different image!</p>
         <p> We start by creating an image that looks like "an oil painting of people around a campfire", but when flipped upside down will reveal "an oil painting of an old man".</p>
-        <p> To do this, we will denoise an image x_t at step t normally with the prompt "an oil painting of an old man", to obtain noise estimate e1. </p>
+        <p> To do this, we will denoise an image $x_t$ at step $t$ normally with the prompt "an oil painting of an old man", to obtain noise estimate $e_1$. </p>
 
-        <p>  But at the same time, we will flip x_t upside down, and denoise with the prompt "an oil painting of people around a campfire", to get noise estimate e2. We can flip e2 back, to make it right-side up, and average the two noise estimates.<
-          /p>
+        <p>  But at the same time, we will flip $x_t$ upside down, and denoise with the prompt "an oil painting of people around a campfire", to get noise estimate $e_2$. We can flip $e_2$ back, to make it right-side up, and average the two noise estimates.
         <p> We can then perform a reverse/denoising diffusion step with the averaged noise estimate.</p>
 
-        <p> e1 = UNet(x_t, t, p1)</p>
-        <p>e2 = flip(UNet(flip(x_t), t, p2))</p>
-        <p>e = (e1 + e2) / 2 </p>
+        <p> $e_1 = \text{UNet}(x_t, t, p_1)$</p>
+        <p>$e_2 = \text{flip}(\text{UNet}(\text{flip}(x_t), t, p_2))$</p>
+        <p>$e = \frac{e_1 + e_2}{2}$ </p>
 
-        <p> where UNet is the diffusion model UNet from before, flip(·) is a function that flips the image, and p1 and p2 are two different text prompt embeddings. And our final noise estimate is e.
+        <p> where UNet is the diffusion model UNet from before, $\text{flip}(\cdot)$ is a function that flips the image, and $p_1$ and $p_2$ are two different text prompt embeddings. And our final noise estimate is $e$.
         </p>
 
         <p> First is the old man to people around a campfire.</p>
@@ -320,16 +359,15 @@
     <section id="1-9">
         <h2>Section 1-9</h2>
 
-        <p> We can also consturct hybrids like in project 2!</p>
+        <p>We can also construct hybrids like in project $2$!</p>
 
-        <p> In order to create hybrid images with a diffusion model we can use a similar technique as above. We will create a composite noise estimate e, by estimating the noise with two different prompts, and then combining low frequencies from one noise estimate with high frequencies of the other. The algorithm is:
+        <p> In order to create hybrid images with a diffusion model we can use a similar technique as above. We will create a composite noise estimate $e$, by estimating the noise with two different prompts, and then combining low frequencies from one noise estimate with high frequencies of the other. The algorithm is:
           </p>
-          <p>e1 = UNet(x_t, t, p1)</p>
-          <p>e2 = UNet(x_t, t, p2)</p>
-          <p>e = f_lowpass(e1) + f_highpass(e2)
+          <p>$e_1 = \text{UNet}(x_t, t, p_1)$</p>
+          <p>$e_2 = \text{UNet}(x_t, t, p_2)$</p>
           </p>
 
-          <p> where UNet is the diffusion model UNet, f_lowpass is a low pass function, f_highpass is a high pass function, and p1 and p2 are two different text prompt embeddings. Our final noise estimate is e.</p>
+          <p> where UNet is the diffusion model UNet, $f_{\text{lowpass}}$ is a low pass function, $f_{\text{highpass}}$ is a high pass function, and $p_1$ and $p_2$ are two different text prompt embeddings. Our final noise estimate is $e$.</p>
 
           <p> We start with a skull and a waterfall.</p>
         <img src="partA/1-9-1.png" alt="1-9-1">
@@ -354,36 +392,31 @@
 
     <section id="b-1-2">
         <h2>Section 1.2</h2>
-        <p>Below is a visualization of the different noising processes over varying sigma values of [0, 0.2, 0.4, 0.5, 0.6, 0.8, 1]</p>
+        <p>Below is a visualization of the different noising processes over varying sigma values of $[0, 0.2, 0.4, 0.5, 0.6, 0.8, 1]$</p>
         <img src="partB/noisy.png">
     </section>
 
     <section id="b-1-2-1">
         <h2>Section 1.2.1</h2>
-        <p>We set the sigma value to 0.5 during training and dynamically add image batches using a batch size of 256 for 5 epochs. We set the learning rate of 1e-4. Other than that, we follow standard ML paradigms on training NNs.</p>
+        <p>We set the sigma value to $\sigma = 0.5$ during training and dynamically add image batches using a batch size of $256$ for $5$ epochs. We set the learning rate of $1 \times 10^{-4}$. Other than that, we follow standard ML paradigms on training NNs.</p>
         <p>And here is the loss over steps during training.</p>
         <img src="partB/T1.png">
         <p>Furthermore, here are the denoised results at the first and fifth epoch.</p>
         <img src='partB/E1.png'>
         <img src='partB/E2.png'>
-    </section>
-
-    <section id="b-1-2-2">
-        <h2>Section 1.2.2</h2>
-        <p>Our denoiser was trained on a sigma val of 0.5. Here are the results when being tested on a varying amount of noise.</p>
-        <img src='partB/VaryingNoise.png'>
+{{ ... }}
     </section>
 
     <section id="b-2-1-2">
         <h2>Section 2.1 and 2.2</h2>
         <p>For the next section, we focus on training a time-conditioned UNET for iterative denoising via a DDPM framework.
-          The model is trained to predict noise rather than clean images using a variance schedule that starts at 0.0001 and ends at 0.02 over 300 timesteps. 
-          Rather than training separate models for every noise level, the UNet is conditioned on timestep t. This allows a single model to handle varying noise levels throughout the diffusion process. Similarly, we are attempting to minimize the mean squared error between predicted and actual noise at randomly sampled timesteps.</p>
+          The model is trained to predict noise rather than clean images using a variance schedule that starts at $\beta_1 = 0.0001$ and ends at $\beta_T = 0.02$ over $T = 300$ timesteps. 
+          Rather than training separate models for every noise level, the UNet is conditioned on timestep $t$. This allows a single model to handle varying noise levels throughout the diffusion process. Similarly, we are attempting to minimize the mean squared error between predicted and actual noise at randomly sampled timesteps.</p>
         <img src='partB/3.png'>
         <img src='partB/4.png'>
         <p>Here's the training algorithm that we follow:</p>
         <img src='partB/5.png'>
-        <p>Here is the time-conditioned UNet training loss graph</p>
+{{ ... }}
         <img src='partB/T2.png'>
     </section>
 
@@ -396,13 +429,13 @@
         <img src='partB/1a10.gif'>
         <img src='partB/1a15.gif'>
         <img src='partB/1a20.gif'>
-        <p>Notice that on varying values of sigma, this model already performs better than the previous model?</p>
+        <p>Notice that on varying values of $\sigma$, this model already performs better than the previous model?</p>
     </section>
 
     <section id="b-2-4">
         <h2>Section 2.4</h2>
-        <p>For our final model, we utilize two additional FCBlocks for processing class as well as time, where we represent class as a one-hot vector.</p>
-        <p>The model implements CFG by randomly dropping class conditioning throughout the training process. Furthermore, during generation, we combine conditional and unconditional predictions using a guidance value of 5 as we've done in Part A.</p>
+        <p>For our final model, we utilize $2$ additional FCBlocks for processing class as well as time, where we represent class as a one-hot vector.</p>
+        <p>The model implements CFG by randomly dropping class conditioning throughout the training process. Furthermore, during generation, we combine conditional and unconditional predictions using a guidance value of $\gamma = 5$ as we've done in Part A.</p>
         <p>The training process goes as follows:</p>
         <img src='partB/7.png'>
         <p>Here is the class-conditioned UNet training loss graph</p>

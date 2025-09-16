@@ -3,28 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Domain Fusion and Light Field Camera</title>
     <style>
-      table {
-          border-collapse: collapse;
-          margin-top: 1em;
-      }
-      td {
-          border: 1px solid #000;
-          padding: 0.5em;
-          vertical-align: top;
-      }
-      td:nth-child(1) {
-          width: 3em;
-          text-align: center;
-      }
-      td:nth-child(2) {
-          width: 30em;
-      }
-      td:nth-child(3) {
-          width: 30em;
-      }
-  </style>
-    <title>Project 1</title>
+        @font-face {
+            font-family: "Alliance No.2";
+            src: url("../fonts/AllianceNo2-Regular.otf") format("opentype");
+            font-weight: normal; 
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "Alliance No.2";
+            src: url("../fonts/AllianceNo2-Bold.otf") format("opentype");
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        body {
+            font-family: "Alliance No.2", Consolas, monospace;
+            margin: 20px;
+            letter-spacing: -0.025em;
+            font-weight: normal;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+            background-color: #f4f4f4;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            letter-spacing: -0.01em; 
+            color: #333333;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            margin-top: 25px;
+        }
+
+        h4 {
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        a {
+            color: #D4A574;
+            text-decoration: none; 
+        }
+        
+        a:hover {
+            text-decoration: underline;
+            color: #C19A6B; 
+        }
+        
+        a:visited {
+            color: #D4A574; 
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            margin: 10px 0;
+        }
+
+        div[style*="display:flex"] {
+            display: flex !important;
+            gap: 10px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        div[style*="display:flex"] img {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        button {
+            background-color: #D4A574;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            margin: 10px 0;
+        }
+
+        button:hover {
+            background-color: #C19A6B;
+        }
+
+        code {
+            background: #e8e8e8;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 20px 0;
+            width: 100%;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            vertical-align: top;
+        }
+        
+        td:nth-child(1) {
+            width: 3em;
+            text-align: center;
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        td:nth-child(2) {
+            width: 40%;
+        }
+        
+        td:nth-child(3) {
+            width: 40%;
+        }
+
+        sup {
+            font-size: 0.75em;
+        }
+
+        em {
+            font-style: italic;
+        }
+    </style>
 
     <h1> Overview of Final Project</h1>
 

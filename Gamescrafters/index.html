@@ -3,85 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gamescrafters</title>
+    <title>Gamescrafters: GamesmanClassic Guide</title>
     <style>
+        @font-face {
+            font-family: "Alliance No.2";
+            src: url("../fonts/AllianceNo2-Regular.otf") format("opentype");
+            font-weight: normal; 
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "Alliance No.2";
+            src: url("../fonts/AllianceNo2-Bold.otf") format("opentype");
+            font-weight: bold;
+            font-style: normal;
+        }
+        
         body {
-            font-family: 'Times New Roman', Times, serif;
-            max-width: 900px;
-            margin: 20px auto;
+            font-family: "Alliance No.2", Consolas, monospace;
+            margin: 20px;
+            letter-spacing: -0.025em;
+            font-weight: normal;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+            background-color: #f4f4f4;
+            color: #333333;
             line-height: 1.6;
             padding: 20px;
-            background-color: #f8f9fa;
-            color: #333;
         }
+
         .center-container {
             text-align: center;
         }
+
+        h1, h2, h3, h4 {
+            letter-spacing: -0.01em; 
+            color: #333333;
+            margin-bottom: 15px;
+        }
+
         h1 {
-            font-family: 'Georgia', serif;
-            font-size: 2.5em;
-            color: #2c3e50;
             text-align: center;
-            margin: 30px 0;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
+            padding: 20px 0;
+            font-size: 2em;
+            border-bottom: 1px solid #ddd;
         }
+
         h2 {
-            font-family: 'Georgia', serif;
-            font-size: 1.8em;
-            color: #34495e;
-            margin: 25px 0 15px;
-            border-left: 4px solid #3498db;
-            padding-left: 10px;
+            font-size: 1.5em;
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
         }
+
         h3 {
-            font-family: 'Georgia', serif;
-            font-size: 1.4em;
-            color: #34495e;
-            margin: 20px 0 10px;
+            font-size: 1.3em;
+            margin-top: 25px;
         }
+
         h4 {
-            font-size: 1.2em;
-            color: #34495e;
-            margin: 15px 0;
+            font-size: 1.1em;
+            margin-top: 20px;
         }
+
         p {
-            margin: 10px 0;
-            text-align: justify;
+            margin-bottom: 15px;
         }
+
         a {
-            color: #3498db;
-            text-decoration: none;
-            transition: color 0.3s;
+            color: #D4A574;
+            text-decoration: none; 
         }
+        
         a:hover {
-            color: #e74c3c;
+            text-decoration: underline;
+            color: #C19A6B; 
         }
+        
+        a:visited {
+            color: #D4A574; 
+        }
+
         ul, ol {
             margin: 15px 0;
             padding-left: 30px;
-            text-align: left;
         }
+
         li {
             margin: 8px 0;
         }
+
         pre {
-            background-color: #f8f9fa;
+            background-color: #e8e8e8;
             padding: 15px;
-            border: 1px solid #e9ecef;
             border-radius: 4px;
             overflow-x: auto;
             font-size: 0.9em;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            color: #212529;
+            color: #333;
+            font-family: 'Courier New', Courier, monospace;
         }
+
         code {
-            font-family: 'Fira Code', 'Courier New', Courier, monospace;
-            background-color: #f1f3f5;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #e8e8e8;
             padding: 2px 4px;
             border-radius: 3px;
-            color: #212529;
+            color: #333;
         }
+
         .keyword { color: #8250df; font-weight: bold; }
         .type { color: #953800; }
         .function { color: #0550ae; }
@@ -90,74 +121,167 @@
         .number { color: #0550ae; }
         .operator { color: #0550ae; }
         .variable { color: #953800; }
+
         .code-example {
             margin: 25px 0;
             padding: 20px;
-            background-color: #f8f9fa;
-            border-left: 4px solid #3498db;
+            background-color: #fff;
+            border-left: 3px solid #D4A574;
             border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
+
         .code-example h4 {
             margin-top: 0;
-            color: #2c3e50;
+            color: #333333;
             font-weight: bold;
         }
+
         .toc {
             list-style: none;
-            padding: 0 0 0 20px;
-            margin: 20px auto 20px 40px;
-            max-width: 600px;
+            padding: 0;
+            margin: 20px 0;
         }
+
         .toc li {
             margin: 6px 0;
             padding: 0;
         }
+
         .toc a {
             display: block;
-            padding: 10px 20px;
-            color: #2c3e50;
-            background-color: #f8f9fa;
-            border-left: 4px solid #3498db;
+            padding: 10px 15px;
+            color: #333333;
+            background-color: #fff;
+            border-left: 3px solid #D4A574;
             text-decoration: none;
             transition: all 0.2s ease;
-            font-weight: 500;
             border-radius: 0 4px 4px 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
+
         .toc a:hover {
-            background-color: #e9ecef;
-            color: #e74c3c;
-            padding-left: 25px;
+            background-color: #f8f9fa;
+            padding-left: 20px;
         }
-        .toc a:active,
-        .toc a:focus {
-            background-color: #e9ecef;
-            outline: none;
-            padding-left: 25px;
-        }
-        .github-button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #3498db;
-            border: none;
-            border-radius: 5px;
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 600;
             text-decoration: none;
-            text-align: center;
-            cursor: pointer;
-            margin: 10px;
-            transition: background-color 0.3s;
+            border-radius: 12px;
+            margin: 12px;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            letter-spacing: 0.02em;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            min-width: 160px;
+            justify-content: center;
         }
-        .github-button:hover {
-            background-color: #e74c3c;
+
+        .btn-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .btn-github {
+            background: linear-gradient(135deg, #24292e 0%, #1a1e22 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(36, 41, 46, 0.2);
+        }
+
+        .btn-github:hover {
+            background: linear-gradient(135deg, #1a1e22 0%, #0f1114 100%);
+            box-shadow: 0 8px 25px rgba(36, 41, 46, 0.3);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, #D4A574 0%, #C19A6B 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .btn-play:hover {
+            background: linear-gradient(135deg, #C19A6B 0%, #B8906B 100%);
+            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.4);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 10px;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: exclude;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            margin: 10px 0;
+        }
+
+        figure {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        figcaption {
+            font-style: italic;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        strong {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <h1>Gamescrafters: GamesmanClassic Introductory Guide</h1>
     <div class="center-container">
-        <a href="https://github.com/GamesCrafters/GamesmanClassic/blob/master/src/mabrobad.c" class="github-button" target="_blank">GitHub</a>
-        <a href="https://nyc.cs.berkeley.edu/uni/games/abrobad/variants/standard" class="github-button" target="_blank">Play Abrobad</a>
+        <a href="https://github.com/GamesCrafters/GamesmanClassic/blob/master/src/mabrobad.c" class="btn btn-github" target="_blank">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            <span>View Source</span>
+        </a>
+        <a href="https://nyc.cs.berkeley.edu/uni/games/abrobad/variants/standard" class="btn btn-play" target="_blank">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            <span>Play Abrobad</span>
+        </a>
     </div>
 
     <h3>Table of Contents</h3>
