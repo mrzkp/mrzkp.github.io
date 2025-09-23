@@ -1,10 +1,31 @@
- /* Global font faces (fallbacks used if font files are missing) */
+ /* Global  faces (fallbacks used if font files are missing) */
  @font-face {
    font-family: "Alliance No.2";
    src: url("fonts/AllianceNo2-Regular.otf") format("opentype");
    font-weight: normal;
    font-style: normal;
  }
+
+html, body {
+  -ms-overflow-style: none; /* IE and legacy Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;                 /* Safari and Chrome */
+  height: 0;
+  display: none;
+}
+* {
+  -ms-overflow-style: none; /* IE and legacy Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;            /* Safari and Chrome */
+  background: transparent;
+}
  
  @font-face {
    font-family: "Alliance No.2";
@@ -13,12 +34,18 @@
    font-style: normal;
  }
  
- /* Base layout and typography */
  html, body {
    height: 100%;
- }
- 
- body {
+   -ms-overflow-style: none; /* IE and legacy Edge */
+   scrollbar-width: none;    /* Firefox */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;                 /* Safari and Chrome */
+  height: 0;
+  display: none;
+}
+body {
    font-family: "Alliance No.2", Consolas, monospace;
    margin: 20px;
    letter-spacing: -0.025em;
@@ -34,10 +61,8 @@
    overflow-x: hidden;
  }
  
- /* Optional page-level helpers */
  body.light { background-color: #fff; }
  
- /* Link themes */
  body a {
    color: #4a90e2;
    text-decoration: none;
@@ -45,12 +70,10 @@
  body a:hover { text-decoration: underline; }
  body a:visited { color: #4a90e2; }
  
- /* Tan link theme for select pages (5/, Final/, Gamescrafters/) */
- body.theme-tan a { color: #D4A574; }
- body.theme-tan a:hover { color: #C19A6B; text-decoration: underline; }
- body.theme-tan a:visited { color: #D4A574; }
+ body.theme-tan a { color: #4a90e2; }
+ body.theme-tan a:hover { color: #4a90e2; text-decoration: underline; }
+ body.theme-tan a:visited { color: #4a90e2; }
  
- /* Headings */
  h1, h2, h3, h4 {
    letter-spacing: -0.01em;
    color: #333333;
@@ -72,7 +95,6 @@
  h3 { font-size: 1.3em; margin-top: 25px; }
  h4 { font-size: 1.1em; margin-top: 20px; }
  
- /* Media */
  img {
    max-width: 100%;
    height: auto;
@@ -92,7 +114,6 @@
  figure { margin: 20px 0; text-align: center; }
  figcaption { font-style: italic; color: #666; margin-top: 8px; font-size: 0.9em; }
  
- /* Code */
  code {
    font-family: Consolas, 'Courier New', Courier, monospace;
    background-color: #f5f5f5;
@@ -111,7 +132,6 @@
    font-family: 'Courier New', Courier, monospace;
  }
  
- /* Common layout helpers */
  .image-row {
    display: flex;
    justify-content: space-around;
@@ -125,7 +145,6 @@
  .center-container { text-align: center; }
  .gif-container { text-align: center; }
  
- /* Full-bleed galleries (generic classes) */
  ul.gallery {
    list-style-type: none;
    padding: 0;
@@ -154,11 +173,9 @@
  .gallery img { width: 300px; height: auto; object-fit: contain; }
  .gallery figcaption { margin-top: 5px; font-size: 0.9em; text-align: center; }
  
- /* Tables (generic) */
  table { border-collapse: collapse; margin: 20px 0; width: 100%; background: white; border-radius: 4px; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
  td, th { border: 1px solid #ddd; padding: 12px; vertical-align: top; }
  
- /* Buttons (generic) */
  button {
    background-color: #D4A574;
    color: white;
@@ -171,7 +188,6 @@
  }
  button:hover { background-color: #C19A6B; }
  
- /* Anchor-styled buttons */
  .btn {
    display: inline-flex;
    align-items: center;
@@ -210,7 +226,6 @@
    mask-composite: exclude;
  }
  
- /* Paper-like pages (290/, UNet/) */
  body.paper {
    font-family: 'Times New Roman', Times, serif;
    background: #fff;
@@ -226,13 +241,11 @@
  body.paper .github-button { display: inline-block; padding: 10px 20px; font-size: 16px; color: white; background-color: rgb(74, 114, 173); border: none; border-radius: 5px; text-decoration: none; text-align: center; cursor: pointer; left: 10%; top: 50%; transform: translateY(-50%); }
  body.paper .github-button:hover { background-color: rgb(161, 31, 31); }
  
- /* Gamescrafters additions */
  .toc { list-style: none; padding: 0; margin: 20px 0; }
  .toc li { margin: 6px 0; padding: 0; }
  .toc a { display: block; padding: 10px 15px; color: #333333; background-color: #fff; border-left: 3px solid #D4A574; text-decoration: none; transition: all 0.2s ease; border-radius: 0 4px 4px 0; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
  .toc a:hover { background-color: #f8f9fa; padding-left: 20px; }
 
- /* Code token colors (for pre/code with span classes) */
  .keyword { color: #8250df; font-weight: bold; }
  .type { color: #953800; }
  .function { color: #0550ae; }
@@ -243,12 +256,10 @@
  .variable { color: #953800; }
 
  
- /* Project 5 specific layout */
  #\31-1 img, #\31-2 img, #\31-3 img { display: inline-block; margin: 10px; max-width: 30%; height: auto; }
  #\31-4 img, #\31-5 img, #\31-6 img, #\31-7 img { display: inline-block; margin: 10px; max-width: 40%; height: auto; }
  #\31-74 img, #\31-8 img { display: block; margin: 10px auto; max-width: 50%; }
  
- /* Home page decorations (die canvas, ASCII animation) */
  #dieCanvas {
    position: fixed;
    top: 45%;
@@ -278,14 +289,13 @@
    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
  }
  
- /* Convenience: style any element explicitly marked as display:flex inline */
+
  div[style*="display:flex"] {
    gap: 10px;
    align-items: flex-start;
    flex-wrap: wrap;
  }
- 
- /* Page 1 (Prokudin-Gorskii) scoped full-bleed gallery rules without changing markup */
+
  body.page-1 ul {
    list-style-type: none;
    padding: 0;
@@ -303,11 +313,9 @@
  body.page-1 img { width: 300px; height: auto; object-fit: contain; }
  body.page-1 figcaption { margin-top: 5px; font-size: 0.9em; text-align: center; }
  
- /* Gamma-AI specific table look (preserve tighter borders) */
  body.gamma-ai table { border-collapse: collapse; margin-top: 1em; }
  body.gamma-ai td { border: 1px solid #000; padding: 0.5em; vertical-align: top; }
  body.gamma-ai td:nth-child(1) { width: 3em; text-align: center; }
  body.gamma-ai td:nth-child(2), body.gamma-ai td:nth-child(3) { width: 30em; }
  
- /* Minor utilities */
  .threshold { color: #e74c3c; font-weight: bold; }
