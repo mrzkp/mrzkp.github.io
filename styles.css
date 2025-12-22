@@ -548,46 +548,43 @@ body.gamma-ai td:nth-child(2), body.gamma-ai td:nth-child(3) { width: 30em; }
 }
 
 .cmu-coursework-container {
-  position: relative;
-  padding: 1.5em 2em 3em;
-  min-height: 200px;
-  background-color: transparent;
   display: flex;
-  justify-content: center;
-}
-
-.cmu-coursework-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0.1;
-  overflow: hidden;
-  pointer-events: none;
-  display: flex;
-  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 2.5rem;
   align-items: flex-start;
+  padding: 1.5em 0;
 }
 
-.cmu-coursework-background pre {
+.cmu-coursework-logo {
+  flex: 0 0 auto;
+}
+
+.cmu-coursework-logo pre {
   font-family: monospace;
-  line-height: 1.2;
-  font-size: 0.8em;
-  font-weight: 800;
+  line-height: 1.05;
+  font-size: 0.9em;
+  font-weight: 700;
   color: #111;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
-  background: transparent;
+  background: none;
   box-shadow: none;
+  border: none;
   padding: 0;
-  margin: -0.2em 0 0;
+  margin: 0;
 }
 
 .cmu-coursework-content {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 600px;
+  flex: 1 1 320px;
+  min-width: 280px;
+}
+
+@media (max-width: 700px) {
+  .cmu-coursework-container {
+    flex-wrap: wrap;
+  }
+  .cmu-coursework-logo,
+  .cmu-coursework-content {
+    flex: 1 1 100%;
+  }
 }
 
 .cmu-coursework-content ul {
